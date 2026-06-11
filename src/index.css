@@ -299,15 +299,15 @@ img {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  transition: border-color 0.15s;
+  transition: background 0.3s ease, border-color 0.3s ease;
   background: #fff;
 }
 .platform-card:hover {
-  border-color: #bbb;
+  border-color: transparent;
 }
 
 .platform-card-button {
-  background: none;
+  background: #fff;
   border: 0.5px solid #ebebeb;
   cursor: pointer;
   font-family: inherit;
@@ -317,11 +317,31 @@ img {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  transition: border-color 0.15s;
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .platform-card-button:hover {
-  border-color: #bbb;
+  border-color: transparent;
+}
+
+/* Hover colors — cycling through 4 colors */
+.platform-grid .platform-card:nth-child(4n+1):hover,
+.platform-grid .platform-card-button:nth-child(4n+1):hover { background: #F4845F; }
+.platform-grid .platform-card:nth-child(4n+2):hover,
+.platform-grid .platform-card-button:nth-child(4n+2):hover { background: #F5C842; }
+.platform-grid .platform-card:nth-child(4n+3):hover,
+.platform-grid .platform-card-button:nth-child(4n+3):hover { background: #5BC8D4; }
+.platform-grid .platform-card:nth-child(4n+4):hover,
+.platform-grid .platform-card-button:nth-child(4n+4):hover { background: #B8A9E8; }
+
+/* Keep logo and followers readable on colored backgrounds */
+.platform-card:hover .platform-followers,
+.platform-card-button:hover .platform-followers {
+  color: #111;
+}
+.platform-card:hover .platform-handle,
+.platform-card-button:hover .platform-handle {
+  color: rgba(0,0,0,0.5);
 }
 
 .platform-header {
