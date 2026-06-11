@@ -19,7 +19,7 @@ html {
 }
 
 body {
-  font-family: "Space Grotesk", "Noto Sans SC", system-ui, sans-serif;
+  font-family: "Inter", "Source Han Sans SC", system-ui, sans-serif;
   background: #fafaf8;
   color: #111;
   -webkit-font-smoothing: antialiased;
@@ -149,8 +149,9 @@ img {
 }
 
 .hero-name {
+  font-family: "Inter", sans-serif;
   font-size: 40px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: -1.5px;
   line-height: 1;
   margin-bottom: 16px;
@@ -158,12 +159,13 @@ img {
 
 /* The hook — italic, like Marc's "I was fired everywhere" */
 .hook {
-  font-size: 16px;
+  font-family: "LXGW WenKai", serif;
+  font-size: 18px;
   font-style: italic;
   color: #444;
-  font-weight: 300;
-  line-height: 1.8;
-  letter-spacing: 0.3px;
+  font-weight: 400;
+  line-height: 2;
+  letter-spacing: 0.5px;
   margin-bottom: 20px;
 }
 
@@ -269,6 +271,7 @@ img {
 }
 
 .section-label {
+  font-family: "Source Han Sans SC", sans-serif;
   font-size: 12px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -358,6 +361,7 @@ img {
 }
 
 .platform-name {
+  font-family: "Source Han Sans SC", sans-serif;
   font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.3px;
@@ -438,6 +442,7 @@ img {
 }
 
 .card-title {
+  font-family: "Source Han Sans SC", sans-serif;
   font-size: 15px;
   font-weight: 600;
   color: #111;
@@ -450,6 +455,7 @@ img {
 }
 
 .card-desc {
+  font-family: "LXGW WenKai", serif;
   font-size: 12px;
   color: #999;
   line-height: 1.6;
