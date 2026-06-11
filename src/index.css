@@ -71,17 +71,17 @@ img {
 }
 
 .logo-img {
-  height: 30px;
+  height: 56px;
   width: auto;
   display: block;
 }
 
 .logo-sub-zh {
-  font-family: "ZCOOL XiaoWei", "Source Han Sans SC", serif;
-  font-size: 22px;
-  font-weight: 400;
+  font-family: "Source Han Sans SC", sans-serif;
+  font-size: 26px;
+  font-weight: 700;
   color: #1a1a1a;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   line-height: 1;
 }
 
