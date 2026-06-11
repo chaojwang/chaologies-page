@@ -269,8 +269,8 @@ img {
 }
 
 .section-label {
-  font-size: 11px;
-  letter-spacing: 0.1em;
+  font-size: 12px;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   color: #888;
   margin-bottom: 14px;
@@ -336,8 +336,8 @@ img {
 }
 
 .platform-logo {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
   flex-shrink: 0;
   opacity: 0.7;
@@ -358,9 +358,9 @@ img {
 }
 
 .platform-name {
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.1px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
 }
 
 .platform-followers {
@@ -405,14 +405,17 @@ img {
 
 .card-top {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
+  gap: 8px;
 }
 
 .card-icon {
-  font-size: 20px;
+  font-size: 22px;
   line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .tag {
@@ -435,18 +438,19 @@ img {
 }
 
 .card-title {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 600;
   color: #111;
-  margin-bottom: 6px;
-  letter-spacing: 0px;
+  margin-bottom: 8px;
+  letter-spacing: 0.3px;
+  flex: 1;
 }
 .card-title.muted {
   color: #bbb;
 }
 
 .card-desc {
-  font-size: 11px;
+  font-size: 12px;
   color: #999;
   line-height: 1.6;
   letter-spacing: 0.2px;
