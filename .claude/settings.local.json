@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3)",
+      "Bash(cd \"/Users/chaowang/Downloads/Coding files/chaologies-page\" && mkdir -p .claude)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ]
+  }
+}

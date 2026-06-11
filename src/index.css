@@ -1,0 +1,699 @@
+/* ─────────────────────────────────────────────────────
+   index.css
+   #111 text · #666 secondary · #BBB muted
+   #EBEBEB borders · #FF6040 coral CTA · #FFF0EC tint
+   ───────────────────────────────────────────────────── */
+
+/* ── Reset ─────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Space Grotesk", "Noto Sans SC", system-ui, sans-serif;
+  background: #fff;
+  color: #111;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  font-weight: 400;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+img {
+  display: block;
+}
+
+/* ── Page shell ─────────────────────────────────────── */
+
+.page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ── Nav ────────────────────────────────────────────── */
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 0;
+  border-bottom: 0.5px solid #ebebeb;
+}
+
+.logo {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+}
+
+.logo-group {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.logo-sub {
+  font-size: 11px;
+  font-weight: 400;
+  color: #aaa;
+  letter-spacing: 0px;
+}
+
+.lang-toggle {
+  display: flex;
+  gap: 4px;
+  align-items: flex-start;
+}
+
+.lang-btn-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.lang-btn {
+  font-size: 11px;
+  padding: 3px 12px;
+  border-radius: 20px;
+  border: 0.5px solid #e8e8e8;
+  background: transparent;
+  color: #aaa;
+  transition:
+    background 0.15s,
+    color 0.15s,
+    border-color 0.15s;
+}
+.lang-btn.active {
+  background: #ff6040;
+  color: #fff;
+  border-color: #ff6040;
+}
+.lang-btn:not(.active):hover {
+  border-color: #999;
+  color: #555;
+}
+
+/* ── Two-column layout ──────────────────────────────── */
+
+.main-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 64px;
+  padding: 48px 0 80px;
+  align-items: start;
+}
+
+.profile-col {
+  position: sticky;
+  top: 40px;
+}
+
+/* ── Profile (left) ─────────────────────────────────── */
+
+.avatar {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 10%;
+  border: 0.5px solid #ebebeb;
+  margin-bottom: 20px;
+}
+
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #bbb;
+  margin-bottom: 6px;
+}
+
+.hero-name {
+  font-size: 40px;
+  font-weight: 600;
+  letter-spacing: -1.5px;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+/* The hook — italic, like Marc's "I was fired everywhere" */
+.hook {
+  font-size: 15px;
+  font-style: italic;
+  color: #444;
+  font-weight: 300;
+  line-height: 1.75;
+  letter-spacing: 0.3px;
+  margin-bottom: 18px;
+}
+
+/* Follower count — the number hook */
+.followers {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.followers-num {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: #111;
+}
+
+.followers-label {
+  font-size: 12px;
+  color: #999;
+}
+
+/* Mission statement */
+.mission {
+  font-size: 14px;
+  color: #666;
+  font-weight: 400;
+  line-height: 1.8;
+  letter-spacing: 0.2px;
+  margin-bottom: 24px;
+}
+
+/* Newsletter CTA — the only coral element */
+.newsletter-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: #ff6040;
+  color: #fff;
+  border-radius: 12px;
+  padding: 14px 18px;
+  transition: background 0.15s;
+}
+.newsletter-cta:hover {
+  background: #e84e2e;
+}
+
+.newsletter-label {
+  font-size: 14px;
+  font-weight: 500;
+}
+.newsletter-sub {
+  font-size: 11px;
+  opacity: 0.85;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+}
+
+/* ── Right column ───────────────────────────────────── */
+
+.right-col {
+  min-width: 0;
+}
+
+.section-label {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #bbb;
+  margin-bottom: 14px;
+}
+
+.section-gap {
+  margin-top: 36px;
+}
+
+/* ── Platform cards ─────────────────────────────────── */
+
+.platform-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.platform-card {
+  border: 0.5px solid #ebebeb;
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: border-color 0.15s;
+}
+.platform-card:hover {
+  border-color: #bbb;
+}
+
+.platform-card-button {
+  background: none;
+  border: 0.5px solid #ebebeb;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  padding: 16px 18px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: border-color 0.15s;
+}
+
+.platform-card-button:hover {
+  border-color: #bbb;
+}
+
+.platform-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.platform-name {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+}
+
+.platform-followers {
+  font-size: 13px;
+  font-weight: 600;
+  color: #ff6040;
+}
+
+.platform-handle {
+  font-size: 11px;
+  color: #aaa;
+}
+
+/* ── Project cards ──────────────────────────────────── */
+
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.card {
+  border: 0.5px solid #ebebeb;
+  border-radius: 12px;
+  padding: 20px;
+  display: block;
+  color: inherit;
+  position: relative;
+  transition: border-color 0.15s;
+}
+
+.card:not(.card-soon):hover {
+  border-color: #bbb;
+}
+
+.card-soon {
+  border-style: dashed;
+  border-color: #e0e0e0;
+  cursor: default;
+}
+
+.card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.card-icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.tag {
+  font-size: 10px;
+  padding: 2px 9px;
+  border-radius: 20px;
+}
+.tag-active {
+  background: #fff0ec;
+  color: #ff6040;
+  font-weight: 500;
+}
+.tag-course {
+  background: #f5f5f5;
+  color: #888;
+}
+.tag-soon {
+  background: #f5f5f5;
+  color: #aaa;
+}
+
+.card-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: #111;
+  margin-bottom: 8px;
+  letter-spacing: 0px;
+}
+.card-title.muted {
+  color: #bbb;
+}
+
+.card-desc {
+  font-size: 12px;
+  color: #999;
+  line-height: 1.7;
+  letter-spacing: 0.2px;
+}
+.card-desc.muted {
+  color: #ccc;
+}
+
+.card-arrow {
+  display: block;
+  font-size: 14px;
+  color: #bbb;
+  margin-top: 14px;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition:
+    opacity 0.15s,
+    transform 0.15s;
+}
+.card:not(.card-soon):hover .card-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.card-links {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.link-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+  border: 1px solid #ebebeb;
+  border-radius: 6px;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+  cursor: pointer;
+  padding: 0;
+  background: transparent;
+}
+
+.link-btn:hover {
+  border-color: #bbb;
+  background: #fafafa;
+}
+
+.link-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+/* ── Mobile ─────────────────────────────────────────── */
+
+@media (max-width: 680px) {
+  .page {
+    padding: 0 20px;
+  }
+
+  .main-layout {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 32px 0 56px;
+  }
+
+  .profile-col {
+    position: static;
+    padding-bottom: 32px;
+    border-bottom: 0.5px solid #ebebeb;
+    margin-bottom: 32px;
+  }
+
+  .hero-name {
+    font-size: 36px;
+  }
+  .platform-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+  .avatar {
+    width: 72px;
+    height: 72px;
+  }
+}
+
+@media (max-width: 420px) {
+  .platform-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Blog Page ──────────────────────────────────────── */
+
+.blog-page {
+  min-height: 100vh;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 32px;
+  border-bottom: 0.5px solid #ebebeb;
+  max-width: 1080px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.blog-logo-btn {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #111;
+}
+
+.blog-logo-btn:hover {
+  color: #666;
+}
+
+.blog-container {
+  max-width: 1080px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 48px 32px 80px;
+}
+
+.blog-header {
+  margin-bottom: 64px;
+}
+
+.blog-header h1 {
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin-bottom: 12px;
+}
+
+.blog-header p {
+  font-size: 16px;
+  color: #666;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* ── Timeline Section ─────────────────────────────── */
+
+.timeline-section {
+  margin-bottom: 80px;
+}
+
+.timeline-section h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 40px;
+  letter-spacing: -0.3px;
+}
+
+.timeline {
+  position: relative;
+  padding-left: 60px;
+}
+
+.timeline-line {
+  position: absolute;
+  left: 14px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, #ff6040, #ffb3a0);
+}
+
+.timeline-events {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.timeline-event {
+  position: relative;
+  display: flex;
+  gap: 20px;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -46px;
+  top: 5px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid #ff6040;
+  flex-shrink: 0;
+}
+
+.timeline-content {
+  flex: 1;
+  padding-top: 4px;
+}
+
+.event-year {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 8px;
+  letter-spacing: -0.2px;
+}
+
+.event-location {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+.flag {
+  font-size: 18px;
+  display: inline-block;
+}
+
+.country {
+  font-weight: 400;
+}
+
+.current-badge {
+  display: inline-block;
+  font-size: 11px;
+  color: #ff6040;
+  font-weight: 500;
+  margin-left: 6px;
+  padding: 2px 8px;
+  background: #fff0ec;
+  border-radius: 12px;
+}
+
+/* ── Articles Section ───────────────────────────────── */
+
+.articles-section {
+  padding: 40px;
+  border: 1px dashed #ebebeb;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.articles-section h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  letter-spacing: -0.2px;
+}
+
+.articles-section p {
+  font-size: 14px;
+  color: #999;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* ── Card Button (for internal page links) ────────── */
+
+.card-button {
+  background: none;
+  border: inherit;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  padding: 20px;
+}
+
+.card-button:hover {
+  border-color: #bbb;
+}
+
+/* ── Blog Mobile ────────────────────────────────────── */
+
+@media (max-width: 680px) {
+  .blog-nav {
+    padding: 18px 20px;
+  }
+
+  .blog-container {
+    padding: 32px 20px 56px;
+  }
+
+  .blog-header h1 {
+    font-size: 36px;
+  }
+
+  .timeline {
+    padding-left: 48px;
+  }
+
+  .timeline-dot {
+    left: -38px;
+    width: 24px;
+    height: 24px;
+    border-width: 2.5px;
+  }
+
+  .event-year {
+    font-size: 16px;
+  }
+
+  .event-location {
+    font-size: 13px;
+  }
+}
+
