@@ -393,12 +393,31 @@ img {
   display: block;
   color: inherit;
   position: relative;
-  transition: border-color 0.15s;
+  transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   background: #fff;
 }
 
 .card:not(.card-soon):hover {
-  border-color: #bbb;
+  border-color: transparent;
+  color: #111;
+}
+
+/* Hover colors — cycling through 4 warm palette colors */
+.card-grid .card:not(.card-soon):nth-child(4n+1):hover { background: #F4845F; }
+.card-grid .card:not(.card-soon):nth-child(4n+2):hover { background: #F5C842; }
+.card-grid .card:not(.card-soon):nth-child(4n+3):hover { background: #5BC8D4; }
+.card-grid .card:not(.card-soon):nth-child(4n+4):hover { background: #B8A9E8; }
+
+/* Keep tags readable on colored backgrounds */
+.card:not(.card-soon):hover .tag-active {
+  background: rgba(255,255,255,0.35);
+  color: #111;
+}
+.card:not(.card-soon):hover .card-desc {
+  color: rgba(0,0,0,0.6);
+}
+.card:not(.card-soon):hover .card-arrow {
+  color: #111;
 }
 
 .card-soon {
