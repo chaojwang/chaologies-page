@@ -128,82 +128,14 @@ img {
 
 /* ── Profile (left) ─────────────────────────────────── */
 
-.avatar-container {
-  position: relative;
-  width: 160px;
-  height: 160px;
-  margin-bottom: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: -40px;
-  margin-right: -40px;
-  padding-left: 40px;
-  padding-right: 40px;
-}
-
 .avatar {
-  width: 160px;
-  height: 160px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   object-fit: cover;
   object-position: center 10%;
   border: 0.5px solid #ebebeb;
-  position: relative;
-  z-index: 10;
-}
-
-.avatar-badges {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-}
-
-.avatar-badge {
-  position: absolute;
-  padding: 8px 12px;
-  background: #fff;
-  border: 0.5px solid #e8e6e1;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  font-weight: 500;
-  white-space: nowrap;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-.avatar-badge:nth-child(1) {
-  top: -15px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-.avatar-badge:nth-child(2) {
-  top: 50%;
-  right: -30px;
-  transform: translateY(-50%);
-}
-.avatar-badge:nth-child(3) {
-  bottom: -15px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-.avatar-badge:nth-child(4) {
-  top: 50%;
-  left: -30px;
-  transform: translateY(-50%);
-}
-
-.badge-icon {
-  font-size: 14px;
-  flex-shrink: 0;
-}
-
-.badge-label {
-  color: #333;
+  margin-bottom: 24px;
 }
 
 .eyebrow {
@@ -602,8 +534,8 @@ img {
     grid-template-columns: 1fr;
   }
   .avatar {
-    width: 120px;
-    height: 120px;
+    width: 140px;
+    height: 140px;
     margin-bottom: 20px;
   }
 }
