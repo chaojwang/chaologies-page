@@ -185,6 +185,8 @@ img {
   line-height: 2;
   letter-spacing: 0.5px;
   margin-bottom: 20px;
+  white-space: pre-line;
+  overflow-wrap: break-word;
 }
 
 /* Follower count — the number hook */
