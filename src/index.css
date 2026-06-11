@@ -204,10 +204,12 @@ img {
 /* Newsletter Form — Custom styled */
 .newsletter-container {
   margin-bottom: 24px;
-  margin-left: -18px;
+  margin-left: 0;
   margin-right: 0;
   padding-left: 0;
   padding-right: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .newsletter-form {
