@@ -77,8 +77,8 @@ function Nav({ lang, setLang }) {
   return (
     <nav className="nav">
       <div className="logo-group">
-        <span className="logo">Chaologies</span>
-        <span className="logo-sub">超說</span>
+        <img src="/logo.png" alt="Chaologies" className="logo-img" />
+        <span className="logo-sub-zh">超說</span>
       </div>
       <div className="lang-toggle">
         <button

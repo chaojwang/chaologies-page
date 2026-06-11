@@ -66,8 +66,23 @@ img {
 
 .logo-group {
   display: flex;
-  align-items: baseline;
-  gap: 8px;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-img {
+  height: 30px;
+  width: auto;
+  display: block;
+}
+
+.logo-sub-zh {
+  font-family: "ZCOOL XiaoWei", "Source Han Sans SC", serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: #1a1a1a;
+  letter-spacing: 2px;
+  line-height: 1;
 }
 
 .logo-sub {
