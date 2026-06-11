@@ -27,44 +27,52 @@ function useSiteData() {
 //  Newsletter — Email subscription form
 // ════════════════════════════════════════════════════
 
-function Newsletter({ lang, newsletter }) {
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!email) return;
-
-    // Open Substack with email pre-filled
-    const subStackUrl = newsletter.url.replace(/\/$/, "");
-    window.open(`${subStackUrl}?utm_source=website`, "_blank");
-
-    // Show success message
-    setSubmitted(true);
-    setEmail("");
-    setTimeout(() => setSubmitted(false), 3000);
-  };
+function Newsletter({ lang, newsletter, followersFmt }) {
+  const subStackUrl = `${newsletter.url.replace(/\/$/, "")}?utm_source=website`;
 
   return (
     <div className="newsletter-container">
-      <form className="newsletter-form" onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder={lang === "zh" ? "你的邮箱地址" : "Your email"}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          className="newsletter-input"
-        />
-        <button type="submit" className="newsletter-btn">
-          {lang === "zh" ? "订阅" : "Subscribe"}
-        </button>
-      </form>
-      {submitted && (
-        <p className="newsletter-message">
-          {lang === "zh" ? "感谢订阅！" : "Thank you!"}
-        </p>
-      )}
+      <div className="newsletter-heading">
+        <div className="newsletter-title">
+          <span className={`nt-line1${lang === "zh" ? " nt-zh" : ""}`}>
+            {lang === "zh" ? "歡迎訂閱" : "Subscribe to"}
+          </span>
+          <span className={`nt-line2${lang === "zh" ? " nt-zh" : ""}`}>
+            {lang === "zh" ? "超說" : "Chaologies"}
+          </span>
+        </div>
+        <img src="/air.png" alt="" className="newsletter-plane" />
+      </div>
+
+      <p className="newsletter-lead">
+        {lang === "zh" ? "加入一個不斷壯大的社群" : "Join a growing community of more than"}
+        <br />
+        <strong className="newsletter-count">{followersFmt}</strong>
+        {lang === "zh" ? " 位同路人" : " friendly followers"}
+      </p>
+
+      <div className="newsletter-proof">
+        <div className="avatar-stack">
+          <span className="mini-avatar mini-avatar-1" />
+          <span className="mini-avatar mini-avatar-2" />
+          <span className="mini-avatar mini-avatar-3" />
+        </div>
+        <div className="newsletter-rating">
+          <span className="stars" aria-hidden="true">★★★★★</span>
+          <span className="review-count">
+            {lang === "zh" ? "全網 200w+ 點讚收藏" : "2M+ likes & saves"}
+          </span>
+        </div>
+      </div>
+
+      <a
+        href={subStackUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="newsletter-btn newsletter-btn-link"
+      >
+        訂閱 | Subscribe
+      </a>
     </div>
   );
 }
@@ -77,8 +85,7 @@ function Nav({ lang, setLang }) {
   return (
     <nav className="nav">
       <div className="logo-group">
-        <img src="/logo.png" alt="Chaologies" className="logo-img" />
-        <span className="logo-sub-zh">超說</span>
+        <img src="/logo.png?v=3" alt="Chaologies" className="logo-img" />
       </div>
       <div className="lang-toggle">
         <button
@@ -201,14 +208,11 @@ function Profile({ lang, data }) {
 
       <p className="hook">{hook[lang]}</p>
 
-      <p className="followers">
-        <span className="followers-num">{followersFmt}</span>
-        <span className="followers-label">{followersLabel[lang]}</span>
-      </p>
-
-      <p className="mission">{mission[lang]}</p>
-
-      <Newsletter lang={lang} newsletter={newsletter} />
+      <Newsletter
+        lang={lang}
+        newsletter={newsletter}
+        followersFmt={followersFmt}
+      />
     </div>
   );
 }

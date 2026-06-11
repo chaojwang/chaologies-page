@@ -14,7 +14,7 @@ export const siteData = {
   // ── Bio: 狠话 + 使命 ──────────────────────────────────
   hook: {
     en: "I spent 10+ years counting other people's money. Now I'm making my own life count. ✨",
-    zh: "帮别人算了十几年钱。\n现在，我想把自己的生活也算算清楚。",
+    zh: "幫別人算了十幾年錢。\n現在，我想把自己的生活也算算清楚。",
   },
 
   mission: {

@@ -3,3 +3,6 @@ dist
 .env.local
 .env
 .DS_Store
+
+# local backup, not for deploy
+public/logo_whitebg_backup.png
