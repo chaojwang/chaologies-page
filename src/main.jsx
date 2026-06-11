@@ -1,10 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
 import './index.css'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-)
+const isAdmin = window.location.pathname.startsWith('/admin')
+
+async function init() {
+  const root = ReactDOM.createRoot(document.getElementById('root'))
+  if (isAdmin) {
+    const { default: AdminApp } = await import('./admin/AdminApp.jsx')
+    root.render(<React.StrictMode><AdminApp /></React.StrictMode>)
+  } else {
+    const { default: App } = await import('./App.jsx')
+    root.render(<React.StrictMode><App /></React.StrictMode>)
+  }
+}
+init()

@@ -3,8 +3,25 @@
 // ─────────────────────────────────────────────────────
 
 import { useState, useEffect } from "react";
-import { siteData } from "./data.js";
+import { siteData as staticData } from "./data.js";
+import { supabase, transformSiteData } from "./lib/supabase.js";
 import Blog from "./Blog.jsx";
+
+function useSiteData() {
+  const [siteData, setSiteData] = useState(staticData);
+  useEffect(() => {
+    Promise.all([
+      supabase.from('profile').select('*').eq('id', 1).single(),
+      supabase.from('platforms').select('*').order('sort_order'),
+      supabase.from('projects').select('*').order('sort_order'),
+    ]).then(([{ data: profile }, { data: platforms }, { data: projects }]) => {
+      if (profile && platforms && projects) {
+        setSiteData(transformSiteData(profile, platforms, projects));
+      }
+    });
+  }, []);
+  return siteData;
+}
 
 // ════════════════════════════════════════════════════
 //  Newsletter — Email subscription form
@@ -87,7 +104,7 @@ function Nav({ lang, setLang }) {
 //  Profile — left column: hook, followers, mission, newsletter
 // ════════════════════════════════════════════════════
 
-function Profile({ lang }) {
+function Profile({ lang, data }) {
   const {
     name,
     tagline,
@@ -96,7 +113,7 @@ function Profile({ lang }) {
     totalFollowers,
     followersLabel,
     newsletter,
-  } = siteData;
+  } = data;
   const [followers, setFollowers] = useState(totalFollowers);
 
   // 粉丝数增长动画 — 平滑过渡，时快时慢，有时掉数
@@ -367,19 +384,19 @@ const LABELS = {
   projects: { en: "THINGS I'M BUILDING", zh: "我正在做的东西" },
 };
 
-function RightColumn({ lang, onNavigate }) {
+function RightColumn({ lang, onNavigate, data }) {
   return (
     <section className="right-col">
       <p className="section-label">{LABELS.platforms[lang]}</p>
       <div className="platform-grid">
-        {siteData.platforms.map((p, i) => (
+        {data.platforms.map((p, i) => (
           <PlatformCard key={i} p={p} lang={lang} onNavigate={onNavigate} />
         ))}
       </div>
 
       <p className="section-label section-gap">{LABELS.projects[lang]}</p>
       <div className="card-grid">
-        {siteData.projects.map((project, i) => (
+        {data.projects.map((project, i) => (
           <ProjectCard
             key={i}
             project={project}
@@ -401,6 +418,7 @@ function RightColumn({ lang, onNavigate }) {
 export default function App() {
   const [lang, setLang] = useState("en");
   const [currentPage, setCurrentPage] = useState("home");
+  const siteData = useSiteData();
 
   const handleNavigate = (page) => {
     setCurrentPage(page);
@@ -421,9 +439,9 @@ export default function App() {
       <Nav lang={lang} setLang={setLang} />
       <div className="main-layout">
         <aside className="profile-col">
-          <Profile lang={lang} />
+          <Profile lang={lang} data={siteData} />
         </aside>
-        <RightColumn lang={lang} onNavigate={handleNavigate} />
+        <RightColumn lang={lang} onNavigate={handleNavigate} data={siteData} />
       </div>
     </div>
   );
