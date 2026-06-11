@@ -84,6 +84,36 @@ function Nav({ lang, setLang }) {
 }
 
 // ════════════════════════════════════════════════════
+//  Avatar Badges
+// ════════════════════════════════════════════════════
+
+function AvatarBadges({ lang }) {
+  const badges = [
+    { label: lang === "zh" ? "视频创作者" : "YouTuber", icon: "▶️", angle: -45 },
+    { label: lang === "zh" ? "创业者" : "Entrepreneur", icon: "🚀", angle: 45 },
+    { label: lang === "zh" ? "理财专家" : "Finance Expert", icon: "💰", angle: 135 },
+    { label: lang === "zh" ? "内容创作者" : "Creator", icon: "✍️", angle: -135 },
+  ];
+
+  return (
+    <div className="avatar-badges">
+      {badges.map((badge, idx) => (
+        <div
+          key={idx}
+          className="avatar-badge"
+          style={{
+            "--angle": `${badge.angle}deg`,
+          }}
+        >
+          <span className="badge-icon">{badge.icon}</span>
+          <span className="badge-label">{badge.label}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ════════════════════════════════════════════════════
 //  Profile — left column: hook, followers, mission, newsletter
 // ════════════════════════════════════════════════════
 
@@ -174,11 +204,14 @@ function Profile({ lang }) {
 
   return (
     <div className="profile">
-      <img
-        className="avatar"
-        src="/avatar.jpg"
-        alt={`${name.en} — Chaologies`}
-      />
+      <div className="avatar-container">
+        <img
+          className="avatar"
+          src="/avatar.jpg"
+          alt={`${name.en} — Chaologies`}
+        />
+        <AvatarBadges lang={lang} />
+      </div>
       <p className="eyebrow">{tagline[lang]}</p>
       <h1 className="hero-name">{name[lang]}</h1>
 

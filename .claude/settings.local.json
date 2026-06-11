@@ -6,7 +6,8 @@
       "Bash(git add *)",
       "Bash(git commit *)",
       "Bash(npx plugins *)",
-      "WebFetch(domain:marclou.com)"
+      "WebFetch(domain:marclou.com)",
+      "Bash(git push *)"
     ]
   }
 }
