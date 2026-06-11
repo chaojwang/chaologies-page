@@ -1,7 +1,7 @@
 /* ─────────────────────────────────────────────────────
    index.css
    #111 text · #666 secondary · #BBB muted
-   #EBEBEB borders · #FF6040 coral CTA · #FFF0EC tint
+   #EBEBEB borders · #FDB913 coral CTA · #FFF0EC tint
    ───────────────────────────────────────────────────── */
 
 /* ── Reset ─────────────────────────────────────────── */
@@ -20,7 +20,7 @@ html {
 
 body {
   font-family: "Space Grotesk", "Noto Sans SC", system-ui, sans-serif;
-  background: #fff;
+  background: #fafaf8;
   color: #111;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -43,7 +43,7 @@ img {
 /* ── Page shell ─────────────────────────────────────── */
 
 .page {
-  max-width: 1080px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 32px;
 }
@@ -102,9 +102,9 @@ img {
     border-color 0.15s;
 }
 .lang-btn.active {
-  background: #ff6040;
+  background: #FDB913;
   color: #fff;
-  border-color: #ff6040;
+  border-color: #FDB913;
 }
 .lang-btn:not(.active):hover {
   border-color: #999;
@@ -115,8 +115,8 @@ img {
 
 .main-layout {
   display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 64px;
+  grid-template-columns: 280px 1fr;
+  gap: 48px;
   padding: 48px 0 80px;
   align-items: start;
 }
@@ -129,21 +129,22 @@ img {
 /* ── Profile (left) ─────────────────────────────────── */
 
 .avatar {
-  width: 88px;
-  height: 88px;
+  width: 160px;
+  height: 160px;
   border-radius: 50%;
   object-fit: cover;
   object-position: center 10%;
   border: 0.5px solid #ebebeb;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .eyebrow {
   font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #bbb;
+  color: #999;
   margin-bottom: 6px;
+  font-weight: 600;
 }
 
 .hero-name {
@@ -156,13 +157,13 @@ img {
 
 /* The hook — italic, like Marc's "I was fired everywhere" */
 .hook {
-  font-size: 15px;
+  font-size: 16px;
   font-style: italic;
   color: #444;
   font-weight: 300;
-  line-height: 1.75;
+  line-height: 1.8;
   letter-spacing: 0.3px;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 /* Follower count — the number hook */
@@ -171,54 +172,93 @@ img {
   align-items: baseline;
   gap: 8px;
   margin-bottom: 14px;
+  justify-content: flex-end;
 }
 
 .followers-num {
-  font-size: 22px;
+  font-size: 32px;
   font-weight: 700;
   letter-spacing: -0.5px;
-  color: #111;
+  color: #000;
 }
 
 .followers-label {
-  font-size: 12px;
+  font-size: 13px;
   color: #999;
+  order: -1;
 }
 
 /* Mission statement */
 .mission {
-  font-size: 14px;
+  font-size: 15px;
   color: #666;
   font-weight: 400;
   line-height: 1.8;
   letter-spacing: 0.2px;
+  margin-bottom: 28px;
+}
+
+/* Newsletter Form — Custom styled */
+.newsletter-container {
   margin-bottom: 24px;
+  margin-left: -18px;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 
-/* Newsletter CTA — the only coral element */
-.newsletter-cta {
+.newsletter-form {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
-  background: #ff6040;
-  color: #fff;
-  border-radius: 12px;
-  padding: 14px 18px;
-  transition: background 0.15s;
-}
-.newsletter-cta:hover {
-  background: #e84e2e;
+  gap: 8px;
+  align-items: stretch;
 }
 
-.newsletter-label {
+.newsletter-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 0.5px solid #e8e6e1;
+  border-radius: 8px;
   font-size: 14px;
-  font-weight: 500;
+  font-family: inherit;
+  background: #fff;
+  color: #111;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
 }
-.newsletter-sub {
-  font-size: 11px;
-  opacity: 0.85;
-  font-weight: 400;
-  letter-spacing: 0.2px;
+.newsletter-input::placeholder {
+  color: #bbb;
+}
+.newsletter-input:focus {
+  outline: none;
+  border-color: #FDB913;
+  box-shadow: 0 0 0 2px rgba(253, 185, 19, 0.1);
+}
+
+.newsletter-btn {
+  padding: 12px 24px;
+  background: #FDB913;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+.newsletter-btn:hover {
+  background: #F5A013;
+}
+.newsletter-btn:active {
+  transform: scale(0.98);
+}
+
+.newsletter-message {
+  font-size: 13px;
+  color: #FDB913;
+  margin-top: 8px;
+  font-weight: 500;
 }
 
 /* ── Right column ───────────────────────────────────── */
@@ -231,8 +271,9 @@ img {
   font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #bbb;
+  color: #888;
   margin-bottom: 14px;
+  font-weight: 600;
 }
 
 .section-gap {
@@ -248,13 +289,14 @@ img {
 }
 
 .platform-card {
-  border: 0.5px solid #ebebeb;
+  border: 0.5px solid #e8e6e1;
   border-radius: 12px;
   padding: 16px 18px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   transition: border-color 0.15s;
+  background: #fff;
 }
 .platform-card:hover {
   border-color: #bbb;
@@ -270,7 +312,7 @@ img {
   border-radius: 12px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
   transition: border-color 0.15s;
 }
 
@@ -278,22 +320,52 @@ img {
   border-color: #bbb;
 }
 
+.platform-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.platform-icon {
+  font-size: 24px;
+  line-height: 1;
+  display: inline-block;
+  width: fit-content;
+  flex-shrink: 0;
+}
+
+.platform-logo {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+
+.platform-card:hover .platform-logo,
+.platform-card-button:hover .platform-logo {
+  opacity: 1;
+}
+
 .platform-head {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
+  flex: 1;
+  gap: 8px;
 }
 
 .platform-name {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.1px;
 }
 
 .platform-followers {
-  font-size: 13px;
-  font-weight: 600;
-  color: #ff6040;
+  font-size: 15px;
+  font-weight: 700;
+  color: #FDB913;
 }
 
 .platform-handle {
@@ -310,13 +382,14 @@ img {
 }
 
 .card {
-  border: 0.5px solid #ebebeb;
+  border: 0.5px solid #e8e6e1;
   border-radius: 12px;
   padding: 20px;
   display: block;
   color: inherit;
   position: relative;
   transition: border-color 0.15s;
+  background: #fff;
 }
 
 .card:not(.card-soon):hover {
@@ -348,7 +421,7 @@ img {
 }
 .tag-active {
   background: #fff0ec;
-  color: #ff6040;
+  color: #FDB913;
   font-weight: 500;
 }
 .tag-course {
@@ -361,10 +434,10 @@ img {
 }
 
 .card-title {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
   color: #111;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   letter-spacing: 0px;
 }
 .card-title.muted {
@@ -372,9 +445,9 @@ img {
 }
 
 .card-desc {
-  font-size: 12px;
+  font-size: 11px;
   color: #999;
-  line-height: 1.7;
+  line-height: 1.6;
   letter-spacing: 0.2px;
 }
 .card-desc.muted {
@@ -461,8 +534,9 @@ img {
     grid-template-columns: 1fr;
   }
   .avatar {
-    width: 72px;
-    height: 72px;
+    width: 120px;
+    height: 120px;
+    margin-bottom: 20px;
   }
 }
 
@@ -556,7 +630,7 @@ img {
   top: 0;
   bottom: 0;
   width: 2px;
-  background: linear-gradient(to bottom, #ff6040, #ffb3a0);
+  background: linear-gradient(to bottom, #FDB913, #FFD580);
 }
 
 .timeline-events {
@@ -579,7 +653,7 @@ img {
   height: 28px;
   border-radius: 50%;
   background: #fff;
-  border: 3px solid #ff6040;
+  border: 3px solid #FDB913;
   flex-shrink: 0;
 }
 
@@ -616,7 +690,7 @@ img {
 .current-badge {
   display: inline-block;
   font-size: 11px;
-  color: #ff6040;
+  color: #FDB913;
   font-weight: 500;
   margin-left: 6px;
   padding: 2px 8px;

@@ -5,7 +5,7 @@
 export const siteData = {
   // ── Identity ─────────────────────────────────────────
   name: { en: "Chao", zh: "Chao" },
-  tagline: { en: "Singapore-based · Global-minded", zh: "📍新加坡 / 面向全球" },
+  tagline: { en: "📍 Singapore", zh: "📍 新加坡" },
 
   // 总粉丝数 — 手动更新这个数字
   totalFollowers: 473648,
@@ -13,8 +13,8 @@ export const siteData = {
 
   // ── Bio: 狠话 + 使命 ──────────────────────────────────
   hook: {
-    en: "I spent 10+ years counting other people's money. Now I'm making my own life count.",
-    zh: "十几年了，都在帮别人算钱。\n现在，我想把自己的生活也慢慢算清楚",
+    en: "I spent 10+ years counting other people's money. Now I'm making my own life count. ✨",
+    zh: "帮别人算了十几年钱。\n现在，我想把自己的生活也算算清楚。",
   },
 
   mission: {
@@ -35,50 +35,57 @@ export const siteData = {
     {
       name: "YouTube",
       nameZh: "YouTube",
-      handle: "@Chaologies",
+      handle: "Chaologies",
       followers: "24.1K",
+      logoUrl: "/icons/youtube.png",
       url: "https://youtube.com/@Chaologies",
     },
     {
       name: "Instagram",
       nameZh: "Instagram",
-      handle: "@Chaologies",
+      handle: "Chaologies",
       followers: "537",
+      logoUrl: "/icons/instagram.png",
       url: "https://instagram.com/chaologies",
     },
     {
       name: "Bilibili",
       nameZh: "B 站",
-      handle: "超说Chaologies",
+      handle: "Chaologies",
       followers: "147.9K",
+      logoUrl: "/icons/bilibili.png",
       url: "https://space.bilibili.com/394165725?spm_id_from=333.1007.0.0",
     },
     {
       name: "Douyin",
       nameZh: "抖音",
-      handle: "@超哥",
+      handle: "Chaologies",
       followers: "57.3K",
+      logoUrl: "/icons/douyin.png",
       url: "https://www.douyin.com/user/self?from_tab_name=main",
     },
     {
       name: "RedNote",
       nameZh: "小红书",
-      handle: "超哥",
+      handle: "Chaologies",
       followers: "167.8K",
+      logoUrl: "/icons/xiaohongshu.png",
       url: "https://xhslink.com/m/5T0Q2Jyx2rN",
     },
     {
       name: "Zhihu",
       nameZh: "知乎",
-      handle: "@Chao",
+      handle: "Chaologies",
       followers: "67.5K",
+      logoUrl: "/icons/zhihu.png",
       url: "https://www.zhihu.com/people/chaology",
     },
     {
       name: "WeChat",
       nameZh: "微信公众号",
-      handle: "超说",
+      handle: "Chaologies",
       followers: "8.3K",
+      logoUrl: "/icons/wechat.png",
       url: "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzkyMzI2MjQyMg==&scene=124#wechat_redirect",
     },
     {
@@ -86,6 +93,7 @@ export const siteData = {
       nameZh: "我的博客",
       handle: "Stories from around the world",
       followers: "✍️",
+      logoUrl: "📝",
       isPage: true,
       url: "/blog",
     },

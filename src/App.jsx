@@ -7,6 +7,52 @@ import { siteData } from "./data.js";
 import Blog from "./Blog.jsx";
 
 // ════════════════════════════════════════════════════
+//  Newsletter — Email subscription form
+// ════════════════════════════════════════════════════
+
+function Newsletter({ lang, newsletter }) {
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!email) return;
+
+    // Open Substack with email pre-filled
+    const subStackUrl = newsletter.url.replace(/\/$/, "");
+    window.open(`${subStackUrl}?utm_source=website`, "_blank");
+
+    // Show success message
+    setSubmitted(true);
+    setEmail("");
+    setTimeout(() => setSubmitted(false), 3000);
+  };
+
+  return (
+    <div className="newsletter-container">
+      <form className="newsletter-form" onSubmit={handleSubmit}>
+        <input
+          type="email"
+          placeholder={lang === "zh" ? "你的邮箱地址" : "Your email"}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          className="newsletter-input"
+        />
+        <button type="submit" className="newsletter-btn">
+          {lang === "zh" ? "订阅" : "Subscribe"}
+        </button>
+      </form>
+      {submitted && (
+        <p className="newsletter-message">
+          {lang === "zh" ? "感谢订阅！" : "Thank you!"}
+        </p>
+      )}
+    </div>
+  );
+}
+
+// ════════════════════════════════════════════════════
 //  Nav
 // ════════════════════════════════════════════════════
 
@@ -145,15 +191,7 @@ function Profile({ lang }) {
 
       <p className="mission">{mission[lang]}</p>
 
-      <a
-        className="newsletter-cta"
-        href={newsletter.url}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <span className="newsletter-label">{newsletter.label[lang]}</span>
-        <span className="newsletter-sub">{newsletter.sub[lang]}</span>
-      </a>
+      <Newsletter lang={lang} newsletter={newsletter} />
     </div>
   );
 }
@@ -163,18 +201,33 @@ function Profile({ lang }) {
 // ════════════════════════════════════════════════════
 
 function PlatformCard({ p, lang, onNavigate }) {
+  const isEmojiLogo = p.logoUrl && p.logoUrl.length === 2;
+
+  const header = (
+    <div className="platform-header">
+      {p.logoUrl && (
+        isEmojiLogo ? (
+          <span className="platform-icon">{p.logoUrl}</span>
+        ) : (
+          <img src={p.logoUrl} alt={p.name} className="platform-logo" />
+        )
+      )}
+      <div className="platform-head">
+        <span className="platform-name">
+          {lang === "zh" ? p.nameZh : p.name}
+        </span>
+        <span className="platform-followers">{p.followers}</span>
+      </div>
+    </div>
+  );
+
   if (p.isPage) {
     return (
       <button
         className="platform-card platform-card-button"
         onClick={() => onNavigate(p.url)}
       >
-        <div className="platform-head">
-          <span className="platform-name">
-            {lang === "zh" ? p.nameZh : p.name}
-          </span>
-          <span className="platform-followers">{p.followers}</span>
-        </div>
+        {header}
         <span className="platform-handle">{p.handle}</span>
       </button>
     );
@@ -187,12 +240,7 @@ function PlatformCard({ p, lang, onNavigate }) {
       target="_blank"
       rel="noopener noreferrer"
     >
-      <div className="platform-head">
-        <span className="platform-name">
-          {lang === "zh" ? p.nameZh : p.name}
-        </span>
-        <span className="platform-followers">{p.followers}</span>
-      </div>
+      {header}
       <span className="platform-handle">{p.handle}</span>
     </a>
   );
