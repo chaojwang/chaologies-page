@@ -19,7 +19,7 @@ export const siteData = {
 
   mission: {
     en: "I help overthinkers simplify their money, their stuff, and their lives.",
-    zh: "我帮普通人，重新掌控时间、金钱和人生选择。",
+    zh: "我幫普通人，重新掌控時間、金錢和人生選擇。",
   },
 
   // ── Newsletter CTA（左栏）───────────────────────────────
