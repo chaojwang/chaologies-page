@@ -102,7 +102,7 @@ export const siteData = {
   // ── Projects ──────────────────────────────────────────
   projects: [
     {
-      icon: "📚",
+      icon: "🌍",
       title: { en: "Reading Roadmap", zh: "超说阅读地图" },
       desc: {
         en: "A reading system that helps good ideas actually stay.",
@@ -122,7 +122,7 @@ export const siteData = {
         },
         {
           platform: "xiaohongshu",
-          url: "https://www.xiaohongshu.com/discovery/item/6a02e586000000003501df22?source=webshare&xhsshare=pc_web&xsec_token=ABSgQf1-RWP_zN1qDU3bAldbHn-SjagIRO1N2T1VgmO0s=&xsec_source=pc_share",
+          url: "http://xhslink.com/o/8txd25qexbN",
         },
       ],
     },
@@ -147,7 +147,7 @@ export const siteData = {
         },
         {
           platform: "xiaohongshu",
-          url: "https://www.xiaohongshu.com/discovery/item/69db2d0b0000000023021acb?source=webshare&xhsshare=pc_web&xsec_token=AB20v9sgO3O7z7XX9KEA_yMOgM_zBBBIlfsUcNxJpKceQ=&xsec_source=pc_share",
+          url: "http://xhslink.com/o/AJ4WfMkRcmJ",
         },
       ],
     },
