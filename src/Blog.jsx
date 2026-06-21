@@ -9,6 +9,7 @@ const ESSAYS = [
     read: "6 min",
     tag: { en: "Latest", zh: "最新" },
     featured: true,
+    url: "https://open.substack.com/pub/chaologies/p/i-audited-my-own-life-the-numbers?r=mq2ld&utm_campaign=post&utm_medium=web&showWelcomeOnShare=true",
     title: {
       en: "I audited my own life. The numbers didn’t add up.",
       zh: "我審計了自己的人生，結果賬對不上。",
@@ -162,7 +163,7 @@ export default function Blog({ lang, setLang, data, onBack }) {
             <a
               key={i}
               className={`blog-essay${e.featured ? " featured" : ""}`}
-              href={subUrl}
+              href={e.url || subUrl}
               target="_blank"
               rel="noopener noreferrer"
             >
