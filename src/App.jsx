@@ -8,6 +8,7 @@ import { siteData as staticData } from "./data.js";
 import { supabase, transformSiteData } from "./lib/supabase.js";
 import Blog from "./Blog.jsx";
 import BudgetPage from "./BudgetPage.jsx";
+import WechatModal from "./WechatModal.jsx";
 
 function useSiteData() {
   const [siteData, setSiteData] = useState(staticData);
@@ -38,6 +39,7 @@ const COPY = {
     zh: "關於錢與極簡主義的長文，大約每月兩篇。",
   },
   subscribe: { en: "Subscribe", zh: "訂閱" },
+  wechat: { en: "Follow on WeChat", zh: "關注公眾號" },
   reviews: { en: "Loved by 2M+ readers", zh: "全網 200w+ 點讚收藏" },
   ctaFine: {
     en: "One email, no spreadsheets. Unsubscribe anytime.",
@@ -109,6 +111,7 @@ function Nav({ lang, setLang, onNavigate }) {
 function Profile({ lang, data }) {
   const { hook, mission, totalFollowers, newsletter } = data;
   const [count, setCount] = useState(totalFollowers);
+  const [wechatOpen, setWechatOpen] = useState(false);
 
   useEffect(() => setCount(totalFollowers), [totalFollowers]);
 
@@ -178,16 +181,23 @@ function Profile({ lang, data }) {
           </div>
           <img className="plane" src="/air.png" alt="" />
         </div>
-        <a className="cta" href={subUrl} target="_blank" rel="noopener noreferrer">
-          <span>{COPY.subscribe[lang]}</span>
-          <span className="arr">→</span>
-        </a>
+        <div className="sub-btns">
+          <a className="cta" href={subUrl} target="_blank" rel="noopener noreferrer">
+            <span>{COPY.subscribe[lang]}</span>
+            <span className="arr">→</span>
+          </a>
+          <button className="sub-wechat" onClick={() => setWechatOpen(true)}>
+            <img className="sub-wechat-ic" src="/icons/wechat.png" alt="" />
+            <span>{COPY.wechat[lang]}</span>
+          </button>
+        </div>
         <div className="sub-proof">
           <span className="stars">★★★★★</span>
           <span className="reviews">{COPY.reviews[lang]}</span>
         </div>
         <p className="cta-fine">{COPY.ctaFine[lang]}</p>
       </div>
+      {wechatOpen && <WechatModal lang={lang} onClose={() => setWechatOpen(false)} />}
     </aside>
   );
 }

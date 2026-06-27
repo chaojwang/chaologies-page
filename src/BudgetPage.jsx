@@ -5,6 +5,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import BudgetTool from "./BudgetTool.jsx";
+import WechatModal from "./WechatModal.jsx";
 
 const T = {
   eyebrow: { en: "Free · 50 / 30 / 20 Budget Tool", zh: "免费 · 50 / 30 / 20 预算工具" },
@@ -60,25 +61,6 @@ const T = {
 };
 
 const SUB_URL = "https://chaologies.substack.com?utm_source=budget-tool";
-
-// ── WeChat QR modal ──────────────────────────────────
-function WechatModal({ lang, onClose }) {
-  useEffect(() => {
-    const onKey = (e) => e.key === "Escape" && onClose();
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
-
-  return (
-    <div className="bp-modal-overlay" onClick={onClose}>
-      <div className="bp-modal" onClick={(e) => e.stopPropagation()}>
-        <img src="/wechat-qr.png" alt="WeChat QR" className="bp-qr" />
-        <p className="bp-qr-hint">{T.wechatHint[lang]}</p>
-        <button className="bp-qr-close" onClick={onClose}>{T.close[lang]}</button>
-      </div>
-    </div>
-  );
-}
 
 // ── Main ─────────────────────────────────────────────
 export default function BudgetPage({ lang, setLang, onBack }) {
@@ -382,34 +364,6 @@ const CSS = `
 }
 .bp-cta-ghost.dark::after { content: ""; }
 .bp-cta-ghost.dark:hover { border-color: var(--ink-3); }
-
-/* WeChat modal */
-.bp-modal-overlay {
-  position: fixed; inset: 0; z-index: 100;
-  background: rgba(28, 25, 21, 0.55); backdrop-filter: blur(5px);
-  display: flex; align-items: center; justify-content: center; padding: 24px;
-  animation: bp-fade 0.2s ease;
-}
-@keyframes bp-fade { from { opacity: 0; } to { opacity: 1; } }
-.bp-modal {
-  background: var(--surface); border-radius: 22px; padding: 34px 32px 26px;
-  display: flex; flex-direction: column; align-items: center; gap: 16px;
-  max-width: 320px; width: 100%; box-shadow: var(--lift);
-}
-.bp-qr {
-  width: 210px; height: 210px; object-fit: contain;
-  border-radius: 14px; border: 1px solid var(--line);
-}
-.bp-qr-hint {
-  font-family: var(--font-hand); font-size: 14px; color: var(--ink-2);
-  text-align: center; line-height: 1.5;
-}
-.bp-qr-close {
-  border: 1px solid var(--line); background: none; cursor: pointer;
-  font-family: var(--font-sans); font-size: 13px; font-weight: 600; color: var(--ink-2);
-  border-radius: 999px; padding: 8px 22px; transition: border-color var(--ease), color var(--ease);
-}
-.bp-qr-close:hover { border-color: var(--ink-3); color: var(--ink); }
 
 @media (max-width: 560px) {
   .bp-hero-inner { max-width: none; }
