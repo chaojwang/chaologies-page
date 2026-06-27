@@ -275,6 +275,8 @@ button { font-family: inherit; }
   transition: border-color var(--ease), transform var(--ease);
 }
 .link-btn:hover { border-color: var(--ink-3); transform: translateY(-1px); }
+.link-btn.link-btn-text { width: auto; padding: 0 10px; font-family: inherit; font-size: 12px; font-weight: 600; color: #FF6040; border-color: #FF6040; cursor: pointer; }
+.link-btn.link-btn-text:hover { background: #FF6040; color: #fff; transform: translateY(-1px); }
 .link-icon { width: 17px; height: 17px; object-fit: contain; }
 
 /* ── Footer ───────────────────────────────────────────── */

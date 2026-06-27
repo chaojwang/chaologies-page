@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { siteData as staticData } from "./data.js";
 import { supabase, transformSiteData } from "./lib/supabase.js";
 import Blog from "./Blog.jsx";
+import BudgetPage from "./BudgetPage.jsx";
 
 function useSiteData() {
   const [siteData, setSiteData] = useState(staticData);
@@ -27,6 +28,7 @@ function useSiteData() {
 // ── Static, bilingual copy (left column → Traditional zh) ──
 const COPY = {
   journal: { en: "Journal", zh: "碎碎念" },
+  budget: { en: "Budget Tool", zh: "预算工具" },
   bubble: { en: "Hi, I'm Chao", zh: "你好，我是 Chao" },
   based: { en: "Based in Singapore", zh: "現居新加坡" },
   followersLabel: { en: "followers across every platform", zh: "全網粉絲" },
@@ -87,6 +89,9 @@ function Nav({ lang, setLang, onNavigate }) {
       <div className="nav-right">
         <button className="nav-link" onClick={() => onNavigate("/blog")}>
           {COPY.journal[lang]}
+        </button>
+        <button className="nav-link" onClick={() => onNavigate("/budget")}>
+          {COPY.budget[lang]}
         </button>
         <div className="lang">
           <button className={lang === "en" ? "on" : ""} onClick={() => setLang("en")}>EN</button>
@@ -232,7 +237,7 @@ function PlatformCard({ p, lang, onNavigate }) {
 //  Project card
 // ════════════════════════════════════════════════════
 
-function ProjectCard({ project, lang }) {
+function ProjectCard({ project, lang, onNavigate }) {
   const isLive = project.status === "active" || project.status === "course";
   const hasLinks = project.links && project.links.length > 0;
 
@@ -251,6 +256,20 @@ function ProjectCard({ project, lang }) {
           {project.links.map((link, idx) => {
             const icon = PLATFORM_ICON[link.platform];
             const isImg = icon && icon.endsWith(".png");
+            const isInternal = link.url && link.url.startsWith("/");
+            const label = link.label ? (link.label[lang] || link.label.en) : null;
+            if (isInternal) {
+              return (
+                <button
+                  key={idx}
+                  className="link-btn link-btn-text"
+                  onClick={() => onNavigate(link.url)}
+                  title={link.platform}
+                >
+                  {label || "→"}
+                </button>
+              );
+            }
             return (
               <a
                 key={idx}
@@ -301,7 +320,7 @@ function RightColumn({ lang, data, onNavigate }) {
         </div>
         <div className="grid">
           {data.projects.map((project, i) => (
-            <ProjectCard key={i} project={project} lang={lang} />
+            <ProjectCard key={i} project={project} lang={lang} onNavigate={onNavigate} />
           ))}
         </div>
       </div>
@@ -314,11 +333,16 @@ function RightColumn({ lang, data, onNavigate }) {
 // ════════════════════════════════════════════════════
 
 export default function App() {
-  const [lang, setLang] = useState("en");
-  const [currentPage, setCurrentPage] = useState("home");
+  const [lang, setLang] = useState("zh");
+  const [currentPage, setCurrentPage] = useState(
+    window.location.pathname === "/budget" ? "/budget" : "home"
+  );
   const siteData = useSiteData();
 
-  const handleNavigate = (page) => setCurrentPage(page);
+  const handleNavigate = (page) => {
+    setCurrentPage(page);
+    window.scrollTo(0, 0);
+  };
 
   if (currentPage === "/blog") {
     return (
@@ -326,7 +350,17 @@ export default function App() {
         lang={lang}
         setLang={setLang}
         data={siteData}
-        onBack={() => setCurrentPage("home")}
+        onBack={() => handleNavigate("home")}
+      />
+    );
+  }
+
+  if (currentPage === "/budget") {
+    return (
+      <BudgetPage
+        lang={lang}
+        setLang={setLang}
+        onBack={() => handleNavigate("home")}
       />
     );
   }

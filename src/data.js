@@ -102,6 +102,17 @@ export const siteData = {
   // ── Projects ──────────────────────────────────────────
   projects: [
     {
+      icon: "💰",
+      title: { en: "The 1st Step of Financial Freedom", zh: "财富自由之路的第一步" },
+      desc: {
+        en: "Stop wondering where your money went. Start seeing where your life is going.",
+        zh: "看清钱的走向，才能掌握未来的方向。",
+      },
+      status: "active",
+      platform: "chaologies",
+      links: [{ platform: "chaologies", label: { en: "Use free →", zh: "免费使用 →" }, url: "/budget" }],
+    },
+    {
       icon: "🌍",
       title: { en: "Reading Roadmap", zh: "超说阅读地图" },
       desc: {
@@ -199,17 +210,6 @@ export const siteData = {
       desc: {
         en: "E-book + Notion Template + Community.",
         zh: "E-book + Notion Template + 社群。",
-      },
-      status: "soon",
-      platform: "Notion",
-      url: null,
-    },
-    {
-      icon: "💰",
-      title: { en: "Budgeting Template", zh: "预算管理模板" },
-      desc: {
-        en: "Excel, Notion, and other formats.",
-        zh: "Excel、Notion 等多种格式。",
       },
       status: "soon",
       platform: "Notion",
