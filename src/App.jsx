@@ -342,16 +342,33 @@ function RightColumn({ lang, data, onNavigate }) {
 //  App root
 // ════════════════════════════════════════════════════
 
+// keep in-app routing and the URL bar in sync, so /blog and /budget
+// are real, shareable links with working back/forward.
+const pathToPage = (path) =>
+  path === "/budget" ? "/budget" : path === "/blog" ? "/blog" : "home";
+const pageToPath = (page) => (page === "home" ? "/" : page);
+
 export default function App() {
   const [lang, setLang] = useState("zh");
   const [currentPage, setCurrentPage] = useState(
-    window.location.pathname === "/budget" ? "/budget" : "home"
+    pathToPage(window.location.pathname)
   );
   const siteData = useSiteData();
+
+  // sync state when the user hits the browser back/forward buttons
+  useEffect(() => {
+    const onPop = () => setCurrentPage(pathToPage(window.location.pathname));
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
 
   const handleNavigate = (page) => {
     setCurrentPage(page);
     window.scrollTo(0, 0);
+    const path = pageToPath(page);
+    if (window.location.pathname !== path) {
+      window.history.pushState({}, "", path);
+    }
   };
 
   if (currentPage === "/blog") {
