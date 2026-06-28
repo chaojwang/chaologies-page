@@ -12,6 +12,14 @@
   --ink-2:   #6b645b;
   --ink-3:   #a49c90;
   --ink-4:   #c4bcaf;
+  /* Full warm-ink scale (design-system names, used by the budget tool) */
+  --ink-900: #1c1915;
+  --ink-700: #3a352e;
+  --ink-500: #6b645b;
+  --ink-400: #8a8276;
+  --ink-300: #a49c90;
+  --ink-200: #c4bcaf;
+  --ink-100: #d8d2c7;
   --line:    #e7e2d8;
   --line-2:  #efebe2;
   --line-dashed: #e0d9cb;
@@ -79,6 +87,9 @@ button { font-family: inherit; }
 .nav-link::after { content: "\2192"; color: var(--honey); transition: transform var(--ease); }
 .nav-link:hover { color: var(--ink); gap: 9px; }
 .nav-link:hover::after { transform: translateX(2px); }
+.blog-link .nl-hover { display: none; }
+.blog-link:hover .nl-default { display: none; }
+.blog-link:hover .nl-hover { display: inline; }
 
 .lang { display: flex; gap: 2px; align-items: center; }
 .lang button {
@@ -338,6 +349,7 @@ button { font-family: inherit; }
 /* ── Mobile ───────────────────────────────────────────── */
 @media (max-width: 820px) {
   .page { padding: 0 24px; }
+  .logo-img { height: 48px; }
   .layout { grid-template-columns: 1fr; gap: 0; padding: 24px 0 48px; }
   .profile { position: static; padding-bottom: 36px; margin-bottom: 36px; border-bottom: 1px solid var(--line); }
 }
