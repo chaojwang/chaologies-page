@@ -1096,11 +1096,11 @@ const CSS = `
   background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.5) 50%,transparent 60%);
   background-size:240% 100%;animation:ifc-sheen 3.4s ease-in-out infinite;}
 @keyframes ifc-sheen{0%{background-position:140% 0;}55%,100%{background-position:-40% 0;}}
-.ifc-demo-cap{margin-top:10px;font-size:12.5px;color:var(--ink-2);line-height:1.5;min-height:3em;
+.ifc-demo-cap{margin-top:10px;font-size:clamp(12.5px,1vw,14.5px);color:var(--ink-2);line-height:1.5;min-height:3em;
   transition:opacity .35s ease;}
 .ifc-demo-foot{display:flex;align-items:center;justify-content:center;gap:8px;
-  border:1px dashed var(--line);border-radius:14px;padding:15px 18px;text-align:center;
-  font-size:13px;color:var(--ink-2);background:var(--card);line-height:1.5;}
+  border:1px dashed var(--line);border-radius:14px;padding:17px 20px;text-align:center;
+  font-size:clamp(13px,1.15vw,15.5px);color:var(--ink-2);background:var(--card);line-height:1.55;}
 .ifc-demo-foot-arrow{color:var(--coral);font-weight:700;}
 @media(max-width:820px){.ifc-demo-foot-arrow{display:none;}}
 .ifc-block{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:17px 19px;}
