@@ -217,14 +217,15 @@ export const siteData = {
     },
     {
       icon: "💳",
-      title: { en: "Personal Finance Guide", zh: "个人理财指南" },
+      title: { en: "7-Day Money OS Starter Plan", zh: "7 天 Money OS 入门计划" },
       desc: {
-        en: "E-book + Notion template for smart money management.",
-        zh: "E-book + Notion 模板，让你的钱更聪慧。",
+        en: "A 7-day personal finance reset — built on strategies of the 1%, designed for you.",
+        zh: "7 天个人财务整理计划，顶层富人的理财逻辑，为你重新设计。",
       },
-      status: "soon",
+      status: "active",
       platform: "Notion",
       url: null,
+      links: [{ url: "/newsletter", platform: "Web", label: { en: "Join waitlist →", zh: "加入等待清单 →" } }],
     },
     {
       icon: "🍁",
