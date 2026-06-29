@@ -9,6 +9,7 @@ import { supabase, transformSiteData } from "./lib/supabase.js";
 import Blog from "./Blog.jsx";
 import BudgetPage from "./BudgetPage.jsx";
 import NewsletterPage from "./NewsletterPage.jsx";
+import FCPXPage from "./FCPXPage.jsx";
 import WechatModal from "./WechatModal.jsx";
 
 function useSiteData() {
@@ -343,7 +344,7 @@ function RightColumn({ lang, data, onNavigate }) {
 // keep in-app routing and the URL bar in sync, so /blog and /budget
 // are real, shareable links with working back/forward.
 const pathToPage = (path) =>
-  path === "/budget" ? "/budget" : path === "/blog" ? "/blog" : path === "/newsletter" ? "/newsletter" : "home";
+  path === "/budget" ? "/budget" : path === "/blog" ? "/blog" : path === "/newsletter" ? "/newsletter" : path === "/fcpx" ? "/fcpx" : "home";
 const pageToPath = (page) => (page === "home" ? "/" : page);
 
 export default function App() {
@@ -385,6 +386,15 @@ export default function App() {
       <BudgetPage
         lang={lang}
         setLang={setLang}
+        onBack={() => handleNavigate("home")}
+      />
+    );
+  }
+
+  if (currentPage === "/fcpx") {
+    return (
+      <FCPXPage
+        lang={lang}
         onBack={() => handleNavigate("home")}
       />
     );
