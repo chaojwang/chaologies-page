@@ -28,8 +28,7 @@ function useSiteData() {
 
 // ── Static, bilingual copy (left column → Traditional zh) ──
 const COPY = {
-  journal: { en: "Journal", zh: "碎碎念" },
-  budget: { en: "Budget Tool", zh: "预算工具" },
+  journal: { en: "Blog", zh: "博客" },
   bubble: { en: "Hi, I'm Chao", zh: "你好，我是 Chao" },
   based: { en: "Based in Singapore", zh: "現居新加坡" },
   followersLabel: { en: "followers across every platform", zh: "全網粉絲" },
@@ -89,11 +88,9 @@ function Nav({ lang, setLang, onNavigate }) {
         <img src="/logo.png?v=3" alt="Chaologies" className="logo-img" />
       </a>
       <div className="nav-right">
-        <button className="nav-link" onClick={() => onNavigate("/blog")}>
-          {COPY.journal[lang]}
-        </button>
-        <button className="nav-link" onClick={() => onNavigate("/budget")}>
-          {COPY.budget[lang]}
+        <button className="nav-link blog-link" onClick={() => onNavigate("/blog")}>
+          <span className="nl-default">{COPY.journal[lang]}</span>
+          <span className="nl-hover">Blog</span>
         </button>
         <div className="lang">
           <button className={lang === "en" ? "on" : ""} onClick={() => setLang("en")}>EN</button>
