@@ -242,6 +242,8 @@ function Profile({ lang, data }) {
   const { totalFollowers, newsletter } = data;
   const [count, setCount] = useState(totalFollowers);
   const [wechatOpen, setWechatOpen] = useState(false);
+  const [email, setEmail] = useState("");
+  const [subState, setSubState] = useState("idle"); // idle | loading | success | error
 
   useEffect(() => setCount(totalFollowers), [totalFollowers]);
 
@@ -259,6 +261,22 @@ function Profile({ lang, data }) {
   }, [totalFollowers]);
 
   const subUrl = `${newsletter.url.replace(/\/$/, "")}?utm_source=website`;
+
+  async function handleSubscribe(e) {
+    e.preventDefault();
+    if (!email || subState === "loading") return;
+    setSubState("loading");
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      setSubState(res.ok ? "success" : "error");
+    } catch {
+      setSubState("error");
+    }
+  }
 
   return (
     <aside className="profile">
@@ -299,11 +317,28 @@ function Profile({ lang, data }) {
           </div>
           <img className="plane" src="/air.png" alt="" />
         </div>
+        {subState === "success" ? (
+          <p className="sub-success">{lang === "zh" ? "✓ 已訂閱，感謝！" : "✓ Subscribed — thanks!"}</p>
+        ) : (
+          <form className="sub-form" onSubmit={handleSubscribe}>
+            <input
+              className="sub-email"
+              type="email"
+              required
+              placeholder={lang === "zh" ? "你的邮件地址" : "Your email address"}
+              value={email}
+              onChange={(e) => { setEmail(e.target.value); setSubState("idle"); }}
+            />
+            <button className="cta" type="submit" disabled={subState === "loading"}>
+              <span>{subState === "loading" ? "…" : COPY.subscribe[lang]}</span>
+              <span className="arr">→</span>
+            </button>
+            {subState === "error" && (
+              <p className="sub-error">{lang === "zh" ? "出錯了，請稍後再試" : "Something went wrong, try again"}</p>
+            )}
+          </form>
+        )}
         <div className="sub-btns">
-          <a className="cta" href={subUrl} target="_blank" rel="noopener noreferrer">
-            <span>{COPY.subscribe[lang]}</span>
-            <span className="arr">→</span>
-          </a>
           <button className="sub-wechat" onClick={() => setWechatOpen(true)}>
             <img className="sub-wechat-ic" src="/icons/wechat.png" alt="" />
             <span>{COPY.wechat[lang]}</span>
