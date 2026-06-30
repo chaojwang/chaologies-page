@@ -45,14 +45,6 @@ const INSIDE = [
   { emoji: "🎁", title: { zh: "额外福利资源", en: "Plus bonus resources" }, desc: { zh: "一份模板与清单合集，帮你把这套系统一直用下去。", en: "A pack of templates so you keep this whole system going for good." } },
 ];
 
-const SUCCESS_STEPS = [
-  { n: "1", emoji: "✈️", title: { zh: "前往 Substack 完成订阅", en: "Subscribe on Substack" }, desc: { zh: "点击下方按钮跳转 Substack 完成订阅，之后每周日都会收到我的来信。", en: "Click the button below to subscribe on Substack — then get my letter every Sunday." }, hasSubstack: true },
-  { n: "2", emoji: "📬", title: { zh: "查收确认邮件", en: "Check your inbox" }, desc: { zh: "订阅完成后会给你发一封确认邮件，点开里面的链接确认订阅（没看到？翻翻垃圾箱或推广邮件）。", en: "After subscribing you'll get a confirmation email — click the link inside (not there? check spam or promotions)." } },
-  { n: "3", emoji: "💬", title: { zh: "关注微信公众号", en: "Follow on WeChat" }, desc: { zh: "扫下方二维码关注「Chaologies」，和 Chao 互动，并在第一时间获取最新消息。", en: "Scan the QR to follow Chaologies on WeChat — interact with Chao and get updates first." }, hasWechat: true },
-];
-
-const CONFETTI = ["🎉", "✨", "💰", "🎊", "💸", "⭐", "✈️", "🎈"];
-const SUBSTACK_URL = "https://chaologies.substack.com";
 
 function PrimaryBtn({ onClick, children, style }) {
   return (
@@ -80,28 +72,69 @@ function PrimaryBtn({ onClick, children, style }) {
   );
 }
 
+function SubForm({ lang }) {
+  const [email, setEmail] = useState("");
+  const [subState, setSubState] = useState("idle");
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (!email || subState === "loading") return;
+    setSubState("loading");
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      setSubState(res.ok ? "success" : "error");
+    } catch {
+      setSubState("error");
+    }
+  }
+
+  if (subState === "success") {
+    return (
+      <p style={{ fontSize: 16, fontWeight: 700, color: "#2a9d5c", padding: "14px 0" }}>
+        {lang === "zh" ? "✓ 已加入，感謝！稍後查收邮件。" : "✓ You're in! Check your inbox shortly."}
+      </p>
+    );
+  }
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit} style={{ display: "flex", alignItems: "center", background: "var(--surface)", borderRadius: 999, padding: "5px 5px 5px 18px", border: "1.5px solid var(--border)", maxWidth: 420 }}>
+        <input
+          type="email" required value={email}
+          onChange={(e) => { setEmail(e.target.value); setSubState("idle"); }}
+          placeholder={lang === "zh" ? "你的邮件地址" : "Your email address"}
+          style={{ flex: 1, border: "none", background: "transparent", fontSize: 14, color: "var(--ink)", outline: "none", minWidth: 0 }}
+        />
+        <button type="submit" disabled={subState === "loading"} style={{ flexShrink: 0, padding: "10px 20px", borderRadius: 999, background: "var(--honey)", color: "#fff", fontSize: 14, fontWeight: 700, border: "none", cursor: "pointer", whiteSpace: "nowrap", transition: "background .15s" }}
+          onMouseEnter={e => e.currentTarget.style.background = "var(--honey-600)"}
+          onMouseLeave={e => e.currentTarget.style.background = "var(--honey)"}
+        >
+          {subState === "loading" ? "…" : (lang === "zh" ? "免費訂閱" : "Subscribe")}
+        </button>
+      </form>
+      {subState === "error" && (
+        <p style={{ fontSize: 12, color: "#c0392b", marginTop: 6 }}>
+          {lang === "zh" ? "出錯了，請稍後再試" : "Something went wrong, try again"}
+        </p>
+      )}
+    </div>
+  );
+}
+
 export default function NewsletterPage({ lang, setLang, onBack }) {
-  const [view, setView] = useState("landing");
   const [showWechat, setShowWechat] = useState(false);
 
   const p = (o) => (o && typeof o === "object" ? (o[lang] || o.zh) : o);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [view]);
+  }, []);
 
-  const joinWaitlist = () => setView("success");
-  const goHome = () => { setView("landing"); onBack(); };
-
-  const confetti = view === "success"
-    ? Array.from({ length: 16 }, (_, i) => ({
-        emoji: CONFETTI[i % CONFETTI.length],
-        left: (i * 6.3 + (i % 3) * 4) % 100,
-        delay: (i % 6) * 0.35,
-        dur: 2.8 + (i % 4) * 0.5,
-        size: 18 + (i % 4) * 6,
-      }))
-    : [];
+  const goHome = () => onBack();
 
   return (
     <div style={{ minHeight: "100vh", background: "var(--paper)", color: "var(--ink)", fontFamily: "var(--font-sans)", lineHeight: 1.5, WebkitFontSmoothing: "antialiased" }}>
@@ -131,9 +164,7 @@ export default function NewsletterPage({ lang, setLang, onBack }) {
         </nav>
       </div>
 
-      {/* ── LANDING ── */}
-      {view === "landing" && (
-        <div>
+      <div>
           {/* HERO */}
           <div style={{ maxWidth: 1180, margin: "0 auto", padding: "0 40px" }}>
             <div style={{ position: "relative", maxWidth: 640, margin: "0 auto", padding: "46px 0 72px" }}>
@@ -153,7 +184,7 @@ export default function NewsletterPage({ lang, setLang, onBack }) {
               </h1>
               <p style={{ fontSize: 17, lineHeight: 1.65, color: "var(--ink-2)", maxWidth: "34ch", margin: "0 0 26px", whiteSpace: "pre-line" }}>{p(COPY.heroSub)}</p>
               <div style={{ marginBottom: 13 }}>
-                <PrimaryBtn onClick={joinWaitlist}>{p(COPY.heroCta)} →</PrimaryBtn>
+                <SubForm lang={lang} />
               </div>
               <p style={{ fontSize: 12.5, lineHeight: 1.55, color: "var(--ink-3)", maxWidth: "46ch", margin: "0 0 24px" }}>{p(COPY.heroFine)}</p>
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -220,7 +251,7 @@ export default function NewsletterPage({ lang, setLang, onBack }) {
                 {p(COPY.finalTitle)}<span style={{ color: "var(--honey-600)" }}>{p(COPY.finalHL)}</span>
               </h2>
               <p style={{ fontSize: 16.5, color: "var(--ink-2)", maxWidth: "42ch", margin: "0 auto 28px", lineHeight: 1.6, whiteSpace: "pre-line" }}>{p(COPY.finalSub)}</p>
-              <PrimaryBtn onClick={joinWaitlist}>{p(COPY.heroCta)} →</PrimaryBtn>
+              <SubForm lang={lang} />
               <p style={{ fontSize: 12.5, color: "var(--ink-3)", margin: "14px 0 0", fontStyle: "italic" }}>{p(COPY.finalFine)}</p>
             </div>
           </div>
@@ -231,52 +262,6 @@ export default function NewsletterPage({ lang, setLang, onBack }) {
             <img src="/air.png" alt="" style={{ width: 40, opacity: .85 }} />
           </div>
         </div>
-      )}
-
-      {/* ── SUCCESS ── */}
-      {view === "success" && (
-        <div style={{ position: "relative", maxWidth: 680, margin: "0 auto", padding: "28px 40px 80px", overflow: "hidden" }}>
-          <div style={{ marginBottom: 20 }}>
-            <button type="button" onClick={goHome} style={{ background: "none", border: "1px solid var(--line)", borderRadius: 22, cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: 600, color: "var(--ink-2)", padding: "7px 16px", display: "inline-flex", alignItems: "center", gap: 5 }}>
-              {p(COPY.backHome)}
-            </button>
-          </div>
-          {/* confetti */}
-          <div style={{ position: "absolute", inset: 0, pointerEvents: "none", overflow: "hidden" }}>
-            {confetti.map((c, i) => (
-              <span key={i} style={{ position: "absolute", top: -30, left: `${c.left}%`, fontSize: c.size, animation: `confetti-fall ${c.dur}s linear ${c.delay}s infinite` }}>{c.emoji}</span>
-            ))}
-          </div>
-          <div style={{ position: "relative", textAlign: "center" }}>
-            <div style={{ fontSize: 60, marginBottom: 10, animation: "pop .5s ease both" }}>🎉</div>
-            <h2 style={{ fontSize: 38, fontWeight: 800, letterSpacing: -1, margin: "0 0 14px" }}>
-              {p(COPY.successTitle)}<span style={{ color: "var(--honey)" }}>{p(COPY.successHi)}</span>
-            </h2>
-            <p style={{ fontSize: 16.5, color: "var(--ink-2)", maxWidth: "42ch", margin: "0 auto 38px", lineHeight: 1.65 }}>{p(COPY.successSub)}</p>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 13 }}>
-            {SUCCESS_STEPS.map((step) => (
-              <div key={step.n} style={{ display: "flex", alignItems: "flex-start", gap: 16, background: "var(--surface)", border: "1px solid var(--line-2)", borderRadius: 16, padding: "20px 22px" }}>
-                <span style={{ flexShrink: 0, width: 38, height: 38, borderRadius: "50%", background: "var(--honey)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, fontWeight: 800, fontFamily: "var(--font-serif)" }}>{step.n}</span>
-                <div style={{ flex: 1 }}>
-                  <p style={{ fontSize: 16.5, fontWeight: 700, color: "var(--ink)", margin: "3px 0 6px" }}>{step.emoji} {p(step.title)}</p>
-                  <p style={{ fontSize: 14.5, lineHeight: 1.6, color: "var(--ink-2)", margin: step.hasSubstack || step.hasWechat ? "0 0 14px" : 0 }}>{p(step.desc)}</p>
-                  {step.hasSubstack && (
-                    <div style={{ display: "flex", justifyContent: "center" }}>
-                      <PrimaryBtn onClick={() => window.open(SUBSTACK_URL, "_blank", "noopener")} style={{ fontSize: 14, padding: "12px 20px", borderRadius: 10 }}>
-                        {p(COPY.goSubstack)}
-                      </PrimaryBtn>
-                    </div>
-                  )}
-                  {step.hasWechat && (
-                    <img src="/wechat-qr.png" alt="微信公众号二维码" style={{ width: 200, height: 200, objectFit: "contain", borderRadius: 12, margin: "6px auto 0", display: "block" }} />
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
 
       {showWechat && <WechatModal lang={lang} onClose={() => setShowWechat(false)} />}
     </div>
