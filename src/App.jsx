@@ -329,9 +329,9 @@ function Profile({ lang, data }) {
               value={email}
               onChange={(e) => { setEmail(e.target.value); setSubState("idle"); }}
             />
-            <button className="cta" type="submit" disabled={subState === "loading"}>
-              <span>{subState === "loading" ? "…" : COPY.subscribe[lang]}</span>
-              <span className="arr">→</span>
+            <button className="cta sub-cta" type="submit" disabled={subState === "loading"}>
+              <span className="sub-cta-zh">{subState === "loading" ? "…" : "免費訂閱"}</span>
+              <span className="sub-cta-en">Subscribe</span>
             </button>
             {subState === "error" && (
               <p className="sub-error">{lang === "zh" ? "出錯了，請稍後再試" : "Something went wrong, try again"}</p>
