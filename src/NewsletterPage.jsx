@@ -72,7 +72,7 @@ function PrimaryBtn({ onClick, children, style }) {
   );
 }
 
-function SubForm({ lang }) {
+function SubForm({ lang, label, center }) {
   const [email, setEmail] = useState("");
   const [subState, setSubState] = useState("idle");
 
@@ -102,7 +102,7 @@ function SubForm({ lang }) {
 
   return (
     <div>
-      <form onSubmit={handleSubmit} style={{ display: "flex", alignItems: "center", background: "var(--surface)", borderRadius: 999, padding: "5px 5px 5px 18px", border: "1.5px solid var(--border)", maxWidth: 420 }}>
+      <form onSubmit={handleSubmit} style={{ display: "flex", alignItems: "center", background: "var(--surface)", borderRadius: 999, padding: "5px 5px 5px 18px", border: "1.5px solid var(--border)", maxWidth: 420, margin: center ? "0 auto" : undefined }}>
         <input
           type="email" required value={email}
           onChange={(e) => { setEmail(e.target.value); setSubState("idle"); }}
@@ -113,7 +113,7 @@ function SubForm({ lang }) {
           onMouseEnter={e => e.currentTarget.style.background = "var(--honey-600)"}
           onMouseLeave={e => e.currentTarget.style.background = "var(--honey)"}
         >
-          {subState === "loading" ? "…" : (lang === "zh" ? "免費訂閱" : "Subscribe")}
+          {subState === "loading" ? "…" : (label || (lang === "zh" ? "免費訂閱" : "Subscribe"))}
         </button>
       </form>
       {subState === "error" && (
@@ -184,7 +184,7 @@ export default function NewsletterPage({ lang, setLang, onBack }) {
               </h1>
               <p style={{ fontSize: 17, lineHeight: 1.65, color: "var(--ink-2)", maxWidth: "34ch", margin: "0 0 26px", whiteSpace: "pre-line" }}>{p(COPY.heroSub)}</p>
               <div style={{ marginBottom: 13 }}>
-                <SubForm lang={lang} />
+                <SubForm lang={lang} label={lang === "zh" ? "加入等待清單" : "Join waitlist"} center />
               </div>
               <p style={{ fontSize: 12.5, lineHeight: 1.55, color: "var(--ink-3)", maxWidth: "46ch", margin: "0 0 24px" }}>{p(COPY.heroFine)}</p>
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -251,7 +251,7 @@ export default function NewsletterPage({ lang, setLang, onBack }) {
                 {p(COPY.finalTitle)}<span style={{ color: "var(--honey-600)" }}>{p(COPY.finalHL)}</span>
               </h2>
               <p style={{ fontSize: 16.5, color: "var(--ink-2)", maxWidth: "42ch", margin: "0 auto 28px", lineHeight: 1.6, whiteSpace: "pre-line" }}>{p(COPY.finalSub)}</p>
-              <SubForm lang={lang} />
+              <SubForm lang={lang} label={lang === "zh" ? "加入等待清單" : "Join waitlist"} center />
               <p style={{ fontSize: 12.5, color: "var(--ink-3)", margin: "14px 0 0", fontStyle: "italic" }}>{p(COPY.finalFine)}</p>
             </div>
           </div>
