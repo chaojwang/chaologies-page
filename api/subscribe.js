@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Invalid email" });
   }
 
-  const PUB_ID = "045bdfc9-d6b0-454a-b284-ea9b5aa2de74";
+  const PUB_ID = "pub_045bdfc9-d6b0-454a-b284-ea9b5aa2de74";
   const API_KEY = process.env.BEEHIIV_API_KEY;
 
   if (!API_KEY) {
