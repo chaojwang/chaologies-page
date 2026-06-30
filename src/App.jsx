@@ -242,8 +242,6 @@ function Profile({ lang, data }) {
   const { totalFollowers, newsletter } = data;
   const [count, setCount] = useState(totalFollowers);
   const [wechatOpen, setWechatOpen] = useState(false);
-  const [email, setEmail] = useState("");
-  const [subState, setSubState] = useState("idle"); // idle | loading | success | error
 
   useEffect(() => setCount(totalFollowers), [totalFollowers]);
 
@@ -262,21 +260,6 @@ function Profile({ lang, data }) {
 
   const subUrl = `${newsletter.url.replace(/\/$/, "")}?utm_source=website`;
 
-  async function handleSubscribe(e) {
-    e.preventDefault();
-    if (!email || subState === "loading") return;
-    setSubState("loading");
-    try {
-      const res = await fetch("/api/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-      setSubState(res.ok ? "success" : "error");
-    } catch {
-      setSubState("error");
-    }
-  }
 
   return (
     <aside className="profile">
@@ -317,27 +300,15 @@ function Profile({ lang, data }) {
           </div>
           <img className="plane" src="/air.png" alt="" />
         </div>
-        {subState === "success" ? (
-          <p className="sub-success">{lang === "zh" ? "✓ 已訂閱，感謝！" : "✓ Subscribed — thanks!"}</p>
-        ) : (
-          <form className="sub-form" onSubmit={handleSubscribe}>
-            <input
-              className="sub-email"
-              type="email"
-              required
-              placeholder={lang === "zh" ? "你的邮件地址" : "Your email address"}
-              value={email}
-              onChange={(e) => { setEmail(e.target.value); setSubState("idle"); }}
-            />
-            <button className="cta sub-cta" type="submit" disabled={subState === "loading"}>
-              <span className="sub-cta-zh">{subState === "loading" ? "…" : "免費訂閱"}</span>
-              <span className="sub-cta-en">Subscribe</span>
-            </button>
-            {subState === "error" && (
-              <p className="sub-error">{lang === "zh" ? "出錯了，請稍後再試" : "Something went wrong, try again"}</p>
-            )}
-          </form>
-        )}
+        <div className="sub-embed">
+          <iframe
+            src="https://chaologies.substack.com/embed"
+            width="100%"
+            frameBorder="0"
+            scrolling="no"
+            title="Newsletter subscription"
+          />
+        </div>
         <div className="sub-btns">
           <button className="sub-wechat" onClick={() => setWechatOpen(true)}>
             <img className="sub-wechat-ic" src="/icons/wechat.png" alt="" />
