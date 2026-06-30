@@ -5,8 +5,8 @@
 import { useEffect } from "react";
 
 const HINT = {
-  en: "Scan to follow on WeChat · 超说 Chaologies",
-  zh: "扫码关注公众号「超说 Chaologies」",
+  en: "Scan to follow on WeChat · Chaologies 超說",
+  zh: "扫码关注公众号「Chaologies 超說」",
 };
 const CLOSE = { en: "Close", zh: "关闭" };
 
