@@ -8,29 +8,35 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Invalid email" });
   }
 
+  const PUB_ID = "045bdfc9-d6b0-454a-b284-ea9b5aa2de74";
+  const API_KEY = process.env.BEEHIIV_API_KEY;
+
+  if (!API_KEY) {
+    return res.status(500).json({ error: "Missing API key" });
+  }
+
   try {
-    const response = await fetch("https://chaologies.substack.com/api/v1/free", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "User-Agent": "Mozilla/5.0",
-        Referer: "https://chaologies.substack.com/embed",
-        Origin: "https://chaologies.substack.com",
-      },
-      body: JSON.stringify({
-        email,
-        first_url: "https://chaologies.com",
-        first_referrer: "",
-        current_url: "https://chaologies.com",
-        current_referrer: "",
-        referral_code: null,
-        source: "embed",
-      }),
-    });
+    const response = await fetch(
+      `https://api.beehiiv.com/v2/publications/${PUB_ID}/subscriptions`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${API_KEY}`,
+        },
+        body: JSON.stringify({
+          email,
+          reactivate_existing: true,
+          send_welcome_email: true,
+          utm_source: "chaologies.com",
+          utm_medium: "organic",
+        }),
+      }
+    );
 
     if (!response.ok) {
       const text = await response.text();
-      console.error("Substack error:", response.status, text);
+      console.error("Beehiiv error:", response.status, text);
       return res.status(502).json({ error: "Subscription failed" });
     }
 
