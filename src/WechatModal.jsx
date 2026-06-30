@@ -3,6 +3,7 @@
 // ─────────────────────────────────────────────────────
 
 import { useEffect } from "react";
+import { createPortal } from "react-dom";
 
 const HINT = {
   en: "Scan to follow on WeChat · Chaologies 超說",
@@ -17,13 +18,14 @@ export default function WechatModal({ lang, onClose }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
 
-  return (
+  return createPortal(
     <div className="wq-overlay" onClick={onClose}>
       <div className="wq-modal" onClick={(e) => e.stopPropagation()}>
         <img src="/wechat-qr.png" alt="WeChat QR" className="wq-img" />
         <p className="wq-hint">{HINT[lang] || HINT.zh}</p>
         <button className="wq-close" onClick={onClose}>{CLOSE[lang] || CLOSE.zh}</button>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
