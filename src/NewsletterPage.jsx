@@ -24,7 +24,7 @@ const COPY = {
   successTitle: { zh: "欢迎上车，", en: "Welcome aboard — " },
   successHi: { zh: "你成功加入了 🎉", en: "you're in! 🎉" },
   successSub: { zh: "完成下面几步，计划一上线你第一个收到 👇", en: "Complete these steps so you're first in line when it drops 👇" },
-  goSubstack: { zh: "前往 Substack 完成订阅 →", en: "Go to Substack to confirm →" },
+  goSubstack: { zh: "前往 Beehiiv 完成订阅 →", en: "Go to Beehiiv to confirm →" },
   backHome: { zh: "← 返回主页", en: "← Back to home" },
   qrModalTitle: { zh: "关注 Chaologies 公众号", en: "Follow Chaologies on WeChat" },
   qrModalSub: { zh: "微信扫一扫，或长按图片保存二维码再扫。", en: "Scan with WeChat, or long-press to save and scan." },

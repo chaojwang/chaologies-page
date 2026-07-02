@@ -11,8 +11,6 @@ import { useState } from "react";
 import BudgetTool from "./BudgetTool.jsx";
 import WechatModal from "./WechatModal.jsx";
 
-const SUB_URL = "https://chaologies.substack.com?utm_source=budget-tool";
-
 const tr = (lang, zh, en) => (lang === "zh" ? zh : en);
 
 // "Money OS" is the through-line of the whole page — make it pop wherever it appears.
@@ -29,7 +27,7 @@ const PLAN_ITEMS = [
   { zh: "还有一些小彩蛋", en: "Plus a few bonuses", dzh: "额外的模板和资源，悄悄送你。", den: "Extra templates and resources, on the house." },
 ];
 
-export default function BudgetPage({ lang, setLang, onBack }) {
+export default function BudgetPage({ lang, setLang, onBack, onNavigate }) {
   const [wechatOpen, setWechatOpen] = useState(false);
 
   const onStart = () => {
@@ -218,7 +216,7 @@ export default function BudgetPage({ lang, setLang, onBack }) {
             <h2 className="bpx-cta-title">{c.ctaTitle}</h2>
             <p className="bpx-cta-sub">{c.ctaSub}</p>
             <div className="bpx-cta-btns">
-              <a href={SUB_URL} target="_blank" rel="noopener noreferrer" className="bpx-btn-dark">{c.ctaPrimary}<span className="bpx-arr-r">→</span></a>
+              <a href="/newsletter" onClick={(e) => { e.preventDefault(); onNavigate?.("/newsletter"); }} className="bpx-btn-dark">{c.ctaPrimary}<span className="bpx-arr-r">→</span></a>
               <button className="bpx-btn-wechat" onClick={() => setWechatOpen(true)}>
                 <img src="/icons/wechat.png" alt="" className="bpx-wechat-ic" />{c.ctaSecondary}
               </button>

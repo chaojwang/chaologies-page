@@ -13,6 +13,8 @@ import BudgetPage from "./BudgetPage.jsx";
 import NewsletterPage from "./NewsletterPage.jsx";
 import FCPXPage from "./FCPXPage.jsx";
 import NotionWeeklyPage from "./NotionWeeklyPage.jsx";
+import ActionBankPage from "./ActionBankPage.jsx";
+import ReadingMapPage from "./ReadingMapPage.jsx";
 import WechatModal from "./WechatModal.jsx";
 
 function useSiteData() {
@@ -259,8 +261,6 @@ function Profile({ lang, data }) {
     }, 2600);
     return () => clearInterval(id);
   }, [totalFollowers]);
-
-  const subUrl = `${newsletter.url.replace(/\/$/, "")}?utm_source=website`;
 
   async function handleSubscribe(e) {
     e.preventDefault();
@@ -518,7 +518,7 @@ function RightColumn({ lang, data, onNavigate }) {
 // keep in-app routing and the URL bar in sync, so /blog and /budget
 // are real, shareable links with working back/forward.
 const pathToPage = (path) =>
-  path === "/budget" ? "/budget" : path === "/blog" ? "/blog" : path === "/newsletter" ? "/newsletter" : path === "/fcpx" ? "/fcpx" : path === "/notion-weekly" ? "/notion-weekly" : "home";
+  path === "/budget" ? "/budget" : path === "/blog" ? "/blog" : path === "/newsletter" ? "/newsletter" : path === "/fcpx" ? "/fcpx" : path === "/notion-weekly" ? "/notion-weekly" : path === "/action-bank" ? "/action-bank" : path === "/reading-map" ? "/reading-map" : "home";
 const pageToPath = (page) => (page === "home" ? "/" : page);
 
 export default function App() {
@@ -561,6 +561,7 @@ export default function App() {
         lang={lang}
         setLang={setLang}
         onBack={() => handleNavigate("home")}
+        onNavigate={handleNavigate}
       />
     );
   }
@@ -579,6 +580,26 @@ export default function App() {
     return (
       <FCPXPage
         lang={lang}
+        onBack={() => handleNavigate("home")}
+      />
+    );
+  }
+
+  if (currentPage === "/reading-map") {
+    return (
+      <ReadingMapPage
+        lang={lang}
+        setLang={setLang}
+        onBack={() => handleNavigate("home")}
+      />
+    );
+  }
+
+  if (currentPage === "/action-bank") {
+    return (
+      <ActionBankPage
+        lang={lang}
+        setLang={setLang}
         onBack={() => handleNavigate("home")}
       />
     );

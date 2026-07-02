@@ -26,7 +26,7 @@ export const siteData = {
   newsletter: {
     label: { en: "Newsletter →", zh: "订阅 Newsletter →" },
     sub: { en: "Essays on money & minimalism", zh: "关于钱和极简主义的长文" },
-    url: "https://chaologies.substack.com",
+    url: "https://chaologies.beehiiv.com",
   },
 
   // ── Platforms（右栏卡片，含粉丝数）─────────────────────
@@ -100,6 +100,7 @@ export const siteData = {
   ],
 
   // ── Projects ──────────────────────────────────────────
+  // 排序逻辑（方案 A）：免费钩子 → 可购买产品 → 等待清单 → 敬请期待
   projects: [
     {
       icon: "💰",
@@ -113,29 +114,16 @@ export const siteData = {
       links: [{ platform: "chaologies", label: { en: "Use free →", zh: "免费使用 →" }, url: "/budget" }],
     },
     {
-      icon: "🌍",
-      title: { en: "Reading Roadmap", zh: "超说阅读地图" },
+      icon: "🗺️",
+      title: { en: "Chaologies Reading Map", zh: "超說閱讀地圖" },
       desc: {
-        en: "A reading system that helps good ideas actually stay.",
-        zh: "101+本好书的精华笔记+指南",
+        en: "Not a booklist — a map that turns 101+ books into your own thinking system.",
+        zh: "不是书单，是一张把 101+ 本好书变成思考系统的阅读地图。",
       },
       status: "active",
       platform: "Notion",
-      url: "#",
-      links: [
-        {
-          platform: "gumroad",
-          url: "https://1408889899058.gumroad.com/l/Books",
-        },
-        {
-          platform: "bilibili",
-          url: "https://mall.bilibili.com/neul-next/detailuniversal/detail.html?page=detailuniversal_detail&itemsId=40994927&loadingShow=1&noTitleBar=1#noReffer=true&msource=merchant_share",
-        },
-        {
-          platform: "xiaohongshu",
-          url: "http://xhslink.com/o/8txd25qexbN",
-        },
-      ],
+      url: null,
+      links: [{ url: "/reading-map", platform: "Web", label: { en: "Open the map →", zh: "打开阅读地图 →" } }],
     },
     {
       icon: "🗓",
@@ -147,20 +135,7 @@ export const siteData = {
       status: "active",
       platform: "Notion",
       url: "#",
-      links: [
-        {
-          platform: "gumroad",
-          url: "https://1408889899058.gumroad.com/l/kcbinp",
-        },
-        {
-          platform: "bilibili",
-          url: "https://mall.bilibili.com/neul-next/detailuniversal/detail.html?page=detailuniversal_detail&itemsId=40799137&loadingShow=1&noTitleBar=1#noReffer=true&msource=merchant_share",
-        },
-        {
-          platform: "xiaohongshu",
-          url: "http://xhslink.com/o/AJ4WfMkRcmJ",
-        },
-      ],
+      links: [{ url: "/notion-weekly", platform: "Web", label: { en: "Get template →", zh: "获取模板 →" } }],
     },
     {
       icon: "🎬",
@@ -172,12 +147,34 @@ export const siteData = {
       status: "active",
       platform: "Video",
       url: "#",
-      links: [
-        {
-          platform: "xiaoe",
-          url: "https://app0v0tctza4800.pc.xiaoe-tech.com/p/t_pc/goods_pc_detail/goods_detail/course_2Z80SD8YWOGbjWWEqHEh6Q5lTZk",
-        },
-      ],
+      links: [{ url: "/fcpx", platform: "Web", label: { en: "View course →", zh: "查看课程 →" } }],
+    },
+    {
+      icon: "🏦",
+      title: {
+        en: "Business Action Bank",
+        zh: "商业行动银行 Action Bank",
+      },
+      desc: {
+        en: "100+ business books distilled into insights, examples and exercises you can act on today.",
+        zh: "100+ 本商业书，拆成可以马上执行的启发、案例和练习。",
+      },
+      status: "active",
+      platform: "Notion",
+      url: null,
+      links: [{ url: "/action-bank", platform: "Web", label: { en: "Join waitlist →", zh: "加入等待清单 →" } }],
+    },
+    {
+      icon: "💳",
+      title: { en: "7-Day Money OS Starter Plan", zh: "7 天 Money OS 入门计划" },
+      desc: {
+        en: "A 7-day personal finance reset — built on strategies of the 1%, designed for you.",
+        zh: "7 天个人财务整理计划，顶层富人的理财逻辑，为你重新设计。",
+      },
+      status: "active",
+      platform: "Notion",
+      url: null,
+      links: [{ url: "/newsletter", platform: "Web", label: { en: "Join waitlist →", zh: "加入等待清单 →" } }],
     },
     {
       icon: "✦",
@@ -191,20 +188,6 @@ export const siteData = {
       url: null,
     },
     {
-      icon: "📖",
-      title: {
-        en: "Business Book Club Database",
-        zh: "Business Book Club Notion Database",
-      },
-      desc: {
-        en: "100+ lessons from business books with actionable exercises.",
-        zh: "100+本商业书籍中的精华课程，配套练习和案例。",
-      },
-      status: "soon",
-      platform: "Notion",
-      url: null,
-    },
-    {
       icon: "🗣️",
       title: { en: "30-Day English Speaking Plan", zh: "30 天口语养成计划" },
       desc: {
@@ -214,18 +197,6 @@ export const siteData = {
       status: "soon",
       platform: "Notion",
       url: null,
-    },
-    {
-      icon: "💳",
-      title: { en: "7-Day Money OS Starter Plan", zh: "7 天 Money OS 入门计划" },
-      desc: {
-        en: "A 7-day personal finance reset — built on strategies of the 1%, designed for you.",
-        zh: "7 天个人财务整理计划，顶层富人的理财逻辑，为你重新设计。",
-      },
-      status: "active",
-      platform: "Notion",
-      url: null,
-      links: [{ url: "/newsletter", platform: "Web", label: { en: "Join waitlist →", zh: "加入等待清单 →" } }],
     },
     {
       icon: "🍁",

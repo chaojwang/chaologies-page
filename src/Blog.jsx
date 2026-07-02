@@ -9,7 +9,7 @@ const ESSAYS = [
     read: "6 min",
     tag: { en: "Latest", zh: "最新" },
     featured: true,
-    url: "https://open.substack.com/pub/chaologies/p/i-audited-my-own-life-the-numbers?r=mq2ld&utm_campaign=post&utm_medium=web&showWelcomeOnShare=true",
+    url: "https://chaologies.beehiiv.com/p/i-audited-my-own-life-the-numbers",
     title: {
       en: "I audited my own life. The numbers didn’t add up.",
       zh: "我審計了自己的人生，結果賬對不上。",
@@ -202,7 +202,7 @@ export default function Blog({ lang, setLang, data, onBack }) {
         <footer className="blog-foot">
           <p className="sign">{T.sign[lang]}</p>
           <div className="links">
-            <a href={subUrl} target="_blank" rel="noopener noreferrer">Substack</a>
+            <a href={subUrl} target="_blank" rel="noopener noreferrer">Beehiiv</a>
             <a href="https://youtube.com/@Chaologies" target="_blank" rel="noopener noreferrer">YouTube</a>
             <a href="mailto:hello@chaologies.com">Email</a>
           </div>
