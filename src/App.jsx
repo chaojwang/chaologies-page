@@ -13,6 +13,7 @@ import BudgetPage from "./BudgetPage.jsx";
 import NewsletterPage from "./NewsletterPage.jsx";
 import FCPXPage from "./FCPXPage.jsx";
 import NotionWeeklyPage from "./NotionWeeklyPage.jsx";
+import WeeklyFocusPage from "./WeeklyFocusPage.jsx";
 import ActionBankPage from "./ActionBankPage.jsx";
 import ReadingMapPage from "./ReadingMapPage.jsx";
 import WechatModal from "./WechatModal.jsx";
@@ -105,6 +106,38 @@ const PLATFORM_ICON = {
   notion: "📄",
   ebook: "📖",
 };
+
+const WEEKLY_FOCUS_PROJECT = {
+  icon: "◎",
+  title: { en: "Weekly Focus Wallpaper", zh: "本周专注壁纸生成器" },
+  desc: {
+    en: "Turn this week's three priorities into a wallpaper you see every day.",
+    zh: "把本周最重要的三件事，做成每天都能看见的手机或电脑壁纸。",
+  },
+  status: "active",
+  badge: { en: "Free tool", zh: "免费工具" },
+  links: [
+    {
+      url: "/weekly-focus",
+      platform: "Web",
+      label: { en: "Make yours free →", zh: "免费制作 →" },
+    },
+  ],
+};
+
+function projectsWithWeeklyFocus(projects = []) {
+  const hasGenerator = projects.some((project) =>
+    /weekly focus|专注壁纸/i.test(`${project.title?.en || ""} ${project.title?.zh || ""}`),
+  );
+  if (hasGenerator) return projects;
+
+  const weeklyIndex = projects.findIndex((project) =>
+    /minimal weekly|极简每周/i.test(`${project.title?.en || ""} ${project.title?.zh || ""}`),
+  );
+  const next = [...projects];
+  next.splice(weeklyIndex >= 0 ? weeklyIndex + 1 : 0, 0, WEEKLY_FOCUS_PROJECT);
+  return next;
+}
 
 // ════════════════════════════════════════════════════
 //  Growth sparkline (deterministic per platform)
@@ -422,7 +455,7 @@ function ProjectCard({ project, lang, onNavigate }) {
       <div className="jcard-top">
         <span className="jcard-emoji">{project.icon}</span>
         <span className={`status ${isLive ? "live" : "soon"}`}>
-          {isLive ? COPY.live[lang] : COPY.soon[lang]}
+          {project.badge?.[lang] || (isLive ? COPY.live[lang] : COPY.soon[lang])}
         </span>
       </div>
       <div className="jcard-title">{project.title[lang]}</div>
@@ -476,6 +509,7 @@ function ProjectCard({ project, lang, onNavigate }) {
 function RightColumn({ lang, data, onNavigate }) {
   const pad2 = (n) => String(n).padStart(2, "0");
   const platforms = orderPlatforms(data.platforms);
+  const projects = projectsWithWeeklyFocus(data.projects);
   return (
     <section className="right-col">
       <div className="section">
@@ -497,12 +531,12 @@ function RightColumn({ lang, data, onNavigate }) {
         <div className="section-head">
           <div className="section-label">
             <span>{COPY.buildingLabel[lang]}</span>
-            <span className="n">{pad2(data.projects.length)}</span>
+            <span className="n">{pad2(projects.length)}</span>
           </div>
           <p className="section-sub">{COPY.buildingSub[lang]}</p>
         </div>
         <div className="grid">
-          {data.projects.map((project, i) => (
+          {projects.map((project, i) => (
             <ProjectCard key={i} project={project} lang={lang} onNavigate={onNavigate} />
           ))}
         </div>
@@ -518,7 +552,7 @@ function RightColumn({ lang, data, onNavigate }) {
 // keep in-app routing and the URL bar in sync, so /blog and /budget
 // are real, shareable links with working back/forward.
 const pathToPage = (path) =>
-  path === "/budget" ? "/budget" : path === "/blog" ? "/blog" : path === "/newsletter" ? "/newsletter" : path === "/fcpx" ? "/fcpx" : path === "/notion-weekly" ? "/notion-weekly" : path === "/action-bank" ? "/action-bank" : path === "/reading-map" ? "/reading-map" : "home";
+  path === "/budget" ? "/budget" : path === "/blog" ? "/blog" : path === "/newsletter" ? "/newsletter" : path === "/fcpx" ? "/fcpx" : path === "/notion-weekly" ? "/notion-weekly" : path === "/weekly-focus" ? "/weekly-focus" : path === "/action-bank" ? "/action-bank" : path === "/reading-map" ? "/reading-map" : "home";
 const pageToPath = (page) => (page === "home" ? "/" : page);
 
 export default function App() {
@@ -572,6 +606,17 @@ export default function App() {
         lang={lang}
         setLang={setLang}
         onBack={() => handleNavigate("home")}
+      />
+    );
+  }
+
+  if (currentPage === "/weekly-focus") {
+    return (
+      <WeeklyFocusPage
+        lang={lang}
+        setLang={setLang}
+        onBack={() => handleNavigate("home")}
+        onNavigate={handleNavigate}
       />
     );
   }
