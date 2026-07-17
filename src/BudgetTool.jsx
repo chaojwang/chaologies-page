@@ -13,7 +13,7 @@
 //  uploaded or persisted; export to keep a copy.
 // ─────────────────────────────────────────────────────
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 let _uid = 100;
 
@@ -64,6 +64,8 @@ export default function BudgetTool({ lang = "zh" }) {
   const [emergency, setEmergency] = useState("");
   const [items, setItems] = useState(INITIAL_ITEMS);
   const [busy, setBusy] = useState("");
+  const [dragging, setDragging] = useState(null);
+  const draggingRef = useRef(null);
 
   const z = lang === "zh";
   const tr = (zh, en) => (z ? zh : en);
@@ -87,6 +89,55 @@ export default function BudgetTool({ lang = "zh" }) {
   };
   const removeRow = (cat, id) =>
     setItems((s) => ({ ...s, [cat]: s[cat].filter((it) => it.id !== id) }));
+  const reorderRow = (cat, sourceId, targetId, position) => {
+    if (sourceId === targetId) return;
+    setItems((s) => {
+      const next = [...s[cat]];
+      const from = next.findIndex((it) => it.id === sourceId);
+      if (from < 0) return s;
+      const [moved] = next.splice(from, 1);
+      const target = next.findIndex((it) => it.id === targetId);
+      if (target < 0) return s;
+      next.splice(target + (position === "after" ? 1 : 0), 0, moved);
+      return { ...s, [cat]: next };
+    });
+  };
+  const startRowDrag = (e, cat, id) => {
+    if (e.button !== 0) return;
+    e.preventDefault();
+    e.currentTarget.setPointerCapture?.(e.pointerId);
+    const next = { cat, id, overId: id, position: "before", pointerId: e.pointerId };
+    draggingRef.current = next;
+    setDragging(next);
+  };
+  const moveRowDrag = (e) => {
+    const active = draggingRef.current;
+    if (!active || active.pointerId !== e.pointerId) return;
+    e.preventDefault();
+    const target = document.elementFromPoint(e.clientX, e.clientY)?.closest(".bt-row");
+    if (!target || target.dataset.cat !== active.cat) return;
+    const overId = Number(target.dataset.rowId);
+    if (!overId || overId === active.id) return;
+    const rect = target.getBoundingClientRect();
+    const position = e.clientY < rect.top + rect.height / 2 ? "before" : "after";
+    if (active.overId === overId && active.position === position) return;
+    reorderRow(active.cat, active.id, overId, position);
+    const next = { ...active, overId, position };
+    draggingRef.current = next;
+    setDragging(next);
+  };
+  const finishRowDrag = (e) => {
+    const active = draggingRef.current;
+    if (!active || active.pointerId !== e.pointerId) return;
+    e.preventDefault();
+    e.currentTarget.releasePointerCapture?.(e.pointerId);
+    draggingRef.current = null;
+    setDragging(null);
+  };
+  const cancelRowDrag = () => {
+    draggingRef.current = null;
+    setDragging(null);
+  };
   const toggle = (cat) => setOpen((o) => ({ ...o, [cat]: !o[cat] }));
   const exportWallpaper = async (kind) => {
     if (busy) return;
@@ -327,7 +378,31 @@ export default function BudgetTool({ lang = "zh" }) {
             {cat.open && (
               <div className="bt-cat-body">
                 {cat.rows.map((row) => (
-                  <div className="bt-row" key={row.id}>
+                  <div
+                    className={[
+                      "bt-row",
+                      dragging?.cat === cat.key && dragging.id === row.id ? "is-dragging" : "",
+                      dragging?.cat === cat.key && dragging.overId === row.id && dragging.id !== row.id
+                        ? `drop-${dragging.position}`
+                        : "",
+                    ].filter(Boolean).join(" ")}
+                    key={row.id}
+                    data-cat={cat.key}
+                    data-row-id={row.id}
+                  >
+                    <button
+                      className="bt-row-drag"
+                      onPointerDown={(e) => startRowDrag(e, cat.key, row.id)}
+                      onPointerMove={moveRowDrag}
+                      onPointerUp={finishRowDrag}
+                      onPointerCancel={cancelRowDrag}
+                      aria-label={tr("拖动调整顺序", "Drag to reorder")}
+                      title={tr("拖动调整顺序", "Drag to reorder")}
+                    >
+                      <span />
+                      <span />
+                      <span />
+                    </button>
                     {row.custom ? (
                       <input
                         className="bt-row-label-input"
@@ -569,7 +644,22 @@ const CSS = `
 .bt-cat-chev { color: var(--ink-300); font-size: 11px; width: 14px; text-align: center; }
 .bt-cat-body { padding: 0 22px 12px; }
 
-.bt-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid var(--line-2); }
+.bt-row {
+  position: relative; display: flex; align-items: center; gap: 10px; padding: 8px 0;
+  border-top: 1px solid var(--line-2); transition: opacity .15s, background .15s, box-shadow .15s;
+}
+.bt-row.is-dragging { opacity: .42; }
+.bt-row.drop-before { box-shadow: inset 0 2px 0 var(--honey); }
+.bt-row.drop-after { box-shadow: inset 0 -2px 0 var(--honey); }
+.bt-row-drag {
+  width: 18px; height: 30px; flex-shrink: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 3px; padding: 0; border: none;
+  background: none; color: var(--ink-200); cursor: grab; touch-action: none;
+  transition: color .15s, transform .15s;
+}
+.bt-row-drag:hover { color: var(--ink-500); transform: scale(1.06); }
+.bt-row-drag:active { cursor: grabbing; }
+.bt-row-drag span { width: 12px; height: 1.5px; border-radius: 2px; background: currentColor; pointer-events: none; }
 .bt-row-label { flex: 1; font-size: 14px; color: var(--ink-700); }
 .bt-row-label-input { flex: 1; min-width: 0; border: none; background: none; font-family: var(--font-sans); font-size: 14px; color: var(--ink-700); outline: none; }
 .bt-amt { display: flex; align-items: center; gap: 5px; width: 142px; border: 1px solid var(--line); border-radius: 9px; padding: 8px 11px; background: var(--surface); }
@@ -677,9 +767,12 @@ const CSS = `
 }
 @media (max-width: 480px) {
   .bt-twin { grid-template-columns: 1fr; }
+  .bt-cat-body { padding-left: 16px; padding-right: 16px; }
+  .bt-row { gap: 8px; }
+  .bt-amt { width: 122px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .bt-freedom-fill, .bt-freedom-plane, .bt-bar-fill, .bt-flow-seg, .bt-pip { transition: none; }
+  .bt-freedom-fill, .bt-freedom-plane, .bt-bar-fill, .bt-flow-seg, .bt-pip, .bt-row, .bt-row-drag { transition: none; }
 }
 `;
 
