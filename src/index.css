@@ -77,19 +77,24 @@ button { font-family: inherit; }
 }
 .brand { display: inline-flex; align-items: center; }
 .logo-img { height: 64px; width: auto; }
-.nav-right { display: flex; align-items: center; gap: 20px; }
+.nav-right { display: flex; align-items: center; gap: 10px; }
 .nav-link {
-  font-size: 13px; font-weight: 600; color: var(--ink-2);
-  display: inline-flex; align-items: center; gap: 6px;
-  background: none; border: none; cursor: pointer;
-  transition: color var(--ease), gap var(--ease);
+  font-size: 12.5px; font-weight: 700; color: var(--ink);
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  min-height: 38px; padding: 8px 15px; border-radius: 999px;
+  background: var(--surface); border: 1px solid var(--line); cursor: pointer;
+  box-shadow: 0 7px 18px -15px rgba(28, 25, 21, 0.7);
+  transition: color var(--ease), gap var(--ease), transform var(--ease), border-color var(--ease), background var(--ease), box-shadow var(--ease);
 }
 .nav-link::after { content: "\2192"; color: var(--honey); transition: transform var(--ease); }
-.nav-link:hover { color: var(--ink); gap: 9px; }
+.nav-link:hover { color: var(--ink); gap: 10px; transform: translateY(-2px); border-color: var(--ink-3); box-shadow: 0 12px 24px -18px rgba(28, 25, 21, 0.75); }
 .nav-link:hover::after { transform: translateX(2px); }
-.blog-link .nl-hover { display: none; }
-.blog-link:hover .nl-default { display: none; }
-.blog-link:hover .nl-hover { display: inline; }
+.nav-link:focus-visible { outline: 2px solid var(--honey); outline-offset: 3px; }
+.blog-link { background: var(--honey-soft); border-color: #eed9aa; color: #7d5711; }
+.blog-link:hover { background: #f8e7bf; border-color: #dfbd70; color: #5e3e08; }
+.partner-link { background: var(--ink); border-color: var(--ink); color: #fff; }
+.partner-link::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--honey); box-shadow: 0 0 0 4px rgba(225, 160, 31, 0.12); }
+.partner-link:hover { background: #000; border-color: #000; color: #fff; }
 
 .lang { display: flex; gap: 2px; align-items: center; }
 .lang button {
@@ -462,6 +467,12 @@ button { font-family: inherit; }
 @media (max-width: 820px) {
   .page { padding: 0 24px; }
   .logo-img { height: 48px; }
+}
+@media (max-width: 620px) {
+  .nav { align-items: flex-start; gap: 10px; }
+  .nav-right { max-width: 290px; justify-content: flex-end; flex-wrap: wrap; gap: 7px; }
+  .nav-link { min-height: 34px; padding: 7px 11px; font-size: 12px; }
+  .lang { width: 100%; justify-content: flex-end; }
 }
 @media (max-width: 480px) {
   .grid { grid-template-columns: 1fr; }

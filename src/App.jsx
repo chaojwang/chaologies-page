@@ -151,7 +151,8 @@ function projectsWithWeeklyFocus(projects = []) {
   return next;
 }
 
-// Pin YouTube + the blog to the top; sort the rest by follower count desc.
+// Homepage only shows active public social channels. Blog stays in the top nav;
+// WeChat stays available elsewhere on the site without duplicating this grid.
 function parseFollowers(s) {
   if (!s) return -1;
   const m = String(s).replace(/,/g, "").match(/([\d.]+)\s*([kKmM万]?)/);
@@ -164,13 +165,14 @@ function parseFollowers(s) {
   return n;
 }
 function orderPlatforms(list) {
-  const arr = list || [];
+  const arr = (list || []).filter((p) =>
+    !p.isPage && !/wechat|微信/i.test(`${p.name || ""} ${p.nameZh || ""}`),
+  );
   const yt = arr.filter((p) => /youtube/i.test(p.name || ""));
-  const blog = arr.filter((p) => p.isPage);
   const rest = arr
-    .filter((p) => !/youtube/i.test(p.name || "") && !p.isPage)
+    .filter((p) => !/youtube/i.test(p.name || ""))
     .sort((a, b) => parseFollowers(b.followers) - parseFollowers(a.followers));
-  return [...yt, ...blog, ...rest];
+  return [...yt, ...rest];
 }
 
 // ════════════════════════════════════════════════════
@@ -185,10 +187,9 @@ function Nav({ lang, setLang, onNavigate }) {
       </a>
       <div className="nav-right">
         <button className="nav-link blog-link" onClick={() => onNavigate("/blog")}>
-          <span className="nl-default">{tr(COPY.journal, lang)}</span>
-          <span className="nl-hover">Blog</span>
+          {tr(COPY.journal, lang)}
         </button>
-        <button className="nav-link" onClick={() => onNavigate("/partner")}>
+        <button className="nav-link partner-link" onClick={() => onNavigate("/partner")}>
           {tr(COPY.partner, lang)}
         </button>
         <LangToggle lang={lang} setLang={setLang} />
@@ -446,8 +447,15 @@ function RightColumn({ lang, data, onNavigate }) {
 
 // keep in-app routing and the URL bar in sync, so /blog and /budget
 // are real, shareable links with working back/forward.
-const pathToPage = (path) =>
-  path === "/budget" ? "/budget" : path === "/blog" ? "/blog" : path === "/partner" ? "/partner" : path === "/newsletter" ? "/newsletter" : path === "/fcpx" ? "/fcpx" : path === "/notion-weekly" ? "/notion-weekly" : path === "/weekly-focus" ? "/weekly-focus" : path === "/action-bank" ? "/action-bank" : path === "/reading-map" ? "/reading-map" : path === "/reading-map/access" ? "/reading-map/access" : path === "/reading-map/thank-you" ? "/reading-map/thank-you" : "home";
+const pathToPage = (path) => {
+  if (path === "/partner" || path.startsWith("/partner/")) return path;
+  const pages = new Set([
+    "/budget", "/blog", "/newsletter", "/fcpx", "/notion-weekly",
+    "/weekly-focus", "/action-bank", "/reading-map", "/reading-map/access",
+    "/reading-map/thank-you",
+  ]);
+  return pages.has(path) ? path : "home";
+};
 const pageToPath = (page) => (page === "home" ? "/" : page);
 
 export default function App() {
@@ -477,13 +485,15 @@ export default function App() {
     }
   };
 
-  if (currentPage === "/partner") {
+  if (currentPage === "/partner" || currentPage.startsWith("/partner/")) {
     return (
       <PartnerPage
         lang={lang}
         setLang={setLang}
         data={siteData}
         onBack={() => handleNavigate("home")}
+        onNavigate={handleNavigate}
+        brandSlug={currentPage.startsWith("/partner/") ? currentPage.slice("/partner/".length) : null}
       />
     );
   }

@@ -62,7 +62,7 @@ export const siteData = {
       handle: "Chaologies",
       followers: "57.3K",
       logoUrl: "/icons/douyin.png",
-      url: "https://www.douyin.com/user/self?from_tab_name=main",
+      url: "https://v.douyin.com/yTifRziOV1M/",
     },
     {
       name: "RedNote",

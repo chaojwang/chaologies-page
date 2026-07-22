@@ -4,6 +4,13 @@
 // ─────────────────────────────────────────────────────
 
 import { tr, LangToggle } from "./i18n.jsx";
+import {
+  DOUYIN_URL,
+  PARTNER_BRANDS,
+  getBrand,
+  getBrandCases,
+  getFeaturedCases,
+} from "./partnerCases.js";
 
 const EMAIL = "chao@chaologies.com";
 const MAILTO = `mailto:${EMAIL}?subject=${encodeURIComponent("Brand Collaboration · Chaologies")}`;
@@ -27,10 +34,10 @@ const T = {
   ctaMail: { en: "Start a conversation", zh: "发来合作资料" },
   statFollowers: { en: "followers across platforms", zh: "全网关注" },
   statLikes: { en: "likes & saves", zh: "累计点赞与收藏" },
-  statYears: { en: "years creating", zh: "持续内容创作" },
+  statYears: { en: "creating consistently", zh: "持续内容创作" },
   statBrands: { en: "brand partners", zh: "合作品牌" },
   brandsK: { en: "Selected brand partners", zh: "曾合作品牌" },
-  brandsHint: { en: "Hover to explore. Linked names have a featured case below.", zh: "鼠标移到品牌上会有反馈；可点击的品牌在下方有案例。" },
+  brandsHint: { en: "Hover to pause. Select a brand to see its complete case library.", zh: "鼠标移入可暂停；点击品牌，可查看该品牌的完整合作案例。" },
   whyK: { en: "How I make product stories", zh: "我怎么把产品讲进内容里" },
   why: [
     {
@@ -65,8 +72,8 @@ const T = {
   },
   workK: { en: "Selected brand work", zh: "品牌合作案例" },
   workIntro: {
-    en: "Four different ways to make a product useful to the story, from cinematic narrative to long-term testing.",
-    zh: "四种不同的合作方式：剧情化表达、真实场景、长期使用和深度评测。重点不是露出多久，而是产品在故事里为什么成立。",
+    en: "A small selection across cinematic narrative, real-life use, long-term testing, and in-depth review. Select any brand above for the complete library.",
+    zh: "这里先选几条代表作：从剧情叙事、真实场景到长期使用和深度评测。点击上方品牌，可查看完整案例库。",
   },
   watchYouTube: { en: "YouTube", zh: "YouTube" },
   watchBilibili: { en: "Bilibili", zh: "B站" },
@@ -96,58 +103,95 @@ const T = {
   },
   ctaBtn: { en: "Send the brief", zh: "发来合作资料" },
   back: { en: "Chaologies", zh: "Chaologies" },
+  brandBack: { en: "All partnerships", zh: "全部品牌合作" },
+  brandEyebrow: { en: "Partnership archive", zh: "品牌合作案例库" },
+  brandCount: { en: "published collaborations", zh: "条合作内容" },
+  brandIntro: {
+    en: "Every case links to the public version available on YouTube, Bilibili, or both. The same core idea is adapted to fit each platform.",
+    zh: "每条案例都保留可公开查看的平台入口；有双平台版本时，同时提供 YouTube 和 B站链接。",
+  },
+  brandEmpty: { en: "No public case is listed yet.", zh: "暂时还没有公开案例。" },
 };
 
-// 单色品牌背书墙。先用可控的 wordmark 排版，后续拿到品牌官方 SVG 后可直接替换。
-const BRANDS = [
-  { name: "SONY", slug: "sony", className: "sony" },
-  { name: "DJI", slug: "dji", className: "dji" },
-  { name: "Insta360", slug: "insta360", className: "insta" },
-  { name: "TUMI", className: "tumi" },
-  { name: "Bellroy", className: "bellroy" },
-  { name: "Steelcase", className: "steelcase" },
-  { name: "EF", className: "ef" },
-  { name: "italki", className: "italki" },
-  { name: "MOFT", className: "moft" },
-  { name: "BOOX", className: "boox" },
-];
+function CaseCard({ item, lang, brandName, compact = false }) {
+  const primaryUrl = item.youtube || item.bilibili;
 
-// 品牌合作案例；能确认双平台版本的作品同时提供 YouTube / B站入口。
-const WORKS = [
-  {
-    slug: "sony",
-    youtube: "z06c1CMlsTs",
-    brand: "Sony",
-    type: { zh: "剧情化品牌短片", en: "Cinematic brand story" },
-    t: { zh: "《影·途》：把镜头放进一个创作者的成长故事", en: "“Shadow & Road” — a creator story built around Sony G Master" },
-  },
-  {
-    slug: "dji",
-    youtube: "8cmkBZHEKe0",
-    bilibili: "https://www.bilibili.com/video/BV1kfeRzcEt3/",
-    brand: "DJI",
-    type: { zh: "真实使用场景", en: "Real-life product use" },
-    t: { zh: "我家扫地机的 7 个隐藏功能 · DJI ROMO", en: "7 hidden features of the DJI ROMO robot vacuum" },
-  },
-  {
-    slug: "dji-mic-mini",
-    youtube: "Vm87E7Y_WYg",
-    brand: "DJI",
-    type: { zh: "新手向深度评测", en: "Beginner-friendly review" },
-    t: { zh: "DJI Mic Mini：把参数变成真实的使用判断", en: "DJI Mic Mini — turning specifications into a useful buying decision" },
-  },
-  {
-    slug: "insta360",
-    youtube: "JqU5jhHNuBs",
-    bilibili: "https://www.bilibili.com/video/BV1ev4y1u7MJ/",
-    brand: "Insta360",
-    type: { zh: "创意概念短片", en: "Concept-led product film" },
-    t: { zh: "给你这双「眼」，你会看什么？· Insta360 ONE RS", en: "Insta360 ONE RS — what would you see with a new pair of eyes?" },
-  },
-];
+  return (
+    <article className={`pp-work${compact ? " pp-work-compact" : ""}`} id={`case-${item.id}`}>
+      <a href={primaryUrl} target="_blank" rel="noopener noreferrer" aria-label={`${brandName}: ${item.title}`}>
+        <div className="pp-work-thumb">
+          {item.youtubeId ? (
+            <img src={`https://i.ytimg.com/vi/${item.youtubeId}/hqdefault.jpg`} alt="" loading="lazy" />
+          ) : (
+            <div className="pp-work-placeholder" aria-hidden="true"><span>{brandName}</span></div>
+          )}
+          <span className="pp-work-brand">{brandName}</span>
+          <span className="pp-work-play">▶</span>
+        </div>
+      </a>
+      <div className="pp-work-type">{tr(item.kind, lang)}</div>
+      <div className="pp-work-t">{item.title}</div>
+      <div className="pp-work-links">
+        {item.youtube && <a href={item.youtube} target="_blank" rel="noopener noreferrer">{tr(T.watchYouTube, lang)} <span>↗</span></a>}
+        {item.bilibili && <a href={item.bilibili} target="_blank" rel="noopener noreferrer">{tr(T.watchBilibili, lang)} <span>↗</span></a>}
+      </div>
+    </article>
+  );
+}
 
-export default function PartnerPage({ lang, setLang, data, onBack }) {
-  const platforms = (data.platforms || []).filter((p) => !p.isPage);
+function BrandCasePage({ brand, lang, setLang, onNavigate }) {
+  const cases = getBrandCases(brand.slug);
+
+  return (
+    <div className="pp pp-brand-page">
+      <style>{CSS}</style>
+      <nav className="pp-nav">
+        <button className="blog-back" onClick={() => onNavigate("/partner")}>
+          <span className="a">←</span>
+          <span>{tr(T.brandBack, lang)}</span>
+        </button>
+        <LangToggle lang={lang} setLang={setLang} />
+      </nav>
+
+      <header className="pp-case-hero">
+        <div className="pp-kicker">{tr(T.brandEyebrow, lang)}</div>
+        <h1 className={`pp-case-brand pp-brand ${brand.className}`}>{brand.name}</h1>
+        <div className="pp-case-count"><b>{cases.length}</b> {tr(T.brandCount, lang)}</div>
+        <p className="pp-sub">{tr(T.brandIntro, lang)}</p>
+      </header>
+
+      {cases.length ? (
+        <section className="pp-sec pp-case-list">
+          <div className="pp-works pp-works-archive">
+            {cases.map((item) => <CaseCard key={item.id} item={item} lang={lang} brandName={brand.name} compact />)}
+          </div>
+        </section>
+      ) : (
+        <p className="pp-empty">{tr(T.brandEmpty, lang)}</p>
+      )}
+
+      <section className="pp-final pp-brand-final">
+        <h2 className="pp-final-t">{tr(T.ctaK, lang)}</h2>
+        <p className="pp-final-s">{tr(T.ctaSub, lang)}</p>
+        <a className="pp-cta big" href={MAILTO}>
+          <span>{tr(T.ctaBtn, lang)}</span>
+          <span className="arr">→</span>
+        </a>
+      </section>
+    </div>
+  );
+}
+
+export default function PartnerPage({ lang, setLang, data, onBack, onNavigate, brandSlug }) {
+  const selectedBrand = brandSlug ? getBrand(brandSlug) : null;
+  if (selectedBrand) {
+    return <BrandCasePage brand={selectedBrand} lang={lang} setLang={setLang} onNavigate={onNavigate} />;
+  }
+
+  const platforms = (data.platforms || [])
+    .filter((p) => !p.isPage)
+    .map((p) => /douyin|抖音/i.test(`${p.name || ""} ${p.nameZh || ""}`) ? { ...p, url: DOUYIN_URL } : p);
+  const works = getFeaturedCases();
   const total = (data.totalFollowers || 0).toLocaleString("en-US");
 
   return (
@@ -181,7 +225,7 @@ export default function PartnerPage({ lang, setLang, data, onBack }) {
         <div className="pp-stats">
           <div className="pp-stat"><b>{total}</b><span>{tr(T.statFollowers, lang)}</span></div>
           <div className="pp-stat"><b>{TOTAL_ENGAGEMENTS}</b><span>{tr(T.statLikes, lang)}</span></div>
-          <div className="pp-stat"><b>5</b><span>{tr(T.statYears, lang)}</span></div>
+          <div className="pp-stat"><b>{lang === "en" ? "5 years" : "5 年"}</b><span>{tr(T.statYears, lang)}</span></div>
           <div className="pp-stat"><b>10+</b><span>{tr(T.statBrands, lang)}</span></div>
         </div>
       </header>
@@ -192,14 +236,17 @@ export default function PartnerPage({ lang, setLang, data, onBack }) {
         <div className="pp-brand-strip" aria-label={tr(T.brandsK, lang)}>
           <div className="pp-brands-track">
             <div className="pp-brands">
-              {BRANDS.map((b) => b.slug ? (
-                <a key={b.name} href={`#case-${b.slug}`} className={`pp-brand ${b.className}`}>{b.name}</a>
-              ) : (
-                <span key={b.name} className={`pp-brand ${b.className}`}>{b.name}</span>
+              {PARTNER_BRANDS.map((b) => (
+                <a
+                  key={b.name}
+                  href={`/partner/${b.slug}`}
+                  className={`pp-brand ${b.className}`}
+                  onClick={(event) => { event.preventDefault(); onNavigate(`/partner/${b.slug}`); }}
+                >{b.name}</a>
               ))}
             </div>
             <div className="pp-brands" aria-hidden="true">
-              {BRANDS.map((b) => <span key={`repeat-${b.name}`} className={`pp-brand ${b.className}`}>{b.name}</span>)}
+              {PARTNER_BRANDS.map((b) => <span key={`repeat-${b.name}`} className={`pp-brand ${b.className}`}>{b.name}</span>)}
             </div>
           </div>
         </div>
@@ -244,23 +291,10 @@ export default function PartnerPage({ lang, setLang, data, onBack }) {
         <div className="pp-sec-k">{tr(T.workK, lang)}</div>
         <p className="pp-sec-intro pp-work-intro">{tr(T.workIntro, lang)}</p>
         <div className="pp-works">
-          {WORKS.map((w) => (
-            <article className="pp-work" key={w.slug} id={`case-${w.slug}`}>
-              <a href={`https://youtu.be/${w.youtube}`} target="_blank" rel="noopener noreferrer" aria-label={`${w.brand}: ${tr(w.t, lang)}`}>
-                <div className="pp-work-thumb">
-                  <img src={`https://i.ytimg.com/vi/${w.youtube}/hqdefault.jpg`} alt="" loading="lazy" />
-                  <span className="pp-work-brand">{w.brand}</span>
-                  <span className="pp-work-play">▶</span>
-                </div>
-              </a>
-              <div className="pp-work-type">{tr(w.type, lang)}</div>
-              <div className="pp-work-t">{tr(w.t, lang)}</div>
-              <div className="pp-work-links">
-                <a href={`https://youtu.be/${w.youtube}`} target="_blank" rel="noopener noreferrer">{tr(T.watchYouTube, lang)} <span>↗</span></a>
-                {w.bilibili && <a href={w.bilibili} target="_blank" rel="noopener noreferrer">{tr(T.watchBilibili, lang)} <span>↗</span></a>}
-              </div>
-            </article>
-          ))}
+          {works.map((item) => {
+            const brand = getBrand(item.brand);
+            return <CaseCard key={item.id} item={item} lang={lang} brandName={brand?.name || item.brand} />;
+          })}
         </div>
       </section>
 
@@ -383,6 +417,11 @@ a.pp-brand:hover::after { left: 0; right: 0; }
 }
 .pp-work-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--ease); }
 .pp-work:hover .pp-work-thumb img { transform: scale(1.04); }
+.pp-work-placeholder {
+  width: 100%; height: 100%; display: grid; place-items: center;
+  background: linear-gradient(145deg, #f3efe5, #e6dfd1); color: var(--ink-3);
+  font-family: var(--font-serif); font-size: clamp(22px, 4vw, 38px); font-weight: 650;
+}
 .pp-work-brand {
   position: absolute; top: 9px; left: 9px; padding: 3px 9px; border-radius: 999px;
   background: rgba(28,25,21,0.82); color: #fff; font-size: 10.5px; font-weight: 700; letter-spacing: 0.05em;
@@ -398,6 +437,24 @@ a.pp-brand:hover::after { left: 0; right: 0; }
 .pp-work-links a { color: var(--ink-2); font-size: 12px; font-weight: 650; border-bottom: 1px solid var(--line); padding-bottom: 2px; transition: color var(--ease), border-color var(--ease); }
 .pp-work-links a:hover { color: var(--ink); border-color: var(--honey-600); }
 .pp-work-links span { color: var(--honey-600); }
+
+.pp-case-hero { padding: 54px 0 4px; max-width: 720px; }
+.pp-case-brand.pp-brand {
+  display: block; width: max-content; max-width: 100%; min-height: 0;
+  color: var(--ink); opacity: 1; filter: none; transform: none;
+  font-family: var(--font-serif); font-size: clamp(48px, 9vw, 84px); line-height: 0.95;
+  letter-spacing: -0.055em; margin: 0;
+}
+.pp-case-brand.pp-brand.dji, .pp-case-brand.pp-brand.moft { font-family: var(--font-sans); letter-spacing: 0.02em; }
+.pp-case-brand.pp-brand.insta, .pp-case-brand.pp-brand.bellroy, .pp-case-brand.pp-brand.italki { font-family: var(--font-sans); letter-spacing: -0.055em; }
+.pp-case-count { margin-top: 24px; color: var(--ink-3); font-size: 13px; letter-spacing: 0.06em; }
+.pp-case-count b { color: var(--honey-600); font-family: var(--font-serif); font-size: 20px; margin-right: 4px; }
+.pp-case-list { margin-top: 44px; }
+.pp-works-archive { grid-template-columns: repeat(3, 1fr); gap: 34px 16px; }
+.pp-work-compact .pp-work-t { font-size: 13.5px; }
+.pp-work-compact .pp-work-links { gap: 14px; }
+.pp-brand-final { margin-top: 82px; }
+.pp-empty { margin: 44px 0 80px; color: var(--ink-3); }
 
 .pp-formats { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 40px; }
 .pp-format { display: flex; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); }
@@ -418,10 +475,12 @@ a.pp-brand:hover::after { left: 0; right: 0; }
   .pp-reach { grid-template-columns: repeat(2, 1fr); }
   .pp-brands { gap: 30px; }
   .pp-works { grid-template-columns: 1fr 1fr; }
+  .pp-works-archive { grid-template-columns: 1fr 1fr; }
   .pp-formats { grid-template-columns: 1fr; }
 }
 @media (max-width: 480px) {
   .pp-hero-actions { align-items: flex-start; flex-direction: column; gap: 10px; }
   .pp-works { grid-template-columns: 1fr; }
+  .pp-works-archive { grid-template-columns: 1fr; }
 }
 `;
