@@ -5,7 +5,7 @@
 //    as a sentence, reordered platforms, growth sparklines.
 // ─────────────────────────────────────────────────────
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { siteData as staticData } from "./data.js";
 import { supabase, transformSiteData } from "./lib/supabase.js";
 import Blog from "./Blog.jsx";
@@ -16,7 +16,13 @@ import NotionWeeklyPage from "./NotionWeeklyPage.jsx";
 import WeeklyFocusPage from "./WeeklyFocusPage.jsx";
 import ActionBankPage from "./ActionBankPage.jsx";
 import ReadingMapPage from "./ReadingMapPage.jsx";
-import WechatModal from "./WechatModal.jsx";
+import ReadingMapThanksPage from "./ReadingMapThanksPage.jsx";
+import SubscribeModal from "./SubscribeModal.jsx";
+import PartnerPage from "./PartnerPage.jsx";
+import { tr, useTw, LangToggle } from "./i18n.jsx";
+
+// 買家完整版（含 books.json）走動態 chunk，不進主包
+const ReadingMap = lazy(() => import("./ReadingMap.jsx"));
 
 function useSiteData() {
   const [siteData, setSiteData] = useState(staticData);
@@ -34,23 +40,25 @@ function useSiteData() {
   return siteData;
 }
 
-// ── Static, bilingual copy (left column → Traditional zh) ──
+// ── Static copy — zh 一律简体；繁体由 i18n 运行时转换 ──
 const COPY = {
   journal: { en: "Blog", zh: "博客" },
+  partner: { en: "For Brands", zh: "品牌合作" },
   bubble: { en: "Hi, I'm Chao", zh: "你好，我是 Chao" },
 
   // Hero headline — primary language large, the other language quiet below.
   heroPrimary: {
     en: "Tax Consultant turned Entrepreneur & Creator",
-    zh: "財稅顧問，變身創業者與創作者",
+    zh: "财税顾问，变身创业者与创作者",
   },
   heroSecondary: {
-    en: "Big 4 財稅顧問 · 變身創業者與創作者",
+    en: "Big 4 财税顾问 · 变身创业者与创作者",
     zh: "Big 4 Tax Consultant turned Entrepreneur & Creator",
+    tw: "Big 4 Tax Consultant turned Entrepreneur & Creator",
   },
   heroDesc: {
     en: "I share honest lessons on money, minimalism, habits, AI & creating — to help you make a complex life gradually clearer.",
-    zh: "我分享關於金錢、極簡、習慣、AI 與創作的真實經驗，幫你把複雜的生活，一點點變得更清楚。",
+    zh: "我分享关于金钱、极简、习惯、AI 与创作的真实经验，帮你把复杂的生活，一点点变得更清楚。",
   },
 
   // Follower stat, framed as a sentence around the live number.
@@ -58,42 +66,46 @@ const COPY = {
   joinUnit: { en: "friends following along", zh: "位同行的朋友" },
   joinDesc: {
     en: "Following along for honest takes on money, minimalism, habits, AI & career changes — and building a freer life system.",
-    zh: "關注這個頻道，我們一起聊聊金錢、極簡、習慣、AI 與轉行，以及如何搭建更自由的生活系統。",
+    zh: "关注这个频道，我们一起聊聊金钱、极简、习惯、AI 与转行，以及如何搭建更自由的生活系统。",
   },
 
-  subLabel: { en: "The Newsletter", zh: "訂閱 Newsletter" },
+  subLabel: { en: "The Newsletter", zh: "订阅 Newsletter" },
   subLead: {
-    en: "Every week: practical notes on life, money, and good books. Free, always.",
-    zh: "每週你會收到關於生活、金錢和好書的實用分享，完全免費。",
+    en: "Twice a month: practical notes on life, money, and good books. Free, always.",
+    zh: "每月两篇，关于生活、金钱和好书的实用分享，完全免费。",
   },
-  subscribe: { en: "Subscribe — it's free", zh: "免費訂閱" },
-  wechat: { en: "Follow on WeChat", zh: "關注公眾號" },
-  reviews: { en: "Loved by 2M+ readers", zh: "全網 200w+ 點讚收藏" },
+  subscribe: { en: "Subscribe — it's free", zh: "免费订阅" },
+  wechat: { en: "Follow on WeChat", zh: "关注公众号" },
+  reviews: { en: "Loved by 2M+ readers", zh: "全网 200w+ 点赞收藏" },
   ctaFine: {
     en: "One email, no spreadsheets. Unsubscribe anytime.",
-    zh: "一封郵件，不含任何報表。隨時退訂。",
+    zh: "一封邮件，不含任何报表。随时退订。",
   },
-  whereLabel: { en: "Where I show up", zh: "我在這裡創作和分享" },
+  whereLabel: { en: "Where I show up", zh: "我在这里创作和分享" },
   whereSub: {
     en: "Find me here — tap any card to follow →",
-    zh: "在這些平台找到我，點一下卡片就能關注 →",
+    zh: "在这些平台找到我，点一下卡片就能关注 →",
   },
-  buildingLabel: { en: "Things I'm building", zh: "我正在做的東西" },
+  buildingLabel: { en: "Things I'm building", zh: "我正在做的东西" },
   buildingSub: {
     en: "Products, templates & courses I've made",
-    zh: "我做的產品、模板和課程",
+    zh: "我做的产品、模板和课程",
   },
-  live: { en: "Live", zh: "進行中" },
-  soon: { en: "Soon", zh: "敬請期待" },
-  followers: { en: "followers", zh: "粉絲" },
-  essays: { en: "Essays", zh: "長文" },
+  live: { en: "Live", zh: "进行中" },
+  soon: { en: "Soon", zh: "敬请期待" },
+  followers: { en: "followers", zh: "粉丝" },
+  essays: { en: "Essays", zh: "长文" },
+  brewing: {
+    en: "Brewing: Canada guides · 30-day speaking plan",
+    zh: "正在酝酿：加拿大指南 · 口语计划",
+  },
   footSign: {
     en: "Made in Singapore, fueled by kopi & kaya toast.",
-    zh: "新加坡出品，靠南洋咖啡和椰香麵包供能。(Kopi & Kaya Toast)",
+    zh: "新加坡出品，靠南洋咖啡和椰香面包供能。(Kopi & Kaya Toast)",
   },
   footNow: {
     en: "Currently: 📍 Singapore · building Money OS · dad life: 2 years in",
-    zh: "近況：現居 📍 新加坡 ～ 在做 Money OS ～ 奶爸經驗：兩年",
+    zh: "近况：现居 📍 新加坡 ～ 在做 Money OS ～ 奶爸经验：两年",
   },
 };
 
@@ -139,90 +151,6 @@ function projectsWithWeeklyFocus(projects = []) {
   return next;
 }
 
-// ════════════════════════════════════════════════════
-//  Growth sparkline (deterministic per platform)
-// ════════════════════════════════════════════════════
-
-// Stable string → 32-bit hash, then a small seeded PRNG, so every
-// platform always draws its OWN curve (flat for a while, then rises),
-// and no two look identical — no data needed in the DB.
-function hashStr(s) {
-  let h = 2166136261;
-  for (let i = 0; i < s.length; i++) {
-    h ^= s.charCodeAt(i);
-    h = Math.imul(h, 16777619);
-  }
-  return h >>> 0;
-}
-function mulberry32(a) {
-  return function () {
-    a |= 0;
-    a = (a + 0x6d2b79f5) | 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-function growthSeries(seed, n = 10) {
-  const rnd = mulberry32(hashStr(seed));
-  const base = 0.1 + rnd() * 0.06; // low, flat start
-  const knee = Math.floor(n * (0.42 + rnd() * 0.32)); // when it starts to climb
-  const peak = 0.58 + rnd() * 0.42; // final height
-  const curve = 1.0 + rnd() * 0.9; // steepness of the ramp
-  const out = [];
-  for (let i = 0; i < n; i++) {
-    if (i < knee) {
-      out.push(base + (rnd() - 0.5) * 0.02);
-    } else {
-      const tt = (i - knee) / Math.max(1, n - 1 - knee);
-      const eased = Math.pow(tt, curve);
-      out.push(base + (peak - base) * eased + (rnd() - 0.5) * 0.03);
-    }
-  }
-  return out.map((v) => Math.max(0.06, Math.min(1, v)));
-}
-
-const SW = 300, SH = 62, SP = 9;
-function sparkPaths(vals) {
-  const n = vals.length;
-  const pts = vals.map((v, i) => [(i / (n - 1)) * SW, SH - SP - v * (SH - 2 * SP)]);
-  let d = `M ${pts[0][0].toFixed(1)} ${pts[0][1].toFixed(1)}`;
-  for (let i = 0; i < n - 1; i++) {
-    const p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || pts[i + 1];
-    const c1x = p1[0] + (p2[0] - p0[0]) / 6, c1y = p1[1] + (p2[1] - p0[1]) / 6;
-    const c2x = p2[0] - (p3[0] - p1[0]) / 6, c2y = p2[1] - (p3[1] - p1[1]) / 6;
-    d += ` C ${c1x.toFixed(1)} ${c1y.toFixed(1)}, ${c2x.toFixed(1)} ${c2y.toFixed(1)}, ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`;
-  }
-  return { line: d, area: `${d} L ${SW} ${SH} L 0 ${SH} Z` };
-}
-
-function Sparkline({ seed }) {
-  const vals = useMemo(() => growthSeries(seed), [seed]);
-  const { line, area } = useMemo(() => sparkPaths(vals), [vals]);
-  const dur = useMemo(() => {
-    const r = mulberry32(hashStr(seed + "d"));
-    return (0.9 + r() * 0.5).toFixed(2);
-  }, [seed]);
-  const gid = "spk-" + seed.replace(/[^a-z0-9]/gi, "");
-  return (
-    <div className="pcard-chart" style={{ "--draw": dur + "s" }}>
-      <svg className="spark spark-base" viewBox="0 0 300 62" preserveAspectRatio="none">
-        <path d={line} fill="none" stroke="#E2DCCF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-      <svg className="spark spark-reveal" viewBox="0 0 300 62" preserveAspectRatio="none">
-        <defs>
-          <linearGradient id={gid} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#E4A11B" stopOpacity="0.26" />
-            <stop offset="1" stopColor="#E4A11B" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-        <path d={area} fill={`url(#${gid})`} />
-        <path d={line} fill="none" stroke="#E4A11B" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    </div>
-  );
-}
-
 // Pin YouTube + the blog to the top; sort the rest by follower count desc.
 function parseFollowers(s) {
   if (!s) return -1;
@@ -257,13 +185,13 @@ function Nav({ lang, setLang, onNavigate }) {
       </a>
       <div className="nav-right">
         <button className="nav-link blog-link" onClick={() => onNavigate("/blog")}>
-          <span className="nl-default">{COPY.journal[lang]}</span>
+          <span className="nl-default">{tr(COPY.journal, lang)}</span>
           <span className="nl-hover">Blog</span>
         </button>
-        <div className="lang">
-          <button className={lang === "en" ? "on" : ""} onClick={() => setLang("en")}>EN</button>
-          <button className={lang === "zh" ? "on" : ""} onClick={() => setLang("zh")}>中</button>
-        </div>
+        <button className="nav-link" onClick={() => onNavigate("/partner")}>
+          {tr(COPY.partner, lang)}
+        </button>
+        <LangToggle lang={lang} setLang={setLang} />
       </div>
     </nav>
   );
@@ -274,11 +202,9 @@ function Nav({ lang, setLang, onNavigate }) {
 // ════════════════════════════════════════════════════
 
 function Profile({ lang, data }) {
-  const { totalFollowers, newsletter } = data;
+  const { totalFollowers } = data;
   const [count, setCount] = useState(totalFollowers);
-  const [wechatOpen, setWechatOpen] = useState(false);
-  const [email, setEmail] = useState("");
-  const [subState, setSubState] = useState("idle"); // idle | loading | success | error
+  const [subOpen, setSubOpen] = useState(false);
 
   useEffect(() => setCount(totalFollowers), [totalFollowers]);
 
@@ -295,22 +221,6 @@ function Profile({ lang, data }) {
     return () => clearInterval(id);
   }, [totalFollowers]);
 
-  async function handleSubscribe(e) {
-    e.preventDefault();
-    if (!email || subState === "loading") return;
-    setSubState("loading");
-    try {
-      const res = await fetch("/api/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-      setSubState(res.ok ? "success" : "error");
-    } catch {
-      setSubState("error");
-    }
-  }
-
   return (
     <aside className="profile">
       {/* avatar + speech bubble (top-right of the avatar) */}
@@ -319,71 +229,54 @@ function Profile({ lang, data }) {
           <img className="avatar" src="/avatar.jpg" alt="Chao" />
         </div>
         <div className="bubble">
-          <span className="bubble-t">{COPY.bubble[lang]}</span>
+          <span className="bubble-t">{tr(COPY.bubble, lang)}</span>
           <span className="wave">👋</span>
         </div>
       </div>
 
       {/* bilingual hero headline */}
       <h1 className="hero-head">
-        <span className="hl">Big 4</span> {COPY.heroPrimary[lang]}
+        <span className="hl">Big 4</span> {tr(COPY.heroPrimary, lang)}
       </h1>
-      <p className="hero-sub">{COPY.heroSecondary[lang]}</p>
-      <p className="hero-desc">{COPY.heroDesc[lang]}</p>
+      <p className="hero-sub">{tr(COPY.heroSecondary, lang)}</p>
+      <p className="hero-desc">{tr(COPY.heroDesc, lang)}</p>
 
       {/* follower stat, as a sentence */}
       <div className="statline-wrap">
         <div className="statline">
-          <span className="pre">{COPY.joinPre[lang]}</span>
+          <span className="pre">{tr(COPY.joinPre, lang)}</span>
           <span className="num">{count.toLocaleString("en-US")}</span>
-          <span className="unit">{COPY.joinUnit[lang]}</span>
+          <span className="unit">{tr(COPY.joinUnit, lang)}</span>
         </div>
-        <p className="stat-desc">{COPY.joinDesc[lang]}</p>
+        <p className="stat-desc">{tr(COPY.joinDesc, lang)}</p>
       </div>
 
       {/* newsletter */}
       <div className="subscribe">
         <div className="sub-top">
           <div>
-            <span className="sub-label">{COPY.subLabel[lang]}</span>
-            <p className="sub-lead">{COPY.subLead[lang]}</p>
+            <span className="sub-label">{tr(COPY.subLabel, lang)}</span>
+            <p className="sub-lead">{tr(COPY.subLead, lang)}</p>
           </div>
           <img className="plane" src="/air.png" alt="" />
         </div>
-        {subState === "success" ? (
-          <p className="sub-success">{lang === "zh" ? "✓ 已訂閱，感謝！" : "✓ Subscribed — thanks!"}</p>
-        ) : (
-          <form className="sub-form" onSubmit={handleSubscribe}>
-            <input
-              className="sub-email"
-              type="email"
-              required
-              placeholder={lang === "zh" ? "你的邮件地址" : "Your email address"}
-              value={email}
-              onChange={(e) => { setEmail(e.target.value); setSubState("idle"); }}
-            />
-            <button className="sub-cta" type="submit" disabled={subState === "loading"}>
-              <span className="sub-cta-zh">{subState === "loading" ? "…" : "免費訂閱"}</span>
-              <span className="sub-cta-en">Subscribe</span>
-            </button>
-            {subState === "error" && (
-              <p className="sub-error">{lang === "zh" ? "出錯了，請稍後再試" : "Something went wrong, try again"}</p>
-            )}
-          </form>
-        )}
         <div className="sub-btns">
-          <button className="sub-wechat" onClick={() => setWechatOpen(true)}>
+          <button className="sub-cta-main" onClick={() => setSubOpen(true)}>
+            <span>{tr(COPY.subscribe, lang)}</span>
+            <span className="arr">→</span>
+          </button>
+          <button className="sub-wechat" onClick={() => setSubOpen(true)}>
             <img className="sub-wechat-ic" src="/icons/wechat.png" alt="" />
-            <span>{COPY.wechat[lang]}</span>
+            <span>{tr(COPY.wechat, lang)}</span>
           </button>
         </div>
         <div className="sub-proof">
           <span className="stars">★★★★★</span>
-          <span className="reviews">{COPY.reviews[lang]}</span>
+          <span className="reviews">{tr(COPY.reviews, lang)}</span>
         </div>
-        <p className="cta-fine">{COPY.ctaFine[lang]}</p>
+        <p className="cta-fine">{tr(COPY.ctaFine, lang)}</p>
       </div>
-      {wechatOpen && <WechatModal lang={lang} onClose={() => setWechatOpen(false)} />}
+      {subOpen && <SubscribeModal lang={lang} onClose={() => setSubOpen(false)} />}
     </aside>
   );
 }
@@ -393,10 +286,10 @@ function Profile({ lang, data }) {
 // ════════════════════════════════════════════════════
 
 function PlatformCard({ p, lang, onNavigate }) {
-  const name = lang === "zh" ? p.nameZh || p.name : p.name;
+  const name = lang !== "en" ? tr(p.nameZh || p.name, lang) : p.name;
   const isEmoji = p.logoUrl && p.logoUrl.length <= 2;
   const handle = p.isPage
-    ? lang === "zh" ? p.handleZh || p.handle : p.handle
+    ? lang !== "en" ? tr(p.handleZh || p.handle, lang) : p.handle
     : "@" + (p.handle || "Chaologies");
 
   const inner = (
@@ -415,16 +308,17 @@ function PlatformCard({ p, lang, onNavigate }) {
         </div>
         <span className="pcard-badge">
           {p.isPage ? (
-            COPY.essays[lang]
-          ) : (
+            tr(COPY.essays, lang)
+          ) : p.followers && !p.hideCount ? (
             <>
               <span className="bn">{p.followers}</span>
-              <span className="bu">{COPY.followers[lang]}</span>
+              <span className="bu">{tr(COPY.followers, lang)}</span>
             </>
+          ) : (
+            <span className="bu">→</span>
           )}
         </span>
       </div>
-      <Sparkline seed={(p.name || "x") + (p.followers || "")} />
     </>
   );
 
@@ -455,18 +349,18 @@ function ProjectCard({ project, lang, onNavigate }) {
       <div className="jcard-top">
         <span className="jcard-emoji">{project.icon}</span>
         <span className={`status ${isLive ? "live" : "soon"}`}>
-          {project.badge?.[lang] || (isLive ? COPY.live[lang] : COPY.soon[lang])}
+          {tr(project.badge, lang) || (isLive ? tr(COPY.live, lang) : tr(COPY.soon, lang))}
         </span>
       </div>
-      <div className="jcard-title">{project.title[lang]}</div>
-      <div className="jcard-desc">{project.desc[lang]}</div>
+      <div className="jcard-title">{tr(project.title, lang)}</div>
+      <div className="jcard-desc">{tr(project.desc, lang)}</div>
       {isLive && hasLinks && (
         <div className="jcard-links">
           {project.links.map((link, idx) => {
             const icon = PLATFORM_ICON[link.platform];
             const isImg = icon && icon.endsWith(".png");
             const isInternal = link.url && link.url.startsWith("/");
-            const label = link.label ? (link.label[lang] || link.label.en) : null;
+            const label = link.label ? (tr(link.label, lang)) : null;
             if (isInternal) {
               return (
                 <button
@@ -515,10 +409,10 @@ function RightColumn({ lang, data, onNavigate }) {
       <div className="section">
         <div className="section-head">
           <div className="section-label">
-            <span>{COPY.whereLabel[lang]}</span>
+            <span>{tr(COPY.whereLabel, lang)}</span>
             <span className="n">{pad2(platforms.length)}</span>
           </div>
-          <p className="section-sub">{COPY.whereSub[lang]}</p>
+          <p className="section-sub">{tr(COPY.whereSub, lang)}</p>
         </div>
         <div className="grid">
           {platforms.map((p, i) => (
@@ -530,16 +424,17 @@ function RightColumn({ lang, data, onNavigate }) {
       <div className="section">
         <div className="section-head">
           <div className="section-label">
-            <span>{COPY.buildingLabel[lang]}</span>
+            <span>{tr(COPY.buildingLabel, lang)}</span>
             <span className="n">{pad2(projects.length)}</span>
           </div>
-          <p className="section-sub">{COPY.buildingSub[lang]}</p>
+          <p className="section-sub">{tr(COPY.buildingSub, lang)}</p>
         </div>
         <div className="grid">
           {projects.map((project, i) => (
             <ProjectCard key={i} project={project} lang={lang} onNavigate={onNavigate} />
           ))}
         </div>
+        <p className="brewing">{tr(COPY.brewing, lang)}</p>
       </div>
     </section>
   );
@@ -552,15 +447,19 @@ function RightColumn({ lang, data, onNavigate }) {
 // keep in-app routing and the URL bar in sync, so /blog and /budget
 // are real, shareable links with working back/forward.
 const pathToPage = (path) =>
-  path === "/budget" ? "/budget" : path === "/blog" ? "/blog" : path === "/newsletter" ? "/newsletter" : path === "/fcpx" ? "/fcpx" : path === "/notion-weekly" ? "/notion-weekly" : path === "/weekly-focus" ? "/weekly-focus" : path === "/action-bank" ? "/action-bank" : path === "/reading-map" ? "/reading-map" : "home";
+  path === "/budget" ? "/budget" : path === "/blog" ? "/blog" : path === "/partner" ? "/partner" : path === "/newsletter" ? "/newsletter" : path === "/fcpx" ? "/fcpx" : path === "/notion-weekly" ? "/notion-weekly" : path === "/weekly-focus" ? "/weekly-focus" : path === "/action-bank" ? "/action-bank" : path === "/reading-map" ? "/reading-map" : path === "/reading-map/access" ? "/reading-map/access" : path === "/reading-map/thank-you" ? "/reading-map/thank-you" : "home";
 const pageToPath = (page) => (page === "home" ? "/" : page);
 
 export default function App() {
-  const [lang, setLang] = useState("zh");
+  const [lang, setLang] = useState("zh"); // "zh" 简 | "tw" 繁 | "en"
   const [currentPage, setCurrentPage] = useState(
     pathToPage(window.location.pathname)
   );
   const siteData = useSiteData();
+  useTw(lang); // 切到繁体时懒加载字典并触发一次重渲染
+
+  // 还没接三语的页面：繁体先按简体显示
+  const coerced = lang === "tw" ? "zh" : lang;
 
   // sync state when the user hits the browser back/forward buttons
   useEffect(() => {
@@ -577,6 +476,17 @@ export default function App() {
       window.history.pushState({}, "", path);
     }
   };
+
+  if (currentPage === "/partner") {
+    return (
+      <PartnerPage
+        lang={lang}
+        setLang={setLang}
+        data={siteData}
+        onBack={() => handleNavigate("home")}
+      />
+    );
+  }
 
   if (currentPage === "/blog") {
     return (
@@ -603,7 +513,7 @@ export default function App() {
   if (currentPage === "/notion-weekly") {
     return (
       <NotionWeeklyPage
-        lang={lang}
+        lang={coerced}
         setLang={setLang}
         onBack={() => handleNavigate("home")}
       />
@@ -613,7 +523,7 @@ export default function App() {
   if (currentPage === "/weekly-focus") {
     return (
       <WeeklyFocusPage
-        lang={lang}
+        lang={coerced}
         setLang={setLang}
         onBack={() => handleNavigate("home")}
         onNavigate={handleNavigate}
@@ -624,7 +534,7 @@ export default function App() {
   if (currentPage === "/fcpx") {
     return (
       <FCPXPage
-        lang={lang}
+        lang={coerced}
         onBack={() => handleNavigate("home")}
       />
     );
@@ -633,9 +543,28 @@ export default function App() {
   if (currentPage === "/reading-map") {
     return (
       <ReadingMapPage
-        lang={lang}
+        lang={coerced}
         setLang={setLang}
         onBack={() => handleNavigate("home")}
+      />
+    );
+  }
+
+  if (currentPage === "/reading-map/access") {
+    return (
+      <Suspense fallback={<div style={{ minHeight: "100vh", background: "#faf9f4" }} />}>
+        <ReadingMap accessCode={import.meta.env.VITE_RM_CODE ?? null} noindex />
+      </Suspense>
+    );
+  }
+
+  if (currentPage === "/reading-map/thank-you") {
+    return (
+      <ReadingMapThanksPage
+        lang={coerced}
+        setLang={setLang}
+        onBack={() => handleNavigate("home")}
+        onNavigate={handleNavigate}
       />
     );
   }
@@ -643,7 +572,7 @@ export default function App() {
   if (currentPage === "/action-bank") {
     return (
       <ActionBankPage
-        lang={lang}
+        lang={coerced}
         setLang={setLang}
         onBack={() => handleNavigate("home")}
       />
@@ -653,7 +582,7 @@ export default function App() {
   if (currentPage === "/newsletter") {
     return (
       <NewsletterPage
-        lang={lang}
+        lang={coerced}
         setLang={setLang}
         onBack={() => handleNavigate("home")}
       />
@@ -668,8 +597,8 @@ export default function App() {
         <RightColumn lang={lang} data={siteData} onNavigate={handleNavigate} />
       </div>
       <footer className="foot">
-        <p className="sign">{COPY.footSign[lang]}</p>
-        <p className="now">{COPY.footNow[lang]}</p>
+        <p className="sign">{tr(COPY.footSign, lang)}</p>
+        <p className="now">{tr(COPY.footNow, lang)}</p>
       </footer>
     </div>
   );

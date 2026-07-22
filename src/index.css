@@ -240,6 +240,88 @@ button { font-family: inherit; }
 .sub-wechat:active { transform: scale(0.985); }
 .sub-wechat-ic { width: 18px; height: 18px; object-fit: contain; }
 
+/* ── Site-wide subscribe modal ─────────────────────────── */
+.sm-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(28, 25, 21, 0.55); backdrop-filter: blur(5px);
+  display: flex; align-items: center; justify-content: center; padding: 24px;
+  animation: wq-fade 0.2s ease;
+}
+.sm-modal {
+  position: relative; background: var(--surface);
+  border-radius: 22px; border-top: 5px solid var(--honey);
+  padding: 34px 36px 30px; max-width: 640px; width: 100%;
+  box-shadow: var(--lift);
+  max-height: calc(100vh - 48px); overflow-y: auto;
+}
+.sm-x {
+  position: absolute; top: 14px; right: 16px;
+  border: none; background: none; cursor: pointer;
+  font-size: 24px; line-height: 1; color: var(--ink-3);
+  padding: 4px; transition: color var(--ease);
+}
+.sm-x:hover { color: var(--ink); }
+.sm-head { text-align: center; margin-bottom: 26px; }
+.sm-plane { width: 46px; height: auto; margin: 0 auto 10px; transform: rotate(-8deg); }
+.sm-title {
+  font-family: var(--font-serif); font-weight: 600;
+  font-size: clamp(20px, 3vw, 26px); letter-spacing: -0.5px; color: var(--ink);
+}
+.sm-sub { font-size: 13px; color: var(--ink-2); margin-top: 8px; }
+.sm-body { display: flex; align-items: stretch; gap: 22px; }
+.sm-col { flex: 1; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.sm-col-k {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--honey-600);
+}
+.sm-form { display: flex; flex-direction: column; gap: 9px; }
+.sm-email {
+  width: 100%; padding: 12px 14px; border-radius: var(--r-sm);
+  border: 1px solid var(--line); background: var(--paper);
+  font-family: var(--font-sans); font-size: 14px; color: var(--ink);
+}
+.sm-email:focus { outline: none; border-color: var(--honey); }
+.sm-btn {
+  width: 100%; padding: 13px; border-radius: var(--r-sm); border: none;
+  background: var(--ink); color: #fff; cursor: pointer;
+  font-family: var(--font-sans); font-size: 14px; font-weight: 600;
+  transition: background var(--ease), transform var(--ease);
+}
+.sm-btn:hover { background: #000; }
+.sm-btn:active { transform: scale(0.985); }
+.sm-fine { font-size: 11.5px; color: var(--ink-3); font-style: italic; line-height: 1.5; }
+.sm-success { font-size: 14px; font-weight: 600; color: #3a7d44; padding: 12px 0; }
+.sm-error { font-size: 12px; color: #c0392b; }
+.sm-or {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  color: var(--ink-4); font-size: 12px; gap: 8px;
+}
+.sm-or::before, .sm-or::after { content: ""; flex: 1; width: 1px; background: var(--line); }
+.sm-col-wx { align-items: center; text-align: center; }
+.sm-qr {
+  width: 132px; height: 132px; object-fit: contain;
+  border-radius: 12px; border: 1px solid var(--line);
+}
+@media (max-width: 560px) {
+  .sm-modal { padding: 28px 22px 24px; }
+  .sm-body { flex-direction: column; gap: 16px; }
+  .sm-or { flex-direction: row; }
+  .sm-or::before, .sm-or::after { height: 1px; width: auto; }
+}
+
+/* Sidebar subscribe CTA (opens the modal) */
+.sub-cta-main {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%; padding: 14px; border-radius: var(--r-sm); border: none;
+  background: var(--ink); color: #fff; cursor: pointer;
+  font-family: var(--font-sans); font-size: 14px; font-weight: 600; letter-spacing: 0.01em;
+  transition: background var(--ease), transform var(--ease);
+}
+.sub-cta-main .arr { color: var(--honey); transition: transform var(--ease); }
+.sub-cta-main:hover { background: #000; }
+.sub-cta-main:hover .arr { transform: translateX(4px); }
+.sub-cta-main:active { transform: scale(0.985); }
+
 /* ── Shared WeChat QR modal ────────────────────────────── */
 .wq-overlay {
   position: fixed; inset: 0; z-index: 9999;
@@ -318,14 +400,10 @@ button { font-family: inherit; }
 }
 .pcard-badge .bu { font-weight: 500; opacity: 0.75; font-size: 10.5px; margin-left: 3px; }
 
-/* Growth sparkline */
-.pcard-chart { position: relative; width: 100%; height: 62px; }
-.spark { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.spark-reveal { clip-path: inset(0 100% 0 0); }
-.pcard:hover .spark-reveal { animation: drawSpark var(--draw, 1s) cubic-bezier(0.4, 0, 0.15, 1) forwards; }
-@keyframes drawSpark { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
-@media (prefers-reduced-motion: reduce) {
-  .pcard:hover .spark-reveal { animation: none; clip-path: inset(0 0 0 0); }
+/* Brewing line under project grid */
+.brewing {
+  margin-top: 18px; font-size: 12px; color: var(--ink-3);
+  letter-spacing: 0.03em; font-style: italic;
 }
 
 /* ── Project card ─────────────────────────────────────── */
@@ -440,7 +518,7 @@ button { font-family: inherit; }
 }
 .blog-cta {
   display: flex; align-items: center; justify-content: center; gap: 10px;
-  width: 100%; padding: 14px; border-radius: var(--r-sm);
+  width: 100%; padding: 14px; border-radius: var(--r-sm); border: none; cursor: pointer;
   background: var(--ink); color: #fff; font-family: var(--font-sans);
   font-size: 14px; font-weight: 600; letter-spacing: 0.01em;
   transition: background var(--ease), transform var(--ease);

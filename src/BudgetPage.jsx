@@ -9,9 +9,11 @@
 
 import { useState } from "react";
 import BudgetTool from "./BudgetTool.jsx";
-import WechatModal from "./WechatModal.jsx";
+import SubscribeModal from "./SubscribeModal.jsx";
+import { tr as trBase } from "./i18n.jsx";
 
-const tr = (lang, zh, en) => (lang === "zh" ? zh : en);
+// 位置参数保持不变；繁体由 i18n 运行时转换
+const tr = (lang, zh, en) => trBase({ zh, en }, lang);
 
 // "Money OS" is the through-line of the whole page — make it pop wherever it appears.
 function moneyOS(text) {
@@ -83,7 +85,8 @@ export default function BudgetPage({ lang, setLang, onBack, onNavigate }) {
           <span className="bpx-tag">{c.tag}</span>
         </button>
         <div className="bpx-lang">
-          <button className={lang === "zh" ? "on" : ""} onClick={() => setLang("zh")}>中</button>
+          <button className={lang === "zh" ? "on" : ""} onClick={() => setLang("zh")}>简</button>
+          <button className={lang === "tw" ? "on" : ""} onClick={() => setLang("tw")}>繁</button>
           <button className={lang === "en" ? "on" : ""} onClick={() => setLang("en")}>EN</button>
         </div>
       </div>
@@ -203,7 +206,7 @@ export default function BudgetPage({ lang, setLang, onBack, onNavigate }) {
       </div>
 
       {/* ══ THE TOOL ══ */}
-      <BudgetTool lang={lang} />
+      <BudgetTool lang={lang === "tw" ? "zh" : lang} />
 
       {/* ══ CTA — Money OS step 1 ══ */}
       <div className="bpx-cta-band">
@@ -253,7 +256,7 @@ export default function BudgetPage({ lang, setLang, onBack, onNavigate }) {
         </div>
       </div>
 
-      {wechatOpen && <WechatModal lang={lang} onClose={() => setWechatOpen(false)} />}
+      {wechatOpen && <SubscribeModal lang={lang} onClose={() => setWechatOpen(false)} />}
     </div>
   );
 }

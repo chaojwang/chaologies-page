@@ -1,4 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
+
+// 試讀區組件 + books.json 走動態 chunk（import()），不拖慢 landing 首屏
+const ReadingMap = lazy(() => import("./ReadingMap.jsx"));
 
 // ─────────────────────────────────────────────────────
 //  ReadingMapPage — 超說閱讀地圖 · Chaologies Reading Map
@@ -13,32 +16,39 @@ const COPY = {
   zh: {
     navTitle: "超說閱讀地圖 · Reading Map",
     eyebrow: "CHAOLOGIES · READING OS",
-    heroL1: "不是書單，",
-    heroL2: "是一張幫你建立",
-    heroHL: "思考系統",
-    heroMid: "的",
-    heroL3: "閱讀地圖。",
-    heroSub: "101+ 本真正參與過我成長的書，整理成一套可以反復使用的 Reading OS。\n不只告訴你讀什麼，更告訴你：怎麼把一本書變成判斷、行動和真實的改變。",
+    heroL1: "用 20 分鐘，",
+    heroL2: "讀懂一本好書",
+    heroHL: "真正值得帶走",
+    heroMid: "的東西。",
+    heroL3: "",
+    heroSub: "101+ 本關於金錢、創作、生活、關係和自我成長的好書，\n整理成一張張可以快速閱讀的認知卡片。",
     heroCta: "立即獲取閱讀地圖",
-    heroSecondary: "地圖持續更新中，訂閱通知 →",
-    bandQuote: "一本書沒有進入你的生活，就還沒有真正被讀完。",
+    heroSecondary: "先免費試讀 6 本，不用註冊 →",
+    bandQuote: "很多人不是不想讀書。\n是一本書太厚，時間太碎，讀完只記得幾句話。",
 
     probEyebrow: "為什麼是「地圖」",
-    probTitle: "我們收藏過太多書單了。",
-    probBody: "我們畫線、標註、截圖、收藏。\n當下覺得很有用，過幾天又慢慢忘了。\n\n普通書單只告訴你「這本書很好」，\n卻不告訴你：它解決什麼問題、\n該在什麼階段讀、讀完可以馬上做什麼。\n\n所以我把閱讀做成了一張地圖——\n每本書都是一個可以反復回來的節點。\n面對金錢、工作、創作和生活選擇時，\n你隨時能從裡面取出可以用的東西。",
+    probTitle: "你缺的不是書，是入口。",
+    probBody: "缺書、缺信息、缺工具，\n從來都不是我們的問題。\n\n真正缺的，是把一本書變成\n判斷、行動和生活改變的那個入口。\n\n所以我把閱讀做成了一張地圖——\n每本書都是一個可以反復回來的節點，\n你隨時能從裡面取出可以用的東西。",
     mapCaption: "圍繞七個維度展開：你每天真正要面對的東西",
+    mapCaption2: "地圖內按 12 種能力檢索每一本書",
 
-    layerEyebrow: "地圖的結構",
-    layerTitle: "每一本書，都被整理成六層",
-    layerSub: "不是書摘，是一個真實的人讀完之後留下來的判斷、經驗和行動線索。",
+    layerEyebrow: "打開一張認知卡片",
+    layerTitle: "15–20 分鐘，看清最值得帶走的部分",
+    layerSub: "",
 
-    useEyebrow: "怎麼用它",
-    useTitle: "一張可以一直回來的地圖",
+    useEyebrow: "它不替代閱讀",
+    useTitle: "而是幫你先找到入口",
+    band2Quote: "只要帶走一個認知、一個問題、一個小練習，\n這本書就已經開始和你的生活發生關係。",
+
+    tryEyebrow: "免費試讀",
+    tryTitle: "先試讀 6 本 ↓",
+    trySub: "不用註冊，直接翻。喜歡，再到下面選一個渠道進入完整地圖。",
 
     buyEyebrow: "101+ 本 · 持續生長中",
     buyTitle: "現在就進入這張地圖",
     buyNote: "101+ 本書的精華筆記與指南，選擇你習慣的平台獲取。",
     buyGo: "立即獲取",
+    buyAllNote: "三個渠道交付內容一致：網頁版 + Notion 模板 + 飛書多維表格，一次購買全部拿到。",
     buyCn: "國內首選",
     buyIntl: "國際",
     buyRed: "國內",
@@ -58,32 +68,39 @@ const COPY = {
   en: {
     navTitle: "Chaologies Reading Map",
     eyebrow: "CHAOLOGIES · READING OS",
-    heroL1: "Not another booklist.",
-    heroL2: "A map for building ",
-    heroHL: "how you think",
+    heroL1: "In 20 minutes,",
+    heroL2: "take away what a great book is ",
+    heroHL: "truly worth keeping",
     heroMid: ".",
     heroL3: "",
-    heroSub: "101+ books that genuinely shaped me, organized into a Reading OS you can return to again and again.\nNot just what to read — how a book becomes judgment, action, and real change.",
+    heroSub: "101+ books on money, creativity, life, relationships and growth —\ndistilled into insight cards you can actually read fast.",
     heroCta: "Get the Reading Map",
-    heroSecondary: "The map keeps growing — get updates →",
-    bandQuote: "A book isn't truly finished until it enters your life.",
+    heroSecondary: "Preview 6 books free — no sign-up →",
+    bandQuote: "It's not that we don't want to read.\nBooks are thick, time is scattered — and a week later, only a few lines remain.",
 
     probEyebrow: "WHY A MAP",
-    probTitle: "We've all saved too many booklists.",
-    probBody: "We highlight, annotate, screenshot, save.\nIt feels useful in the moment — then quietly fades.\n\nAn ordinary booklist only says \"this book is good\".\nIt never tells you what problem it solves,\nwhen in life to read it, or what to do when you finish.\n\nSo I turned reading into a map —\nwhere every book is a node you can return to.\nWhen you face money, work, creativity and life choices,\nthere's always something in here you can actually use.",
+    probTitle: "You're not short on books. You're short on an entry point.",
+    probBody: "More books, more information, more tools —\nthat was never the problem.\n\nWhat's missing is the entry point that turns a book\ninto judgment, action and real change.\n\nSo I turned reading into a map —\nevery book is a node you can return to,\nwith something you can actually use, anytime.",
     mapCaption: "Unfolds along seven dimensions: the things you actually face every day",
+    mapCaption2: "Inside the map, every book is indexed by 12 abilities",
 
-    layerEyebrow: "HOW THE MAP IS BUILT",
-    layerTitle: "Every book is distilled into six layers",
-    layerSub: "Not summaries — the judgments, experience and action threads one real person kept after reading.",
+    layerEyebrow: "OPEN AN INSIGHT CARD",
+    layerTitle: "In 15–20 minutes, see what's truly worth taking away",
+    layerSub: "",
 
-    useEyebrow: "HOW TO USE IT",
-    useTitle: "A map you keep coming back to",
+    useEyebrow: "NOT A REPLACEMENT FOR READING",
+    useTitle: "It helps you find your way in",
+    band2Quote: "Take away one idea, one question or one small exercise —\nand the book has already become part of your life.",
+
+    tryEyebrow: "FREE PREVIEW",
+    tryTitle: "Try 6 books first ↓",
+    trySub: "No sign-up — just browse. Like it? Pick a channel below to enter the full map.",
 
     buyEyebrow: "101+ BOOKS · STILL GROWING",
     buyTitle: "Step into the map today",
     buyNote: "Distilled notes & guides from 101+ books. Pick the platform you prefer.",
     buyGo: "Get it now",
+    buyAllNote: "All three channels deliver the same bundle: web version + Notion template + Feishu Base — one purchase, everything included.",
     buyCn: "China (Recommended)",
     buyIntl: "International",
     buyRed: "China",
@@ -113,23 +130,21 @@ const DIMENSIONS = [
   { zh: "自我", en: "Self" },
 ];
 
-// 每本书的六层结构
+// 一張認知卡片幫你看清的六件事（只放大標題，不堆小字）
 const LAYERS = [
-  { n: "壹", zh: "這本書在解決什麼問題", en: "What problem this book solves", dzh: "先看問題，再看書。你會知道自己為什麼需要它。", den: "Problem first, book second — so you know why you need it." },
-  { n: "貳", zh: "一句話總結", en: "One-line summary", dzh: "整本書留下來的那一句，忘掉全書也不會忘掉它。", den: "The one sentence that survives even after you forget the rest." },
-  { n: "叁", zh: "三個真正留下來的核心認知", en: "Three ideas that actually stayed", dzh: "不是金句摘抄，是過了很久還在影響我的三個認知。", den: "Not quotable lines — the three ideas still shaping me long after." },
-  { n: "肆", zh: "它改變了我什麼判斷", en: "How it changed my judgment", dzh: "讀之前我怎麼想，讀之後我怎麼做。真實的變化。", den: "How I thought before, what I do differently now. Real change." },
-  { n: "伍", zh: "適合在哪個人生階段讀", en: "When in life to read it", dzh: "同一本書，在不同階段讀，是兩本書。時機很重要。", den: "The same book reads differently at different stages. Timing matters." },
-  { n: "陸", zh: "讀完可以馬上做的小練習", en: "A small exercise to do right away", dzh: "合上書的十分鐘裡，就能做的一件小事。", den: "One small thing to do within ten minutes of closing the book." },
+  { n: "壹", zh: "它適不適合你", en: "Is it for you" },
+  { n: "貳", zh: "它解決什麼問題", en: "What problem it solves" },
+  { n: "叁", zh: "最重要的 3 個認知", en: "The 3 ideas that matter most" },
+  { n: "肆", zh: "值得反覆看的句子", en: "Lines worth rereading" },
+  { n: "伍", zh: "我讀完後具體改變了什麼", en: "What it actually changed for me" },
+  { n: "陸", zh: "一個馬上能做的小練習", en: "One small exercise to do right now" },
 ];
 
-// 使用场景
-const USE_CASES = [
-  { emoji: "🧭", zh: "不知道下一本讀什麼時，按你的人生階段找書。", en: "Don't know what to read next? Find it by your stage of life." },
-  { emoji: "🌫️", zh: "對金錢、職業、生活感到混亂時，按主題找入口。", en: "Money, career or life feels foggy? Enter by theme." },
-  { emoji: "🎬", zh: "想做內容缺少角度時，找可延展的視頻和文章選題。", en: "Creating content? Pull extendable topics and angles." },
-  { emoji: "🏃", zh: "讀完不知道怎麼應用時，找對應的行動練習。", en: "Finished a book? Find its action exercise." },
-  { emoji: "🌱", zh: "想建立判斷力時，把它當成長期的思考系統。", en: "Building judgment? Treat it as a long-term thinking system." },
+// 三個入口：不替代閱讀，幫你決定下一步
+const ENTRIES = [
+  { zh: "哪本書，值得你繼續讀完", en: "Which book deserves your full read" },
+  { zh: "哪本書，現在就能給你一點啟發", en: "Which book can spark something today" },
+  { zh: "哪本書，剛好能回答你此刻的問題", en: "Which book answers the question you're holding right now" },
 ];
 
 // 销售入口
@@ -140,7 +155,7 @@ const PURCHASE = [
 ];
 
 // ── 地图视觉：中心一本书，虚线连向七个维度节点 ──
-function MapVisual({ lang, caption }) {
+function MapVisual({ lang, caption, caption2 }) {
   const nodes = [
     { x: 95, y: 78 }, { x: 262, y: 46 }, { x: 428, y: 82 },
     { x: 462, y: 222 }, { x: 372, y: 340 }, { x: 158, y: 348 }, { x: 58, y: 218 },
@@ -174,6 +189,7 @@ function MapVisual({ lang, caption }) {
         })}
       </svg>
       <p style={{ textAlign: "center", fontFamily: SERIF, fontSize: 12.5, color: "#a49c90", margin: "10px 0 4px", letterSpacing: ".04em" }}>{caption}</p>
+      {caption2 && <p style={{ textAlign: "center", fontFamily: SANS, fontSize: 11, color: "#c4bcaf", margin: "0 0 4px", letterSpacing: ".04em" }}>{caption2}</p>}
     </div>
   );
 }
@@ -303,7 +319,7 @@ export default function ReadingMapPage({ lang: initialLang = "zh", setLang: setP
                 onMouseEnter={(e) => { e.currentTarget.style.background = "#c8881a"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = "#e4a11b"; }}
               >{c.heroCta} →</a>
-              <a href="#updates" style={{ color: "#8a8276", fontSize: 14, textDecoration: "none", borderBottom: "1px solid #c4bcaf", paddingBottom: 1 }}
+              <a href="#free-preview" style={{ color: "#8a8276", fontSize: 15, fontWeight: 600, textDecoration: "none", borderBottom: "1px solid #c4bcaf", paddingBottom: 1 }}
                 onMouseEnter={(e) => { e.currentTarget.style.color = "#3a352e"; e.currentTarget.style.borderColor = "#6b645b"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.color = "#8a8276"; e.currentTarget.style.borderColor = "#c4bcaf"; }}
               >{c.heroSecondary}</a>
@@ -321,20 +337,20 @@ export default function ReadingMapPage({ lang: initialLang = "zh", setLang: setP
         </div>
       </section>
 
-      {/* QUOTE BAND */}
-      <div style={{ background: "#1c1915", padding: "32px 40px", textAlign: "center" }}>
-        <p style={{ fontFamily: SERIF, fontSize: "clamp(17px,2.4vw,22px)", lineHeight: 1.6, color: "#f4f2ec", letterSpacing: ".05em", margin: 0 }}>{c.bandQuote}</p>
+      {/* QUOTE BAND — 共情句 */}
+      <div style={{ background: "#1c1915", padding: "44px 40px", textAlign: "center" }}>
+        <p style={{ fontFamily: SERIF, fontSize: "clamp(19px,2.8vw,27px)", lineHeight: 1.75, color: "#f4f2ec", letterSpacing: ".05em", margin: 0, whiteSpace: "pre-line" }}>{c.bandQuote}</p>
       </div>
 
       {/* PROBLEM — 左地图视觉 + 右短文案 */}
       <section style={{ background: "#fff", padding: "80px 40px" }}>
         <div style={{ maxWidth: 1080, margin: "0 auto" }}>
           <div className="rm-prob">
-            <MapVisual lang={lang} caption={c.mapCaption} />
+            <MapVisual lang={lang} caption={c.mapCaption} caption2={c.mapCaption2} />
             <div>
               <div style={eyebrowStyle}>{c.probEyebrow}</div>
-              <h2 style={{ fontFamily: SERIF, fontWeight: 700, fontSize: "clamp(24px,3.2vw,32px)", lineHeight: 1.3, color: "#1c1915", letterSpacing: "-.4px", margin: "0 0 22px" }}>{c.probTitle}</h2>
-              <p style={{ fontFamily: SERIF, fontSize: 15.5, lineHeight: 1.95, color: "#3a352e", whiteSpace: "pre-line", margin: 0 }}>{c.probBody}</p>
+              <h2 style={{ fontFamily: SERIF, fontWeight: 700, fontSize: "clamp(26px,3.4vw,36px)", lineHeight: 1.35, color: "#1c1915", letterSpacing: "-.4px", margin: "0 0 22px" }}>{c.probTitle}</h2>
+              <p style={{ fontFamily: SERIF, fontSize: 17, lineHeight: 2, color: "#3a352e", whiteSpace: "pre-line", margin: 0 }}>{c.probBody}</p>
             </div>
           </div>
         </div>
@@ -345,40 +361,58 @@ export default function ReadingMapPage({ lang: initialLang = "zh", setLang: setP
         <div style={{ maxWidth: 960, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 42 }}>
             <div style={eyebrowStyle}>{c.layerEyebrow}</div>
-            <h2 style={{ fontFamily: SERIF, fontWeight: 700, fontSize: "clamp(25px,3.4vw,34px)", lineHeight: 1.3, letterSpacing: "-.4px", margin: "0 0 12px" }}>{c.layerTitle}</h2>
-            <p style={{ fontSize: 14.5, color: "#6b645b", maxWidth: "46ch", margin: "0 auto", lineHeight: 1.7 }}>{c.layerSub}</p>
+            <h2 style={{ fontFamily: SERIF, fontWeight: 700, fontSize: "clamp(26px,3.6vw,36px)", lineHeight: 1.3, letterSpacing: "-.4px", margin: 0 }}>{c.layerTitle}</h2>
+            {c.layerSub && <p style={{ fontSize: 14.5, color: "#6b645b", maxWidth: "46ch", margin: "12px auto 0", lineHeight: 1.7 }}>{c.layerSub}</p>}
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(270px, 1fr))", gap: 14 }}>
             {LAYERS.map((l, i) => (
-              <div key={i} className="rm-layer">
-                <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 9 }}>
-                  <span style={{ fontFamily: SERIF, fontSize: 13, color: "#a49c90", border: "1px solid #e0d9cb", borderRadius: "50%", width: 26, height: 26, display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{l.n}</span>
-                  <h3 style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 17, lineHeight: 1.4, color: "#1c1915", margin: 0 }}>{lang === "zh" ? l.zh : l.en}</h3>
-                </div>
-                <p style={{ fontSize: 13.5, lineHeight: 1.65, color: "#6b645b", margin: 0 }}>{lang === "zh" ? l.dzh : l.den}</p>
+              <div key={i} className="rm-layer" style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                <span style={{ fontFamily: SERIF, fontSize: 14, color: "#a49c90", border: "1px solid #e0d9cb", borderRadius: "50%", width: 30, height: 30, display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{l.n}</span>
+                <h3 style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 19.5, lineHeight: 1.45, color: "#1c1915", margin: 0 }}>{lang === "zh" ? l.zh : l.en}</h3>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* USE CASES — 紧凑两列 */}
+      {/* ENTRIES — 不替代閱讀，三個入口 */}
       <section style={{ background: "#fff", padding: "76px 40px" }}>
-        <div style={{ maxWidth: 860, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: 36 }}>
+        <div style={{ maxWidth: 680, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 38 }}>
             <div style={eyebrowStyle}>{c.useEyebrow}</div>
-            <h2 style={{ fontFamily: SERIF, fontWeight: 700, fontSize: "clamp(25px,3.4vw,34px)", lineHeight: 1.3, letterSpacing: "-.4px", margin: 0 }}>{c.useTitle}</h2>
+            <h2 style={{ fontFamily: SERIF, fontWeight: 700, fontSize: "clamp(26px,3.6vw,36px)", lineHeight: 1.3, letterSpacing: "-.4px", margin: 0 }}>{c.useTitle}</h2>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 12 }}>
-            {USE_CASES.map((u, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 13, background: "#f9f7f1", border: "1px solid #efebe2", borderRadius: 13, padding: "16px 18px" }}>
-                <span style={{ fontSize: 19, flexShrink: 0 }}>{u.emoji}</span>
-                <span style={{ fontSize: 14, lineHeight: 1.65, color: "#3a352e" }}>{lang === "zh" ? u.zh : u.en}</span>
+          <div style={{ display: "grid", gap: 14 }}>
+            {ENTRIES.map((u, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "center", gap: 16, background: "#f9f7f1", border: "1px solid #efebe2", borderRadius: 13, padding: "20px 24px" }}>
+                <span style={{ fontFamily: SANS, fontSize: 12, fontWeight: 700, color: "#c8881a", letterSpacing: ".08em", flexShrink: 0 }}>0{i + 1}</span>
+                <span style={{ fontFamily: SERIF, fontSize: "clamp(16.5px,2.2vw,19.5px)", fontWeight: 600, lineHeight: 1.6, color: "#1c1915" }}>{lang === "zh" ? u.zh : u.en}</span>
               </div>
             ))}
           </div>
         </div>
       </section>
+
+      {/* FREE PREVIEW — 試讀區：嵌入 ReadingMap，前 6 本免費全覽 */}
+      <section id="free-preview" style={{ background: "#f4f2ec", borderTop: "0.5px solid #e7e2d8", padding: "76px 0 56px" }}>
+        <div style={{ textAlign: "center", padding: "0 24px", marginBottom: 30 }}>
+          <div style={eyebrowStyle}>{c.tryEyebrow}</div>
+          <h2 style={{ fontFamily: SERIF, fontWeight: 700, fontSize: "clamp(25px,3.4vw,34px)", lineHeight: 1.3, letterSpacing: "-.4px", margin: "0 0 12px" }}>{c.tryTitle}</h2>
+          <p style={{ fontSize: 14.5, color: "#6b645b", maxWidth: "46ch", margin: "0 auto", lineHeight: 1.7 }}>{c.trySub}</p>
+        </div>
+        <Suspense fallback={<div style={{ minHeight: 320, display: "grid", placeItems: "center", color: "#a49c90", fontSize: 14 }}>…</div>}>
+          <ReadingMap
+            embedded
+            freePreview={6}
+            onLockedClick={() => document.getElementById("map-entry")?.scrollIntoView({ behavior: "smooth" })}
+          />
+        </Suspense>
+      </section>
+
+      {/* QUOTE BAND 2 — 帶走一個認知，就開始發生關係 */}
+      <div style={{ background: "#1c1915", padding: "44px 40px", textAlign: "center" }}>
+        <p style={{ fontFamily: SERIF, fontSize: "clamp(19px,2.8vw,27px)", lineHeight: 1.75, color: "#f4f2ec", letterSpacing: ".05em", margin: 0, whiteSpace: "pre-line" }}>{c.band2Quote}</p>
+      </div>
 
       {/* PURCHASE — 主转化区 */}
       <section id="map-entry" style={{ background: "#f7eacf", padding: "80px 40px" }}>
@@ -399,6 +433,7 @@ export default function ReadingMapPage({ lang: initialLang = "zh", setLang: setP
               </a>
             ))}
           </div>
+          <p style={{ fontSize: 13, color: "#8a8276", lineHeight: 1.7, maxWidth: 560, margin: "20px auto 0" }}>{c.buyAllNote}</p>
         </div>
       </section>
 

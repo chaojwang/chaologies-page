@@ -44,7 +44,7 @@ export const siteData = {
       name: "Instagram",
       nameZh: "Instagram",
       handle: "Chaologies",
-      followers: "537",
+      followers: "",
       logoUrl: "/icons/instagram.png",
       url: "https://instagram.com/chaologies",
     },
@@ -115,7 +115,7 @@ export const siteData = {
     },
     {
       icon: "🗺️",
-      title: { en: "Chaologies Reading Map", zh: "超說閱讀地圖" },
+      title: { en: "Chaologies Reading Map", zh: "超说阅读地图" },
       desc: {
         en: "Not a booklist — a map that turns 101+ books into your own thinking system.",
         zh: "不是书单，是一张把 101+ 本好书变成思考系统的阅读地图。",
@@ -175,50 +175,6 @@ export const siteData = {
       platform: "Notion",
       url: null,
       links: [{ url: "/newsletter", platform: "Web", label: { en: "Join waitlist →", zh: "加入等待清单 →" } }],
-    },
-    {
-      icon: "✦",
-      title: { en: "Liangxiang · 亮相", zh: "亮相 Liangxiang" },
-      desc: {
-        en: "A showcase for Chinese-language creators.",
-        zh: "一个给华语创作者展示作品的地方。",
-      },
-      status: "soon",
-      platform: null,
-      url: null,
-    },
-    {
-      icon: "🗣️",
-      title: { en: "30-Day English Speaking Plan", zh: "30 天口语养成计划" },
-      desc: {
-        en: "E-book + Notion Template + Community.",
-        zh: "E-book + Notion Template + 社群。",
-      },
-      status: "soon",
-      platform: "Notion",
-      url: null,
-    },
-    {
-      icon: "🍁",
-      title: { en: "Canadian Departure Guide", zh: "加拿大离境指南" },
-      desc: {
-        en: "Essential e-book for returning to your home country.",
-        zh: "回流人士必备的出境指南。",
-      },
-      status: "soon",
-      platform: "Ebook",
-      url: null,
-    },
-    {
-      icon: "🍁",
-      title: { en: "Canadian Arrival Guide", zh: "加拿大入境指南" },
-      desc: {
-        en: "Tax, finance, and living in Canada guide.",
-        zh: "税务、财务和加拿大理财生活指南。",
-      },
-      status: "soon",
-      platform: "Ebook",
-      url: null,
     },
   ],
 };
