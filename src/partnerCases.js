@@ -287,7 +287,7 @@ export const PARTNER_CASES = [
     id: "moft-productivity",
     brand: "moft",
     title: "我的极简主义效率系统｜66 天习惯挑战",
-    kind: { zh: "效率系统", en: "Productivity system" },
+    kind: { zh: "英文产品内容", en: "English product story" },
     youtube: yt("tTv1OgJrWEA"),
     youtubeId: "tTv1OgJrWEA",
     bilibili: bili("BV1S2SsYHEQo"),
@@ -301,15 +301,27 @@ export const PARTNER_CASES = [
     youtubeId: "EmdU-GBWNf4",
     bilibili: bili("BV17H4y1B7fN"),
   },
+
+  {
+    id: "chaologies-english",
+    brand: "chaologies",
+    brandName: "Chaologies · English",
+    title: "靠这一招，我练出了流利的英文",
+    kind: { zh: "英文内容样片", en: "English-language sample" },
+    youtube: yt("ZeQVsbCZF8I"),
+    youtubeId: "ZeQVsbCZF8I",
+  },
 ];
 
 export const FEATURED_CASE_IDS = [
   "sony-g-master",
+  "bellroy-life-update",
   "dji-vlogging-kit",
-  "dji-romo-hidden",
-  "insta360-go3",
-  "tumi-investment",
-  "bellroy-travel-system",
+  "insta360-eyes",
+  "dji-romo-launch",
+  "steelcase-posture",
+  "chaologies-english",
+  "moft-productivity",
 ];
 
 export const getBrand = (slug) => PARTNER_BRANDS.find((brand) => brand.slug === slug);

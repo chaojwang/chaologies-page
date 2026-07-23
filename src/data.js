@@ -104,10 +104,10 @@ export const siteData = {
   projects: [
     {
       icon: "💰",
-      title: { en: "The 1st Step of Financial Freedom", zh: "财富自由之路的第一步" },
+      title: { en: "The 50 / 30 / 20 Rule", zh: "50 / 30 / 20 法则" },
       desc: {
-        en: "Stop wondering where your money went. Start seeing where your life is going.",
-        zh: "看清钱的走向，才能掌握未来的方向。",
+        en: "The first step toward financial freedom.",
+        zh: "财富自由之路的第一步。",
       },
       status: "active",
       platform: "chaologies",
@@ -117,8 +117,8 @@ export const siteData = {
       icon: "🗺️",
       title: { en: "Chaologies Reading Map", zh: "超说阅读地图" },
       desc: {
-        en: "Not a booklist — a map that turns 101+ books into your own thinking system.",
-        zh: "不是书单，是一张把 101+ 本好书变成思考系统的阅读地图。",
+        en: "Turn 101 good books into your own thinking system.",
+        zh: "把 101 本好书变成你的思考系统。",
       },
       status: "active",
       platform: "Notion",
@@ -127,10 +127,10 @@ export const siteData = {
     },
     {
       icon: "🗓",
-      title: { en: "The Minimal Weekly System", zh: "极简每周效率系统" },
+      title: { en: "My Minimalist Weekly Template", zh: "我的极简主义效率模板" },
       desc: {
-        en: "One simple template to make the week feel clear.",
-        zh: "Notion模板，每周一次，每次十分钟",
+        en: "Ten minutes a week to see what matters and plan the week clearly.",
+        zh: "每周花十分钟，理清重点和时间安排。",
       },
       status: "active",
       platform: "Notion",
@@ -139,10 +139,10 @@ export const siteData = {
     },
     {
       icon: "🎬",
-      title: { en: "Final Cut Pro X", zh: "Final Cut Pro X" },
+      title: { en: "Final Cut Pro X Video Editing", zh: "Final Cut Pro X 视频剪辑" },
       desc: {
-        en: "Edit with rhythm, story, and taste.",
-        zh: "不只是会剪，而是学会用画面讲故事。",
+        en: "The best video editing software on the Mac. No contest.",
+        zh: "最好用的苹果视频剪辑软件，没有之一。",
       },
       status: "active",
       platform: "Video",
@@ -152,12 +152,12 @@ export const siteData = {
     {
       icon: "🏦",
       title: {
-        en: "Business Action Bank",
-        zh: "商业行动银行 Action Bank",
+        en: "From Idea to First Revenue",
+        zh: "从想法到第一笔收入",
       },
       desc: {
-        en: "100+ business books distilled into insights, examples and exercises you can act on today.",
-        zh: "100+ 本商业书，拆成可以马上执行的启发、案例和练习。",
+        en: "Turn 100+ business books into a practical library for finding direction, testing ideas, and starting to earn.",
+        zh: "把 100+ 本商业书，变成找方向、验证想法和开始创收的行动库。",
       },
       status: "active",
       platform: "Notion",
@@ -168,8 +168,8 @@ export const siteData = {
       icon: "💳",
       title: { en: "7-Day Money OS Starter Plan", zh: "7 天 Money OS 入门计划" },
       desc: {
-        en: "A 7-day personal finance reset — built on strategies of the 1%, designed for you.",
-        zh: "7 天个人财务整理计划，顶层富人的理财逻辑，为你重新设计。",
+        en: "Seven days to see your cash flow clearly and build a money system you can keep using.",
+        zh: "用 7 天理清现金流，建立一套能长期使用的金钱系统。",
       },
       status: "active",
       platform: "Notion",

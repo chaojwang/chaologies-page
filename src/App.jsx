@@ -19,6 +19,7 @@ import ReadingMapPage from "./ReadingMapPage.jsx";
 import ReadingMapThanksPage from "./ReadingMapThanksPage.jsx";
 import SubscribeModal from "./SubscribeModal.jsx";
 import PartnerPage from "./PartnerPage.jsx";
+import CreatorAcademyPage from "./CreatorAcademyPage.jsx";
 import { tr, useTw, LangToggle } from "./i18n.jsx";
 
 // 買家完整版（含 books.json）走動態 chunk，不進主包
@@ -114,9 +115,9 @@ const PLATFORM_ICON = {
   gumroad: "/icons/gumroad.png",
   bilibili: "/icons/bilibili.png",
   xiaohongshu: "/icons/xiaohongshu.png",
-  xiaoe: "🎓",
-  notion: "📄",
-  ebook: "📖",
+  xiaoe: "↗",
+  notion: "N",
+  ebook: "PDF",
 };
 
 const WEEKLY_FOCUS_PROJECT = {
@@ -137,18 +138,112 @@ const WEEKLY_FOCUS_PROJECT = {
   ],
 };
 
-function projectsWithWeeklyFocus(projects = []) {
-  const hasGenerator = projects.some((project) =>
-    /weekly focus|专注壁纸/i.test(`${project.title?.en || ""} ${project.title?.zh || ""}`),
-  );
-  if (hasGenerator) return projects;
+const CREATOR_ACADEMY_PROJECT = {
+  title: { en: "Creator Academy", zh: "创作者学院" },
+  desc: {
+    en: "Turn your experience into content, then use your personal brand and AI to create new opportunities.",
+    zh: "把你的经验变成内容，用个人品牌和 AI 为自己创造新的机会。",
+  },
+  status: "active",
+  badge: { en: "Waitlist", zh: "等待清单" },
+  links: [
+    {
+      url: "/creator-academy",
+      platform: "Web",
+      label: { en: "Join the waitlist →", zh: "加入等待清单 →" },
+    },
+  ],
+};
 
-  const weeklyIndex = projects.findIndex((project) =>
-    /minimal weekly|极简每周/i.test(`${project.title?.en || ""} ${project.title?.zh || ""}`),
-  );
-  const next = [...projects];
-  next.splice(weeklyIndex >= 0 ? weeklyIndex + 1 : 0, 0, WEEKLY_FOCUS_PROJECT);
-  return next;
+const CREATOR_MONEY_PROJECT = {
+  title: { en: "Side-Income Money Check", zh: "副业钱管家" },
+  desc: {
+    en: "Income is the inlet and spending is the outlet. You need control of both.",
+    zh: "收入是入水口，支出是出水口，两手都要硬。",
+  },
+  status: "active",
+  badge: { en: "Free tool", zh: "免费工具" },
+  links: [
+    {
+      url: "https://creator-money-starter-kit.chaologies.chatgpt.site",
+      platform: "Web",
+      label: { en: "Use free", zh: "免费使用" },
+    },
+  ],
+};
+
+function projectText(project) {
+  return [
+    project?.title?.en,
+    project?.title?.zh,
+    project?.links?.map((link) => link.url).join(" "),
+  ].filter(Boolean).join(" ");
+}
+
+function withProjectCopy(project, title, desc) {
+  return { ...project, title, desc };
+}
+
+function projectsWithWeeklyFocus(projects = []) {
+  const find = (pattern) => projects.find((project) => pattern.test(projectText(project)));
+  const budget = find(/\/budget|financial freedom|财富自由/i);
+  const moneyOs = find(/\/newsletter|money os/i);
+  const weekly = find(/\/notion-weekly|minimal weekly|极简每周/i);
+  const focus = find(/\/weekly-focus|weekly focus|专注壁纸/i) || WEEKLY_FOCUS_PROJECT;
+  const reading = find(/\/reading-map|reading map|阅读地图/i);
+  const action = find(/\/action-bank|action bank|行动银行/i);
+  const fcpx = find(/\/fcpx|final cut/i);
+
+  return [
+    budget && withProjectCopy(
+      budget,
+      { en: "The 50 / 30 / 20 Rule", zh: "50 / 30 / 20 法则" },
+      { en: "The first step toward financial freedom.", zh: "财富自由之路的第一步。" },
+    ),
+    CREATOR_MONEY_PROJECT,
+    weekly && withProjectCopy(
+      weekly,
+      { en: "My Minimalist Weekly Template", zh: "我的极简主义效率模板" },
+      {
+        en: "Ten minutes a week to see what matters and plan the week clearly.",
+        zh: "每周花十分钟，理清重点和时间安排。",
+      },
+    ),
+    focus,
+    reading && withProjectCopy(
+      reading,
+      { en: "Chaologies Reading Map", zh: "超说阅读地图" },
+      {
+        en: "Turn 101 good books into your own thinking system.",
+        zh: "把 101 本好书变成你的思考系统。",
+      },
+    ),
+    action && withProjectCopy(
+      action,
+      { en: "Business Idea Bank", zh: "商业想法银行" },
+      {
+        en: "Turn 100+ business books into a practical library for finding direction, testing ideas, and starting to earn.",
+        zh: "把 100+ 本商业书，变成找方向、验证想法和开始创收的行动库。",
+      },
+    ),
+    fcpx && withProjectCopy(
+      fcpx,
+      { en: "Final Cut Pro X Video Editing", zh: "Final Cut Pro X 视频剪辑" },
+      {
+        en: "The best video editing software on the Mac. No contest.",
+        zh: "最好用的苹果视频剪辑软件，没有之一。",
+      },
+    ),
+    CREATOR_ACADEMY_PROJECT,
+    moneyOs && withProjectCopy(
+      moneyOs,
+      { en: "7-Day Money OS Starter Plan", zh: "7 天 Money OS 入门计划" },
+      {
+        en: "Seven days to see your cash flow clearly and build a money system you can keep using.",
+        zh: "用 7 天理清现金流，建立一套能长期使用的金钱系统。",
+      },
+    ),
+  ].filter(Boolean);
 }
 
 // Homepage only shows active public social channels. Blog stays in the top nav;
@@ -231,7 +326,7 @@ function Profile({ lang, data }) {
         </div>
         <div className="bubble">
           <span className="bubble-t">{tr(COPY.bubble, lang)}</span>
-          <span className="wave">👋</span>
+          <span className="wave" role="img" aria-label={lang === "en" ? "Waving hello" : "挥手问好"}>👋</span>
         </div>
       </div>
 
@@ -348,7 +443,6 @@ function ProjectCard({ project, lang, onNavigate }) {
   return (
     <div className={`jcard ${isLive ? "live" : "dim"}`}>
       <div className="jcard-top">
-        <span className="jcard-emoji">{project.icon}</span>
         <span className={`status ${isLive ? "live" : "soon"}`}>
           {tr(project.badge, lang) || (isLive ? tr(COPY.live, lang) : tr(COPY.soon, lang))}
         </span>
@@ -377,17 +471,17 @@ function ProjectCard({ project, lang, onNavigate }) {
             return (
               <a
                 key={idx}
-                className="link-btn"
+                className={`link-btn ${label ? "link-btn-text" : ""}`}
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 title={link.platform}
               >
-                {isImg ? (
+                {label || (isImg ? (
                   <img className="link-icon" src={icon} alt={link.platform} />
                 ) : (
-                  icon || "🔗"
-                )}
+                  icon || "↗"
+                ))}
               </a>
             );
           })}
@@ -452,7 +546,7 @@ const pathToPage = (path) => {
   const pages = new Set([
     "/budget", "/blog", "/newsletter", "/fcpx", "/notion-weekly",
     "/weekly-focus", "/action-bank", "/reading-map", "/reading-map/access",
-    "/reading-map/thank-you",
+    "/reading-map/thank-you", "/creator-academy",
   ]);
   return pages.has(path) ? path : "home";
 };
@@ -593,6 +687,16 @@ export default function App() {
     return (
       <NewsletterPage
         lang={coerced}
+        setLang={setLang}
+        onBack={() => handleNavigate("home")}
+      />
+    );
+  }
+
+  if (currentPage === "/creator-academy") {
+    return (
+      <CreatorAcademyPage
+        lang={lang}
         setLang={setLang}
         onBack={() => handleNavigate("home")}
       />

@@ -22,13 +22,13 @@ const T = {
   eyebrow: { en: "For Brands · Selected Partnerships", zh: "品牌合作 · 案例与媒体资料" },
   h1a: { en: "Help", zh: "让" },
   h1num: { en: "470,000+", zh: "47 万+" },
-  h1b: {
-    en: "people understand why your product belongs in their lives.",
-    zh: "关注钱、效率与生活品质的人，真正看懂你的产品。",
+  h1line1: {
+    en: "people who care about living well",
+    zh: "关注生活品质的人",
   },
-  sub: {
-    en: "I'm Chao, a creator with five years of publishing experience and more than a decade in Big 4 tax consulting. I put products inside real questions and real use, then explain what they solve, who they suit, and where the trade-offs are.",
-    zh: "我是 Chao，做了 5 年内容，也有十多年四大会计师事务所财税咨询经验。我会把产品放进真实问题和使用场景里，讲清楚它解决了什么、适合谁，也诚实交代取舍。",
+  h1line2: {
+    en: "find products that genuinely add value to their lives.",
+    zh: "找到真正能为生活增加价值的产品。",
   },
   ctaTop: { en: "See the work", zh: "先看合作案例" },
   ctaMail: { en: "Start a conversation", zh: "发来合作资料" },
@@ -37,31 +37,35 @@ const T = {
   statYears: { en: "creating consistently", zh: "持续内容创作" },
   statBrands: { en: "brand partners", zh: "合作品牌" },
   brandsK: { en: "Selected brand partners", zh: "曾合作品牌" },
-  brandsHint: { en: "Hover to pause. Select a brand to see its complete case library.", zh: "鼠标移入可暂停；点击品牌，可查看该品牌的完整合作案例。" },
-  whyK: { en: "How I make product stories", zh: "我怎么把产品讲进内容里" },
+  brandsHint: { en: "Select a brand to see its complete case library.", zh: "点击品牌，查看完整合作案例。" },
+  whyK: { en: "How I approach sponsored content", zh: "我怎么把产品讲进内容里" },
+  whyIntro: {
+    en: "Every partnership has a baseline: explain the brand's value clearly and remain accountable for the audience's buying decision.",
+    zh: "我做合作有一条底线：既要帮品牌把价值讲清楚，也要对观众的购买判断负责。",
+  },
   why: [
     {
       n: "01",
-      t: { en: "Start with a real problem", zh: "先有真实问题，再讲产品" },
+      t: { en: "Start with a genuine fit", zh: "先看它和我的生活是不是真的契合" },
       d: {
-        en: "I don't read out a feature list. I begin with a frustration the audience already knows, then let testing, comparison, and daily use bring the product into the story.",
-        zh: "不是把卖点逐条念完。我先找到观众真的会遇到的麻烦，再用实测、比较和生活场景，让产品自然出现。",
+        en: "I don't force a product into a story because a feature sounds useful. I begin with a real problem and ask whether the product actually fits my life and my audience.",
+        zh: "我不会拿着卖点硬找场景。先从真实问题出发，看看产品到底解决了什么，也看看它是否真的适合我的生活和观众。",
       },
     },
     {
       n: "02",
-      t: { en: "Use depth to earn trust", zh: "长内容负责说服" },
+      t: { en: "Use it before making the call", zh: "先用一段时间，再给判断" },
       d: {
-        en: "The use process, strengths, and trade-offs all stay in the story. Viewers leave knowing why the product matters and whether it fits them.",
-        zh: "使用过程、优点和取舍都会讲清楚。观众看完不只记住产品，也知道它到底适不适合自己。",
+        en: "The process, strengths, and trade-offs stay in the story. I don't force praise or pretend a fit; I share experiences I can stand behind.",
+        zh: "真实的使用过程、优点和取舍都会留在内容里。不硬夸，也不为了合作强行结合；我只讲自己愿意负责的体验。",
       },
     },
     {
       n: "03",
-      t: { en: "Rebuild for each platform", zh: "同一个创意，按平台重做" },
+      t: { en: "Build around real audience questions", zh: "把观众的疑问，变成内容" },
       d: {
-        en: "YouTube, Bilibili, RedNote, and Douyin need different openings, pacing, and language. I adapt the idea rather than reposting the same cut everywhere.",
-        zh: "YouTube、B站、小红书和抖音需要不同的开场、节奏和表达。我会重做版本，不把同一条片简单搬运。",
+        en: "I take purchase questions seriously and answer them through video. Viewers get a clearer decision, and brands reach people who are genuinely a fit.",
+        zh: "我会认真回复有购买需求的观众，用视频回答他们真正关心的问题。观众更容易做决定，品牌也能找到更合适的用户。",
       },
     },
   ],
@@ -70,10 +74,10 @@ const T = {
     en: "Featured cases include YouTube and Bilibili links whenever both versions are available.",
     zh: "合作案例会尽量同时提供 YouTube 和 B站链接，国内外团队都能直接查看。",
   },
-  workK: { en: "Selected brand work", zh: "品牌合作案例" },
+  workK: { en: "Selected work", zh: "代表作" },
   workIntro: {
-    en: "A small selection across cinematic narrative, real-life use, long-term testing, and in-depth review. Select any brand above for the complete library.",
-    zh: "这里先选几条代表作：从剧情叙事、真实场景到长期使用和深度评测。点击上方品牌，可查看完整案例库。",
+    en: "Eight examples arranged by approach: brand stories, cameras and technology, products used at home, and English-language content.",
+    zh: "这 8 条按内容方向排列：品牌故事、数码影像、生活场景和英文内容。点击品牌名称，可以查看完整案例库。",
   },
   watchYouTube: { en: "YouTube", zh: "YouTube" },
   watchBilibili: { en: "Bilibili", zh: "B站" },
@@ -84,24 +88,24 @@ const T = {
       d: { en: "A review, experiment, or cinematic story built around one useful audience question.", zh: "围绕一个真实问题，完成评测、体验或剧情化内容。" },
     },
     {
-      t: { en: "Native integration", zh: "原生视频植入" },
-      d: { en: "A product appears inside a scheduled topic where the use case already makes sense.", zh: "在已经成立的选题里，让产品作为解决方案自然出现。" },
+      t: { en: "Native integration / UGC", zh: "原生植入 / UGC 内容" },
+      d: { en: "A natural, UGC-style piece built around a use case that already belongs in the topic.", zh: "用接近日常分享的 UGC 方式，让产品自然进入真实使用场景。" },
     },
     {
       t: { en: "Platform-native package", zh: "多平台内容组合" },
-      d: { en: "Long-form, short-form, and posts rebuilt around the same core idea.", zh: "围绕同一个核心创意，分别制作长视频、短视频或图文版本。" },
+      d: { en: "Long-form, short-form, or posts prepared in different versions when the campaign needs them.", zh: "如果项目需要，可以提供长视频、短视频或图文等不同版本。" },
     },
     {
-      t: { en: "Series or long-term use", zh: "系列或长期合作" },
-      d: { en: "Use the product over time, then return with follow-ups and new real-life contexts.", zh: "先真实使用一段时间，再用复访、长期体验或新场景继续讲。" },
+      t: { en: "Brand story", zh: "品牌理念内容" },
+      d: { en: "Like the Sony and Bellroy films: the brand's point of view and the human story lead, rather than a single product or feature list.", zh: "像 Sony 和 Bellroy 的合作一样，不从单一产品卖点出发，而是讲品牌理念和人的故事。" },
     },
   ],
-  ctaK: { en: "Does your product deserve a closer look?", zh: "如果你的产品，也需要被认真讲清楚" },
+  ctaK: { en: "Let's see if it's a fit", zh: "聊聊这次合作" },
   ctaSub: {
-    en: "Send the product, target platforms, and preferred launch window. I'll reply with fit and the next information I need.",
-    zh: "邮件里写清产品、目标平台和预计上线时间。我会回复是否适合，以及下一步需要哪些资料。",
+    en: "Send the product, target platforms, and preferred timing. If it fits the channel and the audience, we can find the most natural way to tell the story.",
+    zh: "可以把产品资料、目标平台和时间安排发来。确认产品和内容方向合适后，我们再一起找最自然的合作方式。",
   },
-  ctaBtn: { en: "Send the brief", zh: "发来合作资料" },
+  ctaBtn: { en: "Send the brief", zh: "发送合作资料" },
   back: { en: "Chaologies", zh: "Chaologies" },
   brandBack: { en: "All partnerships", zh: "全部品牌合作" },
   brandEyebrow: { en: "Partnership archive", zh: "品牌合作案例库" },
@@ -210,29 +214,46 @@ export default function PartnerPage({ lang, setLang, data, onBack, onNavigate, b
       <header className="pp-hero">
         <div className="pp-kicker">{tr(T.eyebrow, lang)}</div>
         <h1 className="pp-h1">
-          {tr(T.h1a, lang)} <span className="pp-h1-num">{tr(T.h1num, lang)}</span> {tr(T.h1b, lang)}
+          <span className="pp-h1-line">{tr(T.h1a, lang)} <span className="pp-h1-num">{tr(T.h1num, lang)}</span> {tr(T.h1line1, lang)}</span>
+          <span className="pp-h1-line pp-h1-line-2">{tr(T.h1line2, lang)}</span>
         </h1>
-        <p className="pp-sub">{tr(T.sub, lang)}</p>
         <div className="pp-hero-actions">
           <a className="pp-cta" href="#partner-cases">
             <span>{tr(T.ctaTop, lang)}</span>
             <span className="arr">↓</span>
           </a>
-          <a className="pp-text-link" href={MAILTO}>{tr(T.ctaMail, lang)} <span>→</span></a>
         </div>
 
-        {/* stat band */}
-        <div className="pp-stats">
-          <div className="pp-stat"><b>{total}</b><span>{tr(T.statFollowers, lang)}</span></div>
-          <div className="pp-stat"><b>{TOTAL_ENGAGEMENTS}</b><span>{tr(T.statLikes, lang)}</span></div>
-          <div className="pp-stat"><b>{lang === "en" ? "5 years" : "5 年"}</b><span>{tr(T.statYears, lang)}</span></div>
-          <div className="pp-stat"><b>10+</b><span>{tr(T.statBrands, lang)}</span></div>
+        <div className="pp-proof">
+          <div className="pp-stats">
+            <div className="pp-stat pp-stat-primary"><b>{total}</b><span>{tr(T.statFollowers, lang)}</span></div>
+            <div className="pp-stat"><b>{TOTAL_ENGAGEMENTS}</b><span>{tr(T.statLikes, lang)}</span></div>
+            <div className="pp-stat"><b>{lang === "en" ? "5 years" : "5 年"}</b><span>{tr(T.statYears, lang)}</span></div>
+            <div className="pp-stat"><b>10+</b><span>{tr(T.statBrands, lang)}</span></div>
+          </div>
+          <div className="pp-platform-cluster">
+            <div className="pp-proof-label">{tr(T.reachK, lang)}</div>
+            <div className="pp-platform-bubbles">
+              {platforms.map((p, i) => (
+                <a
+                  className="pp-platform-bubble"
+                  key={i}
+                  href={p.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={lang !== "en" ? tr(p.nameZh || p.name, lang) : p.name}
+                >
+                  {p.logoUrl && p.logoUrl.length > 2 ? <img src={p.logoUrl} alt="" /> : null}
+                  <span className="pp-platform-tip">{lang !== "en" ? tr(p.nameZh || p.name, lang) : p.name}</span>
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
       </header>
 
       {/* BRANDS */}
-      <section className="pp-sec">
-        <div className="pp-sec-k">{tr(T.brandsK, lang)}</div>
+      <section className="pp-sec pp-brand-section">
         <div className="pp-brand-strip" aria-label={tr(T.brandsK, lang)}>
           <div className="pp-brands-track">
             <div className="pp-brands">
@@ -250,40 +271,6 @@ export default function PartnerPage({ lang, setLang, data, onBack, onNavigate, b
             </div>
           </div>
         </div>
-        <p className="pp-brand-hint">{tr(T.brandsHint, lang)}</p>
-      </section>
-
-      {/* WHY */}
-      <section className="pp-sec">
-        <div className="pp-sec-k">{tr(T.whyK, lang)}</div>
-        <div className="pp-why">
-          {T.why.map((w, i) => (
-            <div className="pp-why-card" key={i}>
-              <span className="pp-why-ic">{w.n}</span>
-              <div className="pp-why-t">{tr(w.t, lang)}</div>
-              <div className="pp-why-d">{tr(w.d, lang)}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* REACH */}
-      <section className="pp-sec">
-        <div className="pp-sec-k">{tr(T.reachK, lang)}</div>
-        <p className="pp-sec-intro">{tr(T.reachNote, lang)}</p>
-        <div className="pp-reach">
-          {platforms.map((p, i) => (
-            <a className="pp-reach-item" key={i} href={p.url} target="_blank" rel="noopener noreferrer">
-              {p.logoUrl && p.logoUrl.length > 2 ? (
-                <img src={p.logoUrl} alt="" className="pp-reach-ic" />
-              ) : (
-                <span className="pp-reach-emoji">{p.logoUrl}</span>
-              )}
-              <span className="pp-reach-name">{lang !== "en" ? tr(p.nameZh || p.name, lang) : p.name}</span>
-              {p.followers && <b className="pp-reach-n">{p.followers}</b>}
-            </a>
-          ))}
-        </div>
       </section>
 
       {/* WORK */}
@@ -293,8 +280,40 @@ export default function PartnerPage({ lang, setLang, data, onBack, onNavigate, b
         <div className="pp-works">
           {works.map((item) => {
             const brand = getBrand(item.brand);
-            return <CaseCard key={item.id} item={item} lang={lang} brandName={brand?.name || item.brand} />;
+            return <CaseCard key={item.id} item={item} lang={lang} brandName={item.brandName || brand?.name || item.brand} />;
           })}
+        </div>
+      </section>
+
+      {/* WHY */}
+      <section className="pp-sec">
+        <div className="pp-sec-k">{tr(T.whyK, lang)}</div>
+        <p className="pp-sec-intro pp-why-intro">{tr(T.whyIntro, lang)}</p>
+        <div className="pp-why">
+          {T.why.map((w, i) => (
+            <div className="pp-why-card" key={i}>
+              <span className={`pp-mini-art pp-partner-art-${i}`} aria-hidden="true" />
+              <span className="pp-why-ic">{w.n}</span>
+              <div className="pp-why-t">{tr(w.t, lang)}</div>
+              <div className="pp-why-d">{tr(w.d, lang)}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* FINAL CTA */}
+      <section className="pp-final">
+        <div className="pp-portrait-wrap" aria-hidden="true">
+          <img src="/avatar.jpg" alt="" />
+        </div>
+        <div className="pp-final-copy">
+          <h2 className="pp-final-t">{tr(T.ctaK, lang)}</h2>
+          <p className="pp-final-s">{tr(T.ctaSub, lang)}</p>
+          <a className="pp-cta big" href={MAILTO}>
+            <span>{tr(T.ctaBtn, lang)}</span>
+            <span className="arr">→</span>
+          </a>
+          <a className="pp-email" href={MAILTO}>{EMAIL}</a>
         </div>
       </section>
 
@@ -304,6 +323,7 @@ export default function PartnerPage({ lang, setLang, data, onBack, onNavigate, b
         <div className="pp-formats">
           {T.formats.map((f, i) => (
             <div className="pp-format" key={i}>
+              <span className={`pp-mini-art pp-partner-art-${i + 3}`} aria-hidden="true" />
               <span className="pp-format-n">{String(i + 1).padStart(2, "0")}</span>
               <div>
                 <div className="pp-format-t">{tr(f.t, lang)}</div>
@@ -314,28 +334,20 @@ export default function PartnerPage({ lang, setLang, data, onBack, onNavigate, b
         </div>
       </section>
 
-      {/* FINAL CTA */}
-      <section className="pp-final">
-        <h2 className="pp-final-t">{tr(T.ctaK, lang)}</h2>
-        <p className="pp-final-s">{tr(T.ctaSub, lang)}</p>
-        <a className="pp-cta big" href={MAILTO}>
-          <span>{tr(T.ctaBtn, lang)}</span>
-          <span className="arr">→</span>
-        </a>
-        <a className="pp-email" href={MAILTO}>{EMAIL}</a>
-      </section>
     </div>
   );
 }
 
 // ── styles (design-system tokens) ────────────────────
 const CSS = `
-.pp { max-width: 880px; margin: 0 auto; padding: 0 32px 90px; background: var(--paper); }
+.pp { max-width: 1080px; margin: 0 auto; padding: 0 32px 90px; background: var(--paper); }
 .pp-nav { display: flex; align-items: center; justify-content: space-between; padding: 26px 0; }
 
-.pp-hero { padding: 40px 0 14px; }
+.pp-hero { padding: 40px 0 4px; }
 .pp-kicker { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--honey); margin-bottom: 20px; }
-.pp-h1 { font-family: var(--font-serif); font-weight: 600; font-size: clamp(32px, 5.4vw, 50px); line-height: 1.12; letter-spacing: -1.2px; max-width: 22ch; }
+.pp-h1 { font-family: var(--font-serif); font-weight: 600; font-size: clamp(34px, 5vw, 54px); line-height: 1.1; letter-spacing: -1.4px; max-width: 24ch; }
+.pp-h1-line { display: block; text-wrap: balance; }
+.pp-h1-line-2 { margin-top: 7px; }
 .pp-h1-num { color: var(--honey); white-space: nowrap; }
 .pp-sub { font-family: var(--font-hand); font-size: clamp(15px, 2vw, 18px); line-height: 1.75; color: var(--ink-2); margin-top: 20px; max-width: 52ch; letter-spacing: 0.2px; }
 .pp-hero-actions { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; margin-top: 28px; }
@@ -353,63 +365,104 @@ const CSS = `
 .pp-text-link:hover { color: var(--ink); border-color: var(--ink-3); }
 .pp-text-link:hover span { margin-left: 8px; }
 
-.pp-stats {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
-  margin-top: 44px; padding: 26px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+.pp-proof {
+  display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(250px, .75fr); gap: 22px;
+  margin-top: 44px; padding: 18px; border: 1px solid var(--line-2); border-radius: 22px;
+  background: rgba(255,255,255,.55); box-shadow: 0 18px 50px -40px rgba(53,40,19,.55);
 }
-.pp-stat { display: flex; flex-direction: column; gap: 5px; }
-.pp-stat b { font-family: var(--font-serif); font-size: clamp(22px, 3vw, 30px); font-weight: 600; letter-spacing: -0.6px; font-variant-numeric: tabular-nums; }
+.pp-stats { display: grid; grid-template-columns: 1.35fr repeat(3, 1fr); gap: 8px; }
+.pp-stat {
+  display: flex; flex-direction: column; gap: 5px; padding: 15px 13px; border-radius: 15px;
+  background: var(--surface); border: 1px solid rgba(223,217,205,.7);
+  transition: transform var(--ease), box-shadow var(--ease), background var(--ease), border-color var(--ease);
+}
+.pp-stat-primary { border-color: #e3d4b5; }
+.pp-stat:nth-child(1) { --stat-wash: #fff1cf; --stat-line: #e6bd65; }
+.pp-stat:nth-child(2) { --stat-wash: #ffe7df; --stat-line: #e9a18a; }
+.pp-stat:nth-child(3) { --stat-wash: #e4f2ef; --stat-line: #85bdb2; }
+.pp-stat:nth-child(4) { --stat-wash: #e8edf8; --stat-line: #93a8d0; }
+.pp-stat:hover {
+  z-index: 2; transform: translateY(-6px) rotate(-.35deg); background: var(--stat-wash);
+  border-color: var(--stat-line); box-shadow: 0 18px 28px -22px rgba(28,25,21,.72);
+}
+.pp-stat b { font-family: var(--font-serif); font-size: clamp(21px, 2.5vw, 29px); font-weight: 600; letter-spacing: -0.6px; font-variant-numeric: tabular-nums; }
 .pp-stat span { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
+.pp-platform-cluster { display: flex; flex-direction: column; justify-content: center; align-items: center; min-width: 0; padding: 10px 6px; }
+.pp-proof-label { margin-bottom: 16px; font-size: 10px; font-weight: 700; letter-spacing: .14em; color: var(--ink-3); text-transform: uppercase; }
+.pp-platform-bubbles { display: flex; align-items: center; justify-content: center; min-height: 64px; padding: 0 16px; }
+.pp-platform-bubble {
+  position: relative; display: grid; place-items: center; width: 48px; height: 48px;
+  margin-left: -14px; border-radius: 50%; background: var(--surface); border: 1px solid var(--line);
+  box-shadow: 0 7px 18px -12px rgba(28,25,21,.65);
+  transition: margin var(--ease), transform var(--ease), box-shadow var(--ease), border-color var(--ease);
+}
+.pp-platform-bubble:first-child { margin-left: 0; }
+.pp-platform-bubble img { width: 21px; height: 21px; object-fit: contain; filter: grayscale(1); opacity: .66; transition: filter var(--ease), opacity var(--ease), transform var(--ease); }
+.pp-platform-bubbles:hover .pp-platform-bubble,
+.pp-platform-bubbles:focus-within .pp-platform-bubble { margin-left: 5px; transform: translateY(var(--bubble-y, 0px)) rotate(var(--bubble-r, 0deg)); }
+.pp-platform-bubble:nth-child(2n) { --bubble-y: -6px; --bubble-r: 3deg; }
+.pp-platform-bubble:nth-child(3n) { --bubble-y: 5px; --bubble-r: -3deg; }
+.pp-platform-bubble:hover,
+.pp-platform-bubble:focus-visible { z-index: 4; border-color: #dfb866; box-shadow: 0 12px 24px -16px rgba(28,25,21,.72); transform: translateY(-8px) rotate(0deg) scale(1.08) !important; }
+.pp-platform-bubble:hover img,
+.pp-platform-bubble:focus-visible img { filter: none; opacity: 1; transform: scale(1.05); }
+.pp-platform-tip {
+  position: absolute; left: 50%; bottom: -28px; transform: translate(-50%, 5px); opacity: 0; pointer-events: none;
+  padding: 4px 7px; border-radius: 6px; background: var(--ink); color: #fff; font-size: 9px; font-weight: 650; white-space: nowrap;
+  transition: opacity var(--ease), transform var(--ease);
+}
+.pp-platform-bubble:hover .pp-platform-tip,
+.pp-platform-bubble:focus-visible .pp-platform-tip { opacity: 1; transform: translate(-50%, 0); }
 
 .pp-sec { margin-top: 56px; }
 .pp-sec-k { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 20px; }
 .pp-sec-intro { max-width: 64ch; margin: -6px 0 20px; color: var(--ink-2); font-size: 13.5px; line-height: 1.65; }
 
-.pp-brand-strip { overflow: hidden; padding: 8px 2px 12px; margin: 0 -2px; mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent); }
+.pp-brand-section { margin-top: 38px; }
+.pp-brand-strip { overflow: hidden; padding: 14px 2px 16px; margin: 0 -2px; mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); }
 .pp-brand-strip::-webkit-scrollbar { display: none; }
 .pp-brands-track { display: flex; width: max-content; animation: ppBrandDrift 30s linear infinite; }
 .pp-brand-strip:hover .pp-brands-track { animation-play-state: paused; }
 .pp-brands { display: flex; width: max-content; gap: clamp(28px, 4.5vw, 48px); align-items: center; padding-right: clamp(28px, 4.5vw, 48px); }
 .pp-brand {
-  position: relative; display: inline-flex; align-items: center; min-height: 34px;
-  font-family: var(--font-serif); font-size: clamp(18px, 2.4vw, 23px); font-weight: 650;
-  color: var(--ink-3); letter-spacing: -0.35px; white-space: nowrap;
-  filter: grayscale(1); opacity: 0.72; transition: color var(--ease), opacity var(--ease), transform var(--ease);
+  position: relative; display: inline-flex; align-items: center; justify-content: center; min-height: 38px;
+  font-family: var(--font-serif); font-size: clamp(18px, 2vw, 23px); font-weight: 650;
+  color: var(--ink-2); letter-spacing: -0.35px; white-space: nowrap;
+  filter: grayscale(1); opacity: 0.72; transition: color var(--ease), opacity var(--ease), transform var(--ease), filter var(--ease);
 }
-a.pp-brand::after { content: ""; position: absolute; left: 50%; right: 50%; bottom: -6px; height: 1px; background: var(--honey-600); transition: left var(--ease), right var(--ease); }
-.pp-brand:hover { color: var(--ink); opacity: 1; transform: translateY(-3px); }
+a.pp-brand::after { content: ""; position: absolute; left: 50%; right: 50%; bottom: 1px; height: 1px; background: var(--honey-600); transition: left var(--ease), right var(--ease); }
+.pp-brand:hover { color: var(--ink); opacity: 1; filter: none; transform: translateY(-3px); animation: ppSpectrumInk .72s ease-out both; }
 a.pp-brand:hover::after { left: 0; right: 0; }
 .pp-brand.dji, .pp-brand.moft { font-family: var(--font-sans); font-weight: 800; letter-spacing: 0.06em; }
 .pp-brand.insta, .pp-brand.bellroy, .pp-brand.italki { font-family: var(--font-sans); font-weight: 700; letter-spacing: -0.04em; }
 .pp-brand.steelcase, .pp-brand.boox { font-family: var(--font-sans); font-weight: 750; letter-spacing: -0.02em; }
-.pp-brand-hint { margin-top: 8px; color: var(--ink-3); font-size: 11.5px; line-height: 1.5; }
 @keyframes ppBrandDrift { to { transform: translateX(-50%); } }
+@keyframes ppSpectrumInk {
+  0% { color: #df684f; }
+  18% { color: #dd9b24; }
+  38% { color: #6eaa71; }
+  58% { color: #4c9ba7; }
+  78% { color: #677fc3; }
+  92% { color: #9971b7; }
+  100% { color: var(--ink); }
+}
+.pp-stat:hover b, .pp-stat:hover span { animation: ppSpectrumInk .72s ease-out both; }
 @media (prefers-reduced-motion: reduce) {
   .pp-brands-track { animation: none; }
   .pp-brand-strip { overflow-x: auto; mask-image: none; }
+  .pp-brand:hover, .pp-stat:hover b, .pp-stat:hover span { animation: none; }
 }
 
 .pp-why { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-.pp-why-card { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--r); padding: 22px 20px; transition: transform var(--ease), border-color var(--ease), box-shadow var(--ease); }
+.pp-why-intro { max-width: 62ch; margin-bottom: 22px; color: var(--ink-2); font-size: 15px; line-height: 1.7; }
+.pp-why-card { position: relative; min-height: 250px; overflow: hidden; background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--r); padding: 22px 20px 112px; transition: transform var(--ease), border-color var(--ease), box-shadow var(--ease); }
 .pp-why-card:hover { transform: translateY(-3px); border-color: var(--line); box-shadow: 0 16px 30px -28px rgba(28,25,21,0.5); }
 .pp-why-ic { font-family: var(--font-serif); font-size: 13px; color: var(--honey-600); font-weight: 650; letter-spacing: 0.08em; }
 .pp-why-t { font-size: 15px; font-weight: 700; margin: 12px 0 7px; }
 .pp-why-d { font-size: 13.5px; color: var(--ink-2); line-height: 1.6; }
 
-.pp-reach { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-.pp-reach-item {
-  display: flex; align-items: center; gap: 9px; padding: 12px 14px;
-  background: var(--surface); border: 1px solid var(--line-2); border-radius: 12px;
-  transition: border-color var(--ease), transform var(--ease);
-}
-.pp-reach-item:hover { border-color: var(--line); transform: translateY(-2px); }
-.pp-reach-ic { width: 17px; height: 17px; object-fit: contain; }
-.pp-reach-emoji { font-size: 15px; }
-.pp-reach-name { font-size: 12.5px; font-weight: 600; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.pp-reach-n { font-family: var(--font-serif); font-size: 13.5px; font-variant-numeric: tabular-nums; }
-
 .pp-work-intro { max-width: 68ch; }
-.pp-works { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px 18px; }
+.pp-works { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px 14px; }
 .pp-work { display: block; scroll-margin-top: 24px; }
 .pp-work-thumb {
   position: relative; border-radius: 14px; overflow: hidden; aspect-ratio: 16/9;
@@ -432,7 +485,7 @@ a.pp-brand:hover::after { left: 0; right: 0; }
   display: flex; align-items: center; justify-content: center;
 }
 .pp-work-type { margin-top: 12px; color: var(--honey-600); font-size: 10.5px; font-weight: 750; letter-spacing: 0.12em; text-transform: uppercase; }
-.pp-work-t { font-size: 14px; font-weight: 650; line-height: 1.5; margin-top: 5px; color: var(--ink); }
+.pp-work-t { font-size: 13px; font-weight: 650; line-height: 1.45; margin-top: 5px; color: var(--ink); }
 .pp-work-links { display: flex; gap: 18px; margin-top: 10px; }
 .pp-work-links a { color: var(--ink-2); font-size: 12px; font-weight: 650; border-bottom: 1px solid var(--line); padding-bottom: 2px; transition: color var(--ease), border-color var(--ease); }
 .pp-work-links a:hover { color: var(--ink); border-color: var(--honey-600); }
@@ -456,31 +509,59 @@ a.pp-brand:hover::after { left: 0; right: 0; }
 .pp-brand-final { margin-top: 82px; }
 .pp-empty { margin: 44px 0 80px; color: var(--ink-3); }
 
-.pp-formats { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 40px; }
-.pp-format { display: flex; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.pp-formats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.pp-format { position: relative; min-height: 178px; overflow: hidden; display: flex; gap: 16px; padding: 22px 145px 22px 20px; border: 1px solid var(--line-2); border-radius: var(--r); background: var(--surface); }
 .pp-format-n { font-family: var(--font-serif); font-size: 14px; color: var(--honey-600); font-weight: 600; margin-top: 2px; }
 .pp-format-t { font-size: 15px; font-weight: 700; }
 .pp-format-d { font-size: 13.5px; color: var(--ink-2); line-height: 1.6; margin-top: 4px; }
 
-.pp-final { margin-top: 76px; text-align: center; background: var(--surface); border: 1px solid var(--line-2); border-radius: 22px; padding: clamp(36px, 6vw, 56px) 28px; box-shadow: 0 14px 34px -22px rgba(70,55,25,0.3); }
+.pp-mini-art {
+  position: absolute; right: 5px; bottom: -18px; width: 126px; height: 150px;
+  background-image: url('/visuals/partner-sprites.png'); background-size: 400% 200%; background-repeat: no-repeat;
+  pointer-events: none; opacity: .9; transform: rotate(-2deg) scale(.88); transform-origin: bottom right;
+  transition: transform var(--ease), opacity var(--ease);
+}
+.pp-why-card:hover .pp-mini-art,
+.pp-format:hover .pp-mini-art { transform: rotate(0deg) scale(.94) translate(-3px,-3px); opacity: 1; }
+.pp-partner-art-0 { background-position: 0% 0%; }
+.pp-partner-art-1 { background-position: 33.333% 0%; }
+.pp-partner-art-2 { background-position: 66.666% 0%; }
+.pp-partner-art-3 { background-position: 100% 0%; }
+.pp-partner-art-4 { background-position: 0% 100%; }
+.pp-partner-art-5 { background-position: 33.333% 100%; }
+.pp-partner-art-6 { background-position: 66.666% 100%; }
+.pp-partner-art-7 { background-position: 100% 100%; }
+
+.pp-final { display: grid; grid-template-columns: minmax(170px, .65fr) minmax(0, 1.5fr); align-items: center; gap: 34px; margin-top: 76px; text-align: left; background: var(--surface); border: 1px solid var(--line-2); border-radius: 24px; padding: clamp(32px, 5vw, 52px); box-shadow: 0 14px 34px -22px rgba(70,55,25,0.3); overflow: hidden; }
+.pp-portrait-wrap { position: relative; width: min(210px, 100%); aspect-ratio: 1; margin: 0 auto; }
+.pp-portrait-wrap::before { content: ""; position: absolute; inset: 7% 0 0 7%; border-radius: 47% 53% 46% 54%; background: #f4c963; transform: rotate(-7deg); }
+.pp-portrait-wrap::after { content: ""; position: absolute; width: 52%; height: 52%; right: -6%; top: -2%; border-top: 3px solid #8071a8; border-right: 3px solid #8071a8; border-radius: 50%; transform: rotate(15deg); opacity: .65; }
+.pp-portrait-wrap img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
 .pp-final-t { font-family: var(--font-serif); font-weight: 600; font-size: clamp(22px, 3.4vw, 30px); letter-spacing: -0.5px; }
 .pp-final-s { font-size: 14px; color: var(--ink-2); margin-top: 10px; }
 .pp-email { display: block; margin-top: 14px; font-size: 13px; color: var(--ink-3); letter-spacing: 0.02em; }
 .pp-email:hover { color: var(--ink); }
+.pp-final.pp-brand-final { display: block; text-align: center; }
 
 @media (max-width: 760px) {
   .pp { padding: 0 22px 70px; }
-  .pp-stats { grid-template-columns: repeat(2, 1fr); gap: 20px 14px; }
+  .pp-proof { grid-template-columns: 1fr; }
+  .pp-stats { grid-template-columns: repeat(2, 1fr); }
   .pp-why { grid-template-columns: 1fr; }
-  .pp-reach { grid-template-columns: repeat(2, 1fr); }
-  .pp-brands { gap: 30px; }
   .pp-works { grid-template-columns: 1fr 1fr; }
   .pp-works-archive { grid-template-columns: 1fr 1fr; }
   .pp-formats { grid-template-columns: 1fr; }
+  .pp-final { grid-template-columns: 130px minmax(0, 1fr); gap: 24px; }
 }
 @media (max-width: 480px) {
   .pp-hero-actions { align-items: flex-start; flex-direction: column; gap: 10px; }
   .pp-works { grid-template-columns: 1fr; }
   .pp-works-archive { grid-template-columns: 1fr; }
+  .pp-platform-bubble { width: 43px; height: 43px; }
+  .pp-brand-strip { overflow-x: auto; mask-image: none; }
+  .pp-format { padding-right: 112px; }
+  .pp-mini-art { width: 108px; height: 129px; }
+  .pp-final { grid-template-columns: 1fr; text-align: center; }
+  .pp-portrait-wrap { width: 150px; }
 }
 `;
