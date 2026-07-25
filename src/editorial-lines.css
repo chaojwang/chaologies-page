@@ -1,0 +1,13 @@
+.editorial-lines {
+  line-break: strict;
+  text-wrap: pretty;
+}
+
+.editorial-line {
+  display: block;
+  text-wrap: pretty;
+}
+
+.editorial-line + .editorial-line {
+  margin-top: var(--editorial-line-gap, .65em);
+}

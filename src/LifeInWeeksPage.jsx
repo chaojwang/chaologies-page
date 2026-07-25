@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import EditorialLines from "./EditorialLines.jsx";
 import "./life-in-weeks.css";
 
 const MAX_YEARS = 90;
@@ -513,7 +514,10 @@ export default function LifeInWeeksPage({ onBack }) {
               <div><strong>{elapsed.toLocaleString("zh-CN")}</strong><span>周，已经走过</span></div>
               <div><strong>{remaining.toLocaleString("zh-CN")}</strong><span>周，约在前面</span></div>
             </div>
-            <p className="liw-result-note">按 90 年 × 52 周简化计算。这是一张用来理解时间的图，不是对寿命的预测。</p>
+            <p className="liw-result-note">
+              <span>按 90 年 × 52 周简化计算。</span>
+              <span>这是一张用来理解生命的图，而不是对寿命的预测。</span>
+            </p>
 
             <label className="liw-intention">
               <span>接下来的 52 周，你最不想再推迟什么？</span>
@@ -546,7 +550,14 @@ export default function LifeInWeeksPage({ onBack }) {
           <p className="liw-eyebrow">为什么要把人生画成一格一格？</p>
           <h2>有些事，不必等到“有空的时候”。</h2>
         </div>
-        <p>看到这些格子，不是为了催自己更忙。只是当时间不再是一个模糊的“以后”，我们会更清楚，哪些事值得留下位置。</p>
+        <EditorialLines
+          className="liw-reflection-copy"
+          lines={[
+            "这张图不是为了让你催自己。",
+            "当时间不再是一个模糊的“以后”，",
+            "我们自然会更清楚，哪些事值得我们的时间。",
+          ]}
+        />
       </section>
 
       <section className="liw-book">
@@ -554,9 +565,19 @@ export default function LifeInWeeksPage({ onBack }) {
           <img src="/four-thousand-weeks.webp" alt="《四千周》中文版封面" />
         </div>
         <div className="liw-book-copy">
-          <p className="liw-eyebrow">这个页面的灵感</p>
+          <p className="liw-eyebrow">这个页面的灵感来自</p>
           <h2>《四千周》</h2>
-          <p>我们总觉得，只要再高效一点，就能把所有事情安排妥当。这本书谈的是另一件事：承认做不完，然后认真选择。</p>
+          <div className="liw-book-thought">
+            <p>我们总觉得，只要再高效一点，就能把所有事情安排妥当。</p>
+            <p>这本书谈的，其实是另一件事：</p>
+            <EditorialLines
+              className="liw-book-insight"
+              lines={[
+                "事情永远做不完。",
+                "我们需要认真选择，什么才真正值得。",
+              ]}
+            />
+          </div>
           <a href={JD_URL} target="_blank" rel="noopener noreferrer sponsored">去京东看看这本书 <span>↗</span></a>
           <small>通过这个链接购买，我可能获得少量佣金，不影响你的购买价格。</small>
         </div>
