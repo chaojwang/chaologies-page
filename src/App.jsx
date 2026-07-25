@@ -14,6 +14,7 @@ import NewsletterPage from "./NewsletterPage.jsx";
 import FCPXPage from "./FCPXPage.jsx";
 import NotionWeeklyPage from "./NotionWeeklyPage.jsx";
 import WeeklyFocusPage from "./WeeklyFocusPage.jsx";
+import LifeInWeeksPage from "./LifeInWeeksPage.jsx";
 import ActionBankPage from "./ActionBankPage.jsx";
 import ReadingMapPage from "./ReadingMapPage.jsx";
 import ReadingMapThanksPage from "./ReadingMapThanksPage.jsx";
@@ -545,7 +546,7 @@ const pathToPage = (path) => {
   if (path === "/partner" || path.startsWith("/partner/")) return path;
   const pages = new Set([
     "/budget", "/blog", "/newsletter", "/fcpx", "/notion-weekly",
-    "/weekly-focus", "/action-bank", "/reading-map", "/reading-map/access",
+    "/weekly-focus", "/life-in-weeks", "/action-bank", "/reading-map", "/reading-map/access",
     "/reading-map/thank-you", "/creator-academy",
   ]);
   return pages.has(path) ? path : "home";
@@ -633,6 +634,10 @@ export default function App() {
         onNavigate={handleNavigate}
       />
     );
+  }
+
+  if (currentPage === "/life-in-weeks") {
+    return <LifeInWeeksPage onBack={() => handleNavigate("home")} />;
   }
 
   if (currentPage === "/fcpx") {
