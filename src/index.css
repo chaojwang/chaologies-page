@@ -151,20 +151,22 @@ button { font-family: inherit; }
   85% { transform: rotate(12deg); }
 }
 
-/* ── Hero headline (bilingual editorial) ──────────────── */
+/* ── Hero headline ────────────────────────────────────── */
 .hero-head {
   font-family: var(--font-sans); font-size: 27px; font-weight: 700;
   line-height: 1.32; letter-spacing: -0.6px; color: var(--ink);
   margin-bottom: 11px; word-break: keep-all; text-wrap: pretty;
 }
 .hero-head .hl { color: var(--honey); }
-.hero-sub {
-  font-size: 13.5px; color: var(--ink-3); line-height: 1.5;
-  letter-spacing: -0.1px; margin-bottom: 20px;
+.hero-topics {
+  display: flex; flex-wrap: wrap; gap: 8px 18px;
+  list-style: none; margin: 16px 0 26px; padding: 0;
+  color: var(--ink-2); font-size: 14px; font-weight: 650;
 }
-.hero-desc {
-  font-family: var(--font-hand); font-size: 18px; line-height: 1.7;
-  color: var(--ink-700); letter-spacing: 0.2px; margin-bottom: 26px; max-width: 34ch;
+.hero-topics li { display: flex; align-items: center; gap: 8px; }
+.hero-topics li::before {
+  content: ""; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--honey);
 }
 
 /* ── Follower stat (sentence around the live number) ──── */
@@ -177,16 +179,63 @@ button { font-family: inherit; }
   letter-spacing: -1.2px; line-height: 1; color: var(--honey);
   font-variant-numeric: tabular-nums lining-nums;
 }
-.stat-desc {
-  margin-top: 11px; font-size: 13.5px; color: var(--ink-3);
-  line-height: 1.65; max-width: 36ch;
+
+/* ── Social dock ──────────────────────────────────────── */
+.social-dock {
+  position: relative; display: flex; align-items: flex-end; justify-content: center;
+  gap: 7px; width: fit-content; min-height: 48px; margin-top: 18px;
+  padding: 7px 0 3px;
+}
+.social-dock-slot {
+  position: relative; display: flex; align-items: flex-end; justify-content: center;
+  width: 38px; height: 34px;
+}
+.social-dock-item {
+  position: relative; z-index: 1; display: grid; place-items: center;
+  width: 34px; height: 34px; border: 0; border-radius: 0;
+  background: transparent; box-shadow: none;
+  will-change: transform; outline: none; mix-blend-mode: multiply;
+}
+.social-dock-item img {
+  width: 25px; height: 25px; object-fit: contain;
+  filter: none; opacity: 1;
+  transition: filter 180ms ease;
+}
+.social-dock-item img[src$="/bilibili.png"],
+.social-dock-item img[src$="/xiaohongshu.png"] {
+  width: 34px; height: 34px;
+  clip-path: circle(36% at 50% 50%);
+}
+.social-dock-slot.is-active .social-dock-item img,
+.social-dock-slot:hover .social-dock-item img,
+.social-dock-slot:focus-within .social-dock-item img { filter: drop-shadow(0 6px 7px rgba(30, 24, 15, 0.2)); }
+.social-dock-item:focus-visible { outline: 2px solid rgba(225, 160, 29, 0.58); outline-offset: 3px; border-radius: 8px; }
+.social-dock-tip {
+  position: absolute; z-index: 4; left: 50%; bottom: 56px;
+  display: flex; flex-direction: column; gap: 2px; min-width: max-content;
+  padding: 8px 10px; border: 1px solid var(--line); border-radius: 11px;
+  background: var(--ink); color: #fff; box-shadow: var(--lift-sm);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transform: translate(-50%, 5px) scale(0.96);
+  transition: opacity 150ms ease, visibility 150ms ease, transform 180ms ease;
+}
+.social-dock-tip::after {
+  content: ""; position: absolute; left: 50%; bottom: -5px;
+  width: 9px; height: 9px; background: var(--ink);
+  transform: translateX(-50%) rotate(45deg);
+}
+.social-dock-tip strong { font-size: 11.5px; line-height: 1.2; }
+.social-dock-tip span { color: rgba(255, 255, 255, 0.65); font-size: 10px; line-height: 1.2; }
+.social-dock-slot.is-active .social-dock-tip,
+.social-dock-slot:hover .social-dock-tip,
+.social-dock-slot:focus-within .social-dock-tip {
+  opacity: 1; visibility: visible; transform: translate(-50%, 0) scale(1);
 }
 
 /* ── Subscribe ────────────────────────────────────────── */
-.subscribe { margin-top: 28px; padding: 22px 22px 20px; background: var(--surface); border: 1px solid var(--line-2); border-radius: 18px; box-shadow: 0 14px 34px -22px rgba(70, 55, 25, 0.22); }
+.subscribe { margin-top: 22px; padding: 22px 22px 20px; background: var(--surface); border: 1px solid var(--line-2); border-radius: 18px; box-shadow: 0 14px 34px -22px rgba(70, 55, 25, 0.22); }
 .sub-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; margin-bottom: 16px; }
 .sub-label { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--honey); }
-.sub-lead { font-size: 14px; color: var(--ink-700); line-height: 1.6; margin-top: 8px; max-width: 24ch; }
 .plane { width: 42px; height: auto; opacity: 0.92; flex-shrink: 0; }
 .sub-proof { display: flex; align-items: center; gap: 9px; margin-top: 14px; }
 .stars { color: var(--honey); font-size: 12px; letter-spacing: 2px; line-height: 1; }
@@ -372,38 +421,8 @@ button { font-family: inherit; }
   font-family: var(--font-serif); font-size: 13px;
   color: var(--ink-4); font-variant-numeric: tabular-nums;
 }
-.section-sub { font-size: 13px; color: var(--ink-3); }
 .section + .section { margin-top: 48px; }
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-
-/* ── Platform card ────────────────────────────────────── */
-.pcard {
-  background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--r);
-  padding: 17px 18px 14px; display: flex; flex-direction: column; gap: 13px;
-  width: 100%; text-align: left;
-  transition: transform var(--ease), box-shadow var(--ease), border-color var(--ease);
-  cursor: pointer;
-}
-.pcard.blog { border: 1px solid var(--line-2); }
-.pcard:hover { transform: translateY(-3px); box-shadow: 0 8px 20px -12px rgba(70, 55, 25, 0.24); border-color: var(--line); }
-.pcard-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-.pcard-id { display: flex; align-items: center; gap: 11px; min-width: 0; }
-.pcard-logo {
-  width: 22px; height: 22px; object-fit: contain; flex-shrink: 0;
-  filter: grayscale(1); opacity: 0.55; transition: filter var(--ease), opacity var(--ease);
-}
-.pcard:hover .pcard-logo { filter: grayscale(0); opacity: 1; }
-.pcard-emoji { font-size: 20px; line-height: 1; flex-shrink: 0; }
-.pcard-meta { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
-.pcard-name { font-size: 14.5px; font-weight: 600; letter-spacing: -0.2px; color: var(--ink); }
-.pcard-handle { font-size: 11px; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.pcard-badge {
-  display: inline-flex; align-items: center; flex-shrink: 0;
-  padding: 4px 9px; border-radius: 999px; background: #fbf1da; color: #b07a12;
-  font-size: 12.5px; font-weight: 700; letter-spacing: -0.1px; line-height: 1;
-  white-space: nowrap; font-variant-numeric: tabular-nums;
-}
-.pcard-badge .bu { font-weight: 500; opacity: 0.75; font-size: 10.5px; margin-left: 3px; }
 
 /* Brewing line under project grid */
 .brewing {
@@ -452,10 +471,7 @@ button { font-family: inherit; }
 .foot .sign {
   font-family: var(--font-hand); font-size: 14.5px; color: var(--ink-2);
   max-width: 36ch; line-height: 1.65; letter-spacing: 0.2px;
-}
-.foot .now {
-  font-size: 12px; color: var(--ink-3); letter-spacing: 0.02em;
-  text-align: right; line-height: 1.7; max-width: 30ch;
+  white-space: pre-line;
 }
 
 /* ── Mobile ───────────────────────────────────────────── */
@@ -476,8 +492,13 @@ button { font-family: inherit; }
 @media (max-width: 480px) {
   .grid { grid-template-columns: 1fr; }
   .hero-head { font-size: 24px; }
+  .social-dock { width: fit-content; justify-content: flex-start; gap: 6px; padding-inline: 0; }
+  .social-dock-slot { width: 37px; }
   .foot { flex-direction: column; gap: 16px; }
-  .foot .now { text-align: left; }
+}
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .social-dock-item { will-change: auto; }
 }
 
 /* ═════════════════════════════════════════════════════
@@ -509,11 +530,13 @@ button { font-family: inherit; }
 .blog-h1 {
   font-family: var(--font-serif); font-weight: 600;
   font-size: clamp(34px, 5.6vw, 52px); line-height: 1.05;
-  letter-spacing: -1.4px; max-width: 16ch; text-wrap: balance;
+  letter-spacing: -1.4px; max-width: 18ch; text-wrap: balance;
+  --editorial-line-gap: 0.08em;
 }
 .blog-dek {
   font-family: var(--font-hand); font-size: 18px; line-height: 1.75;
   color: var(--ink-2); margin-top: 22px; max-width: 46ch; letter-spacing: 0.2px;
+  --editorial-line-gap: 0.18em;
 }
 
 .blog-signup {

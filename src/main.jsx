@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Analytics } from '@vercel/analytics/react'
+import SmoothScroll from './SmoothScroll.jsx'
 import './index.css'
 
 const isAdmin = window.location.pathname.startsWith('/admin')
@@ -14,6 +15,7 @@ async function init() {
     const { default: App } = await import('./App.jsx')
     root.render(
       <React.StrictMode>
+        <SmoothScroll />
         <App />
         <Analytics />
       </React.StrictMode>,

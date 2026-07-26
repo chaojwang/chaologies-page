@@ -4,6 +4,7 @@
 // ─────────────────────────────────────────────────────
 
 import { useState } from "react";
+import EditorialLines from "./EditorialLines.jsx";
 import SubscribeModal from "./SubscribeModal.jsx";
 import { tr, LangToggle } from "./i18n.jsx";
 
@@ -94,15 +95,18 @@ const CURRENTLY = [
 
 const T = {
   back: "Chaologies",
-  kicker: { en: "The Journal", zh: "碎碎念" },
-  title: {
-    en: "Notes from a recovering accountant.",
-    zh: "一个「康复中」会计师的碎碎念。",
-  },
-  dek: {
-    en: "Essays on money, minimalism, and the quiet thrill of owning less. Published roughly twice a month — whenever the spreadsheet of my thoughts finally balances.",
-    zh: "关于金钱、极简，和「拥有更少」的小确幸。大约每月两篇——等我脑子里那张表终于对上账的时候。",
-  },
+  kicker: { en: "The Blog", zh: "博客" },
+  titleLines: [
+    { en: "Making a complicated life", zh: "把复杂的生活，" },
+    { en: "a little clearer.", zh: "写清楚一点。" },
+  ],
+  dekLines: [
+    { en: "I write about money, minimalism, habits and AI.", zh: "这里写金钱、极简、习惯和 AI。" },
+    {
+      en: "Also what I’ve tried, changed my mind about, and still haven’t figured out.",
+      zh: "也写我试过的东西、改过的主意，以及那些还没完全想明白的事。",
+    },
+  ],
   join: { en: "Join", zh: "和" },
   joinTail: {
     en: "fellow overthinkers. One email, no spreadsheets.",
@@ -140,8 +144,15 @@ export default function Blog({ lang, setLang, data, onBack }) {
       <div className="blog-wrap">
         <header className="blog-hero">
           <div className="blog-kicker">{tr(T.kicker, lang)}</div>
-          <h1 className="blog-h1">{tr(T.title, lang)}</h1>
-          <p className="blog-dek">{tr(T.dek, lang)}</p>
+          <EditorialLines
+            as="h1"
+            className="blog-h1"
+            lines={T.titleLines.map((line) => tr(line, lang))}
+          />
+          <EditorialLines
+            className="blog-dek"
+            lines={T.dekLines.map((line) => tr(line, lang))}
+          />
 
           <div className="blog-signup">
             <p className="blog-lead">

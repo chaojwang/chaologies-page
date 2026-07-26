@@ -1,11 +1,13 @@
 // ─────────────────────────────────────────────────────
 //  App.jsx — Chaologies home (design-system port)
-//  Left sticky profile + right platforms & projects
+//  Left sticky profile/social dock + right project directory
 //  ▸ 2024 redesign: bilingual hero headline, follower stat
 //    as a sentence, reordered platforms, growth sparklines.
 // ─────────────────────────────────────────────────────
 
-import { useState, useEffect, lazy, Suspense } from "react";
+import { useState, useEffect, useRef, lazy, Suspense } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 import { siteData as staticData } from "./data.js";
 import { supabase, transformSiteData } from "./lib/supabase.js";
 import Blog from "./Blog.jsx";
@@ -22,6 +24,8 @@ import SubscribeModal from "./SubscribeModal.jsx";
 import PartnerPage from "./PartnerPage.jsx";
 import CreatorAcademyPage from "./CreatorAcademyPage.jsx";
 import { tr, useTw, LangToggle } from "./i18n.jsx";
+
+gsap.registerPlugin(useGSAP);
 
 // 買家完整版（含 books.json）走動態 chunk，不進主包
 const ReadingMap = lazy(() => import("./ReadingMap.jsx"));
@@ -48,66 +52,39 @@ const COPY = {
   partner: { en: "For Brands", zh: "品牌合作" },
   bubble: { en: "Hi, I'm Chao", zh: "你好，我是 Chao" },
 
-  // Hero headline — primary language large, the other language quiet below.
+  // Hero headline — one language only; the About page can carry the longer story.
   heroPrimary: {
     en: "Tax Consultant turned Entrepreneur & Creator",
     zh: "财税顾问，变身创业者与创作者",
   },
-  heroSecondary: {
-    en: "Big 4 财税顾问 · 变身创业者与创作者",
-    zh: "Big 4 Tax Consultant turned Entrepreneur & Creator",
-    tw: "Big 4 Tax Consultant turned Entrepreneur & Creator",
-  },
-  heroDesc: {
-    en: "I share honest lessons on money, minimalism, habits, AI & creating — to help you make a complex life gradually clearer.",
-    zh: "我分享关于金钱、极简、习惯、AI 与创作的真实经验，帮你把复杂的生活，一点点变得更清楚。",
-  },
+  heroTopics: [
+    { en: "Personal finance", zh: "个人财务" },
+    { en: "Minimalism", zh: "极简" },
+    { en: "Habits", zh: "习惯" },
+    { en: "AI", zh: "AI" },
+  ],
 
   // Follower stat, framed as a sentence around the live number.
   joinPre: { en: "Join", zh: "加入" },
   joinUnit: { en: "friends following along", zh: "位同行的朋友" },
-  joinDesc: {
-    en: "Following along for honest takes on money, minimalism, habits, AI & career changes — and building a freer life system.",
-    zh: "关注这个频道，我们一起聊聊金钱、极简、习惯、AI 与转行，以及如何搭建更自由的生活系统。",
-  },
-
   subLabel: { en: "The Newsletter", zh: "订阅 Newsletter" },
-  subLead: {
-    en: "Twice a month: practical notes on life, money, and good books. Free, always.",
-    zh: "每月两篇，关于生活、金钱和好书的实用分享，完全免费。",
-  },
   subscribe: { en: "Subscribe — it's free", zh: "免费订阅" },
   wechat: { en: "Follow on WeChat", zh: "关注公众号" },
   reviews: { en: "Loved by 2M+ readers", zh: "全网 200w+ 点赞收藏" },
   ctaFine: {
-    en: "One email, no spreadsheets. Unsubscribe anytime.",
-    zh: "一封邮件，不含任何报表。随时退订。",
-  },
-  whereLabel: { en: "Where I show up", zh: "我在这里创作和分享" },
-  whereSub: {
-    en: "Find me here — tap any card to follow →",
-    zh: "在这些平台找到我，点一下卡片就能关注 →",
+    en: "Two emails a month. Free. Unsubscribe anytime.",
+    zh: "每月两篇，完全免费，随时退订。",
   },
   buildingLabel: { en: "Things I'm building", zh: "我正在做的东西" },
-  buildingSub: {
-    en: "Products, templates & courses I've made",
-    zh: "我做的产品、模板和课程",
-  },
   live: { en: "Live", zh: "进行中" },
   soon: { en: "Soon", zh: "敬请期待" },
-  followers: { en: "followers", zh: "粉丝" },
-  essays: { en: "Essays", zh: "长文" },
   brewing: {
-    en: "Brewing: Canada guides · 30-day speaking plan",
-    zh: "正在酝酿：加拿大指南 · 口语计划",
+    en: "Brewing: Personal finance white paper · 30-day speaking plan",
+    zh: "正在酝酿：个人财务管理白皮书 · 30 天口语养成计划",
   },
   footSign: {
-    en: "Made in Singapore, fueled by kopi & kaya toast.",
-    zh: "新加坡出品，靠南洋咖啡和椰香面包供能。(Kopi & Kaya Toast)",
-  },
-  footNow: {
-    en: "Currently: 📍 Singapore · building Money OS · dad life: 2 years in",
-    zh: "近况：现居 📍 新加坡 ～ 在做 Money OS ～ 奶爸经验：两年",
+    en: "Made in Singapore.\nFueled by kopi and kaya toast.",
+    zh: "新加坡出品。\n靠南洋咖啡和椰香面包供能。",
   },
 };
 
@@ -167,6 +144,23 @@ const CREATOR_MONEY_PROJECT = {
   links: [
     {
       url: "https://creator-money-starter-kit.chaologies.chatgpt.site",
+      platform: "Web",
+      label: { en: "Use free", zh: "免费使用" },
+    },
+  ],
+};
+
+const LIFE_IN_WEEKS_PROJECT = {
+  title: { en: "Life in Weeks", zh: "人生周历" },
+  desc: {
+    en: "Lay out 90 years as 4,680 weeks, then decide what the time ahead is for.",
+    zh: "把 90 年摊成 4,680 个星期，看看接下来的时间想留给什么。",
+  },
+  status: "active",
+  badge: { en: "Free tool", zh: "免费工具" },
+  links: [
+    {
+      url: "/life-in-weeks",
       platform: "Web",
       label: { en: "Use free", zh: "免费使用" },
     },
@@ -244,31 +238,31 @@ function projectsWithWeeklyFocus(projects = []) {
         zh: "用 7 天理清现金流，建立一套能长期使用的金钱系统。",
       },
     ),
+    LIFE_IN_WEEKS_PROJECT,
   ].filter(Boolean);
 }
 
 // Homepage only shows active public social channels. Blog stays in the top nav;
 // WeChat stays available elsewhere on the site without duplicating this grid.
-function parseFollowers(s) {
-  if (!s) return -1;
-  const m = String(s).replace(/,/g, "").match(/([\d.]+)\s*([kKmM万]?)/);
-  if (!m) return -1;
-  let n = parseFloat(m[1]);
-  const u = m[2].toLowerCase();
-  if (u === "k") n *= 1e3;
-  else if (u === "m") n *= 1e6;
-  else if (u === "万") n *= 1e4;
-  return n;
-}
 function orderPlatforms(list) {
   const arr = (list || []).filter((p) =>
     !p.isPage && !/wechat|微信/i.test(`${p.name || ""} ${p.nameZh || ""}`),
   );
-  const yt = arr.filter((p) => /youtube/i.test(p.name || ""));
-  const rest = arr
-    .filter((p) => !/youtube/i.test(p.name || ""))
-    .sort((a, b) => parseFollowers(b.followers) - parseFollowers(a.followers));
-  return [...yt, ...rest];
+  const sequence = [
+    /youtube/i,
+    /bilibili|b\s*站/i,
+    /rednote|小红书/i,
+    /douyin|抖音/i,
+    /zhihu|知乎/i,
+    /instagram/i,
+  ];
+  return [...arr].sort((a, b) => {
+    const aName = `${a.name || ""} ${a.nameZh || ""}`;
+    const bName = `${b.name || ""} ${b.nameZh || ""}`;
+    const aIndex = sequence.findIndex((pattern) => pattern.test(aName));
+    const bIndex = sequence.findIndex((pattern) => pattern.test(bName));
+    return (aIndex < 0 ? sequence.length : aIndex) - (bIndex < 0 ? sequence.length : bIndex);
+  });
 }
 
 // ════════════════════════════════════════════════════
@@ -291,6 +285,142 @@ function Nav({ lang, setLang, onNavigate }) {
         <LangToggle lang={lang} setLang={setLang} />
       </div>
     </nav>
+  );
+}
+
+// ════════════════════════════════════════════════════
+//  Social dock — distance-based magnification, inspired by desktop docks
+// ════════════════════════════════════════════════════
+
+function SocialDock({ lang, platforms }) {
+  const dockRef = useRef(null);
+  const scaleTo = useRef([]);
+  const yTo = useRef([]);
+  const motionEnabled = useRef(false);
+
+  const setActiveItem = (activeIndex) => {
+    dockRef.current?.querySelectorAll(".social-dock-slot").forEach((slot, index) => {
+      slot.classList.toggle("is-active", index === activeIndex);
+    });
+  };
+
+  const resetDock = () => {
+    scaleTo.current.forEach((to) => to(1));
+    yTo.current.forEach((to) => to(0));
+    setActiveItem(null);
+  };
+
+  useGSAP(() => {
+    const items = gsap.utils.toArray(".social-dock-item");
+    const media = gsap.matchMedia();
+
+    media.add(
+      "(prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine)",
+      () => {
+        motionEnabled.current = true;
+        gsap.set(items, { scaleX: 1, scaleY: 1, y: 0, transformOrigin: "50% 100%" });
+        scaleTo.current = items.map((item) => {
+          const scaleXTo = gsap.quickTo(item, "scaleX", { duration: 0.28, ease: "power3.out" });
+          const scaleYTo = gsap.quickTo(item, "scaleY", { duration: 0.28, ease: "power3.out" });
+          return (value) => {
+            scaleXTo(value);
+            scaleYTo(value);
+          };
+        });
+        yTo.current = items.map((item) =>
+          gsap.quickTo(item, "y", { duration: 0.28, ease: "power3.out" }),
+        );
+
+        const resetOutsideDock = (event) => {
+          if (dockRef.current && !dockRef.current.contains(event.target)) resetDock();
+        };
+        window.addEventListener("pointermove", resetOutsideDock, { passive: true });
+
+        return () => {
+          window.removeEventListener("pointermove", resetOutsideDock);
+          motionEnabled.current = false;
+          scaleTo.current = [];
+          yTo.current = [];
+        };
+      },
+    );
+
+    return () => media.revert();
+  }, { scope: dockRef });
+
+  const focusItem = (index) => {
+    setActiveItem(index);
+    if (!motionEnabled.current) return;
+    scaleTo.current.forEach((to, itemIndex) => {
+      const distance = Math.abs(itemIndex - index);
+      to(distance === 0 ? 1.5 : distance === 1 ? 1.18 : 1);
+    });
+    yTo.current.forEach((to, itemIndex) => {
+      const distance = Math.abs(itemIndex - index);
+      to(distance === 0 ? -9 : distance === 1 ? -3 : 0);
+    });
+  };
+
+  const handlePointerMove = (event) => {
+    if (!motionEnabled.current || event.pointerType !== "mouse") return;
+    const items = [...dockRef.current.querySelectorAll(".social-dock-item")];
+    const centres = items.map((item) => {
+      const rect = item.getBoundingClientRect();
+      return rect.left + rect.width / 2;
+    });
+    let nearestIndex = 0;
+    let nearestDistance = Infinity;
+    centres.forEach((centre, index) => {
+      const distance = Math.abs(event.clientX - centre);
+      const influence = Math.max(0, 1 - distance / 92);
+      scaleTo.current[index]?.(1 + influence * 0.5);
+      yTo.current[index]?.(-9 * influence);
+      if (distance < nearestDistance) {
+        nearestIndex = index;
+        nearestDistance = distance;
+      }
+    });
+    setActiveItem(nearestIndex);
+  };
+
+  return (
+    <div
+      className="social-dock"
+      ref={dockRef}
+      onPointerMove={handlePointerMove}
+      onPointerLeave={resetDock}
+      onMouseLeave={resetDock}
+      aria-label={lang === "en" ? "Find Chao online" : "在这些平台找到 Chao"}
+    >
+      {platforms.map((platform, index) => {
+        const name = lang === "en" ? platform.name : tr(platform.nameZh || platform.name, lang);
+        const followerText = platform.followers
+          ? lang === "en"
+            ? `${platform.followers} followers`
+            : `${platform.followers} 粉丝`
+          : lang === "en" ? "Visit channel" : "访问主页";
+
+        return (
+          <div className="social-dock-slot" key={platform.name}>
+            <div className="social-dock-tip" aria-hidden="true">
+              <strong>{name}</strong>
+              <span>{followerText}</span>
+            </div>
+            <a
+              className="social-dock-item"
+              href={platform.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${name} · ${followerText}`}
+              onFocus={() => focusItem(index)}
+              onBlur={resetDock}
+            >
+              <img src={platform.logoUrl} alt="" />
+            </a>
+          </div>
+        );
+      })}
+    </div>
   );
 }
 
@@ -331,12 +461,15 @@ function Profile({ lang, data }) {
         </div>
       </div>
 
-      {/* bilingual hero headline */}
+      {/* single-language hero headline */}
       <h1 className="hero-head">
         <span className="hl">Big 4</span> {tr(COPY.heroPrimary, lang)}
       </h1>
-      <p className="hero-sub">{tr(COPY.heroSecondary, lang)}</p>
-      <p className="hero-desc">{tr(COPY.heroDesc, lang)}</p>
+      <ul className="hero-topics" aria-label={lang === "en" ? "Topics" : "内容主题"}>
+        {COPY.heroTopics.map((topic) => (
+          <li key={topic.en}>{tr(topic, lang)}</li>
+        ))}
+      </ul>
 
       {/* follower stat, as a sentence */}
       <div className="statline-wrap">
@@ -345,16 +478,14 @@ function Profile({ lang, data }) {
           <span className="num">{count.toLocaleString("en-US")}</span>
           <span className="unit">{tr(COPY.joinUnit, lang)}</span>
         </div>
-        <p className="stat-desc">{tr(COPY.joinDesc, lang)}</p>
       </div>
+
+      <SocialDock lang={lang} platforms={orderPlatforms(data.platforms)} />
 
       {/* newsletter */}
       <div className="subscribe">
         <div className="sub-top">
-          <div>
-            <span className="sub-label">{tr(COPY.subLabel, lang)}</span>
-            <p className="sub-lead">{tr(COPY.subLead, lang)}</p>
-          </div>
+          <span className="sub-label">{tr(COPY.subLabel, lang)}</span>
           <img className="plane" src="/air.png" alt="" />
         </div>
         <div className="sub-btns">
@@ -375,61 +506,6 @@ function Profile({ lang, data }) {
       </div>
       {subOpen && <SubscribeModal lang={lang} onClose={() => setSubOpen(false)} />}
     </aside>
-  );
-}
-
-// ════════════════════════════════════════════════════
-//  Platform card
-// ════════════════════════════════════════════════════
-
-function PlatformCard({ p, lang, onNavigate }) {
-  const name = lang !== "en" ? tr(p.nameZh || p.name, lang) : p.name;
-  const isEmoji = p.logoUrl && p.logoUrl.length <= 2;
-  const handle = p.isPage
-    ? lang !== "en" ? tr(p.handleZh || p.handle, lang) : p.handle
-    : "@" + (p.handle || "Chaologies");
-
-  const inner = (
-    <>
-      <div className="pcard-head">
-        <div className="pcard-id">
-          {isEmoji ? (
-            <span className="pcard-emoji">{p.logoUrl}</span>
-          ) : (
-            <img className="pcard-logo" src={p.logoUrl} alt="" />
-          )}
-          <div className="pcard-meta">
-            <span className="pcard-name">{name}</span>
-            <span className="pcard-handle">{handle}</span>
-          </div>
-        </div>
-        <span className="pcard-badge">
-          {p.isPage ? (
-            tr(COPY.essays, lang)
-          ) : p.followers && !p.hideCount ? (
-            <>
-              <span className="bn">{p.followers}</span>
-              <span className="bu">{tr(COPY.followers, lang)}</span>
-            </>
-          ) : (
-            <span className="bu">→</span>
-          )}
-        </span>
-      </div>
-    </>
-  );
-
-  if (p.isPage) {
-    return (
-      <button className="pcard blog" onClick={() => onNavigate(p.url)}>
-        {inner}
-      </button>
-    );
-  }
-  return (
-    <a className="pcard" href={p.url} target="_blank" rel="noopener noreferrer">
-      {inner}
-    </a>
   );
 }
 
@@ -498,32 +574,15 @@ function ProjectCard({ project, lang, onNavigate }) {
 
 function RightColumn({ lang, data, onNavigate }) {
   const pad2 = (n) => String(n).padStart(2, "0");
-  const platforms = orderPlatforms(data.platforms);
   const projects = projectsWithWeeklyFocus(data.projects);
   return (
     <section className="right-col">
       <div className="section">
         <div className="section-head">
           <div className="section-label">
-            <span>{tr(COPY.whereLabel, lang)}</span>
-            <span className="n">{pad2(platforms.length)}</span>
-          </div>
-          <p className="section-sub">{tr(COPY.whereSub, lang)}</p>
-        </div>
-        <div className="grid">
-          {platforms.map((p, i) => (
-            <PlatformCard key={i} p={p} lang={lang} onNavigate={onNavigate} />
-          ))}
-        </div>
-      </div>
-
-      <div className="section">
-        <div className="section-head">
-          <div className="section-label">
             <span>{tr(COPY.buildingLabel, lang)}</span>
             <span className="n">{pad2(projects.length)}</span>
           </div>
-          <p className="section-sub">{tr(COPY.buildingSub, lang)}</p>
         </div>
         <div className="grid">
           {projects.map((project, i) => (
@@ -717,7 +776,6 @@ export default function App() {
       </div>
       <footer className="foot">
         <p className="sign">{tr(COPY.footSign, lang)}</p>
-        <p className="now">{tr(COPY.footNow, lang)}</p>
       </footer>
     </div>
   );
