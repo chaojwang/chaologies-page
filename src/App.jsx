@@ -20,6 +20,7 @@ import LifeInWeeksPage from "./LifeInWeeksPage.jsx";
 import ActionBankPage from "./ActionBankPage.jsx";
 import ReadingMapPage from "./ReadingMapPage.jsx";
 import ReadingMapThanksPage from "./ReadingMapThanksPage.jsx";
+import ProductDeliveryPage from "./ProductDeliveryPage.jsx";
 import SubscribeModal from "./SubscribeModal.jsx";
 import PartnerPage from "./PartnerPage.jsx";
 import CreatorAcademyPage from "./CreatorAcademyPage.jsx";
@@ -606,7 +607,8 @@ const pathToPage = (path) => {
   const pages = new Set([
     "/budget", "/blog", "/newsletter", "/fcpx", "/notion-weekly",
     "/weekly-focus", "/life-in-weeks", "/action-bank", "/reading-map", "/reading-map/access",
-    "/reading-map/thank-you", "/creator-academy",
+    "/reading-map/thank-you", "/reading-map/start", "/notion-weekly/start",
+    "/start/read", "/start/week", "/creator-academy",
   ]);
   return pages.has(path) ? path : "home";
 };
@@ -735,6 +737,14 @@ export default function App() {
         onNavigate={handleNavigate}
       />
     );
+  }
+
+  if (currentPage === "/reading-map/start" || currentPage === "/start/read") {
+    return <ProductDeliveryPage product="reading" onNavigate={handleNavigate} />;
+  }
+
+  if (currentPage === "/notion-weekly/start" || currentPage === "/start/week") {
+    return <ProductDeliveryPage product="weekly" onNavigate={handleNavigate} />;
   }
 
   if (currentPage === "/action-bank") {
