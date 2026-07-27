@@ -1,5 +1,6 @@
 {
   "rewrites": [
+    { "source": "/creator-money/:path*", "destination": "/index.html" },
     { "source": "/start/read", "destination": "/index.html" },
     { "source": "/start/week", "destination": "/index.html" },
     { "source": "/reading-map/start", "destination": "/index.html" },
