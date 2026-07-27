@@ -24,6 +24,7 @@ import ProductDeliveryPage from "./ProductDeliveryPage.jsx";
 import SubscribeModal from "./SubscribeModal.jsx";
 import PartnerPage from "./PartnerPage.jsx";
 import CreatorAcademyPage from "./CreatorAcademyPage.jsx";
+import CreatorMoneyEmbed from "./CreatorMoneyEmbed.jsx";
 import { tr, useTw, LangToggle } from "./i18n.jsx";
 
 gsap.registerPlugin(useGSAP);
@@ -80,8 +81,8 @@ const COPY = {
   live: { en: "Live", zh: "进行中" },
   soon: { en: "Soon", zh: "敬请期待" },
   brewing: {
-    en: "Brewing: Personal finance white paper · 30-day speaking plan",
-    zh: "正在酝酿：个人财务管理白皮书 · 30 天口语养成计划",
+    en: "Brewing: Creator Academy · 7-Day Money OS · Personal finance white paper · 30-day speaking plan",
+    zh: "正在酝酿：创作者学院 · 7 天 Money OS 入门计划 · 个人财务管理白皮书 · 30 天口语养成计划",
   },
   footSign: {
     en: "Made in Singapore.\nFueled by kopi and kaya toast.",
@@ -144,11 +145,18 @@ const CREATOR_MONEY_PROJECT = {
   badge: { en: "Free tool", zh: "免费工具" },
   links: [
     {
-      url: "https://creator-money-starter-kit.chaologies.chatgpt.site",
+      url: "/creator-money",
       platform: "Web",
       label: { en: "Use free", zh: "免费使用" },
     },
   ],
+};
+
+// Keep upcoming projects defined and routable, but out of the homepage grid.
+// Flip either value to true when it is ready to return to “Things I'm building”.
+const HOMEPAGE_PROJECT_VISIBILITY = {
+  creatorAcademy: false,
+  moneyOs: false,
 };
 
 const LIFE_IN_WEEKS_PROJECT = {
@@ -230,8 +238,8 @@ function projectsWithWeeklyFocus(projects = []) {
         zh: "最好用的苹果视频剪辑软件，没有之一。",
       },
     ),
-    CREATOR_ACADEMY_PROJECT,
-    moneyOs && withProjectCopy(
+    HOMEPAGE_PROJECT_VISIBILITY.creatorAcademy && CREATOR_ACADEMY_PROJECT,
+    HOMEPAGE_PROJECT_VISIBILITY.moneyOs && moneyOs && withProjectCopy(
       moneyOs,
       { en: "7-Day Money OS Starter Plan", zh: "7 天 Money OS 入门计划" },
       {
@@ -604,6 +612,7 @@ function RightColumn({ lang, data, onNavigate }) {
 // are real, shareable links with working back/forward.
 const pathToPage = (path) => {
   if (path === "/partner" || path.startsWith("/partner/")) return path;
+  if (path === "/creator-money" || path.startsWith("/creator-money/")) return path;
   const pages = new Set([
     "/budget", "/blog", "/newsletter", "/fcpx", "/notion-weekly",
     "/weekly-focus", "/life-in-weeks", "/action-bank", "/reading-map", "/reading-map/access",
@@ -775,6 +784,10 @@ export default function App() {
         onBack={() => handleNavigate("home")}
       />
     );
+  }
+
+  if (currentPage === "/creator-money" || currentPage.startsWith("/creator-money/")) {
+    return <CreatorMoneyEmbed route={currentPage} />;
   }
 
   return (
