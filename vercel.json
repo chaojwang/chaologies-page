@@ -1,4 +1,10 @@
 {
+  "rewrites": [
+    { "source": "/start/read", "destination": "/index.html" },
+    { "source": "/start/week", "destination": "/index.html" },
+    { "source": "/reading-map/start", "destination": "/index.html" },
+    { "source": "/notion-weekly/start", "destination": "/index.html" }
+  ],
   "headers": [
     {
       "source": "/start/read",
