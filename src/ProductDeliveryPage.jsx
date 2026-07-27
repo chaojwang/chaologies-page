@@ -7,7 +7,7 @@ const DELIVERY = {
     navTitle: "超说阅读地图",
     eyebrow: "购买成功 · 从这里开始",
     title: "你好，欢迎进入\n超说阅读地图",
-    intro: "这不是一份要从头读到尾的书单。它把 101 本好书整理成可以随时回来查找、思考和行动的阅读入口。",
+    intro: "请先选择你正在使用的设备。下面会把注册、打开阅读地图和复制模板，一步一步列给你。",
     accent: "#d49422",
     soft: "#f7ead0",
     templateUrl: "https://piquant-antimatter-ada.notion.site/Chaologies-35af81438f7c80c3a86ccc8dcd452bb3?source=copy_link",
@@ -21,23 +21,23 @@ const DELIVERY = {
     steps: [
       {
         label: "STEP 01",
-        title: "先登录 Notion",
-        body: "推荐第一次在电脑浏览器中操作。没有账号时，先免费注册一个 Notion 账号。",
+        title: "从此刻的问题出发",
+        body: "不用从第一页开始，也不用一次看完。先想一件你最近真正想解决的事。",
       },
       {
         label: "STEP 02",
-        title: "打开模板并复制",
-        body: "点击上方按钮，在页面右上角选择「Duplicate / 复制」，把模板放进你自己的工作区。",
+        title: "选择一个主题或能力",
+        body: "按金钱、工作、生活、创作等主题，或按你想培养的能力，找到此刻最相关的一本书。",
       },
       {
         label: "STEP 03",
-        title: "从此刻的问题出发",
-        body: "不必按顺序读。按金钱、工作、生活、创作等主题，或按你想培养的能力开始找书。",
+        title: "一次只读一张卡片",
+        body: "先看它解决什么问题，再读最重要的三个认知。觉得相关时，再决定要不要继续读原书。",
       },
       {
         label: "STEP 04",
-        title: "带走一个可以用的东西",
-        body: "一次只读一张卡片：一个认知、一个问题或一个小练习，就已经足够。",
+        title: "带走一次小行动",
+        body: "一个认知、一个问题或一个可以马上开始的小练习，就已经足够。",
       },
     ],
     insideTitle: "打开一张卡片，你会看到这些",
@@ -65,7 +65,7 @@ const DELIVERY = {
     navTitle: "Minimalist Weekly System",
     eyebrow: "购买成功 · 从这一周开始",
     title: "用十分钟，\n把这一周过清楚",
-    intro: "这套系统不是让你塞进更多任务，而是把注意力留给真正想推进的事情。第一次只需要按下面四步设置。",
+    intro: "这套系统不是让你塞进更多任务，而是把注意力留给真正想推进的事情。",
     accent: "#3498a4",
     soft: "#dff1f1",
     templateUrl: "https://piquant-antimatter-ada.notion.site/The-Minimalist-Weekly-System-2fcf81438f7c81baa4c7e6dfb2308937",
@@ -79,8 +79,8 @@ const DELIVERY = {
     steps: [
       {
         label: "STEP 01",
-        title: "登录并复制模板",
-        body: "推荐在电脑浏览器中登录 Notion，再打开模板并选择「Duplicate / 复制」。",
+        title: "找到每周规划模板",
+        body: "进入首页后，先找到 Weekly Planning Template。固定事件和新一周计划，都从这里开始设置。",
       },
       {
         label: "STEP 02",
@@ -89,13 +89,13 @@ const DELIVERY = {
       },
       {
         label: "STEP 03",
-        title: "放入固定事件",
-        body: "先安排周一到周五已经确定的会议、运动和固定承诺，看到这一周真实剩下的空间。",
+        title: "先修改「固定事件」",
+        body: "在 Weekly Planning Template 里，把周一到周五的会议、运动和固定承诺改成你自己的。请先改模板本身，以后新建的每一周才会自动带上这些安排。",
       },
       {
         label: "STEP 04",
-        title: "复制本周计划",
-        body: "从 Parking Lot 拖入真正要推进的任务，设置优先级和时间；每周完成后，再复制一个新星期。",
+        title: "再创建本周计划",
+        body: "点击模板里的「点击复制每周模版」，生成本周页面，再从 Parking Lot 拖入这一周真正要推进的任务。",
       },
     ],
     insideTitle: "模板里有四个核心区域",
@@ -126,17 +126,10 @@ const DEVICE_GUIDES = [
     tab: "电脑",
     sub: "Mac / Windows",
     icon: "⌨",
-    title: "第一次使用，电脑浏览器最省事",
-    intro: "不用先安装软件。登录 Notion 网页版，复制模板成功后，再决定要不要下载桌面 App。",
-    actionLabel: "打开 Notion 网页版",
-    actionUrl: "https://www.notion.so/signup",
-    optionalLabel: "下载 Notion 桌面版",
-    optionalUrl: "https://www.notion.com/desktop",
-    steps: [
-      "在浏览器登录或免费注册 Notion。",
-      "回到本页，点击「打开模板」。",
-      "在模板右上角找 Duplicate / 复制，选择自己的工作区。",
-    ],
+    title: "第一次使用\n电脑浏览器最省事",
+    intro: "不用先安装软件。\n注册、登录和复制模板，都先在浏览器完成。\n复制成功后，再决定要不要下载桌面 App。",
+    appLabel: "可选：复制成功后下载桌面 App",
+    appUrl: "https://www.notion.com/desktop",
     ui: "desktop",
   },
   {
@@ -144,17 +137,10 @@ const DEVICE_GUIDES = [
     tab: "iPhone / iPad",
     sub: "iOS / iPadOS",
     icon: "◉",
-    title: "先装 Notion，再从浏览器打开模板",
-    intro: "App Store 安装完成后，先登录账号。再回到这个交付页打开模板，按提示在 Notion 中继续。",
-    actionLabel: "前往 Notion 手机端官网",
-    actionUrl: "https://www.notion.com/mobile",
-    optionalLabel: "直接使用网页版",
-    optionalUrl: "https://www.notion.so/signup",
-    steps: [
-      "在 App Store 搜索「Notion」，确认开发者为 Notion Labs, Inc.。",
-      "安装后登录；iPad 第一次复制模板也可以直接用 Safari。",
-      "打开模板后，查看右上角的复制图标或 ••• 菜单。",
-    ],
+    title: "iPhone / iPad\n先装 App，再从浏览器复制",
+    intro: "还没有 Notion 时，先安装官方 App。\n然后按下面 1 → 2 → 3 操作，不用再去别的页面找入口。",
+    appLabel: "先安装 Notion 官方 App",
+    appUrl: "https://apps.apple.com/us/app/notion-notes-tasks-ai/id1232780281",
     ui: "mobile",
   },
   {
@@ -162,17 +148,10 @@ const DEVICE_GUIDES = [
     tab: "安卓 / 华为",
     sub: "Android / HarmonyOS",
     icon: "◇",
-    title: "安卓可装 App，华为优先用网页版",
-    intro: "有 Google Play 的设备可以安装 Notion App；暂时无法安装时，浏览器网页版同样能复制和使用模板。",
-    actionLabel: "前往 Notion 手机端官网",
-    actionUrl: "https://www.notion.com/mobile",
-    optionalLabel: "打开 Notion 网页版",
-    optionalUrl: "https://www.notion.so/signup",
-    steps: [
-      "在 Google Play 搜索并安装「Notion」。",
-      "华为设备找不到官方 App 时，直接用浏览器登录 notion.so。",
-      "登录后返回本页打开模板，在右上角 ••• 中寻找复制入口。",
-    ],
+    title: "安卓 / 华为\n先注册账号，再打开模板",
+    intro: "有 Google Play 时可以先安装 Notion App。\n华为暂时装不了官方 App 也没关系，直接用浏览器完成下面三步。",
+    appLabel: "Google Play 安装 Notion",
+    appUrl: "https://play.google.com/store/apps/details?id=notion.id",
     ui: "mobile",
   },
 ];
@@ -261,18 +240,31 @@ export default function ProductDeliveryPage({ product, onNavigate }) {
             <p className="delivery-eyebrow"><span />{data.eyebrow}</p>
             <h1 id={`${data.slug}-title`}>{data.title}</h1>
             <p className="delivery-intro">{data.intro}</p>
-            <div className="delivery-actions">
-              <a className="delivery-button delivery-button--primary" href={data.templateUrl} rel="noreferrer">
-                {data.primary} <ArrowIcon />
-              </a>
-              <a className="delivery-button delivery-button--secondary" href="#notion-install">
-                先看 Notion 安装方法 <span aria-hidden="true">↓</span>
-              </a>
-            </div>
-            <p className="delivery-action-note">
-              建议先登录 Notion，再打开模板。仍想看原来的长说明？
-              <a href={data.guideUrl} rel="noreferrer">{data.guideCta} <ArrowIcon /></a>
-            </p>
+            {product === "weekly" && (
+              <div className="delivery-actions">
+                <a className="delivery-button delivery-button--primary" href={data.templateUrl} rel="noreferrer">
+                  {data.primary} <ArrowIcon />
+                </a>
+              </div>
+            )}
+            <aside className="delivery-first-use" aria-label="第一次使用提醒">
+              <p><span>{product === "reading" ? "请按照以下步骤" : "第一次只需要按照下面四个步骤设置"}</span></p>
+              <h2>{product === "reading" ? "选择设备，打开你的阅读地图" : "先在电脑浏览器里复制模板"}</h2>
+              <div>
+                {product === "reading" ? (
+                  <>电脑、iPhone / iPad、安卓 / 华为都有对应入口。<br />先注册或登录 Notion，再打开模板并复制。</>
+                ) : (
+                  <><strong>不用先安装软件。</strong><br />登录 Notion 网页版，把模板复制到自己的工作区。<br />复制成功后，再决定要不要下载桌面 App。</>
+                )}
+              </div>
+              <a href="#notion-install">选择你正在使用的设备 <span aria-hidden="true">↓</span></a>
+            </aside>
+            {product === "weekly" && (
+              <p className="delivery-action-note">
+                仍想看原来的长说明？
+                <a href={data.guideUrl} rel="noreferrer">{data.guideCta} <ArrowIcon /></a>
+              </p>
+            )}
           </div>
 
           <aside className="delivery-package" aria-label={data.packageLabel}>
@@ -294,7 +286,7 @@ export default function ProductDeliveryPage({ product, onNavigate }) {
           <div className="delivery-section-heading delivery-section-heading--wide">
             <p>NOTION SETUP</p>
             <h2 id={`${data.slug}-device-guide`}>你现在用什么设备？</h2>
-            <span>选一个设备，下面只显示你需要的安装方式和按钮位置。第一次使用最推荐电脑浏览器。</span>
+            <span>选好设备后，按 1 → 2 → 3 走：登录或注册、打开模板、点击复制。需要的入口都在这里。</span>
           </div>
 
           <div className="delivery-device-tabs" role="tablist" aria-label="选择设备">
@@ -326,15 +318,33 @@ export default function ProductDeliveryPage({ product, onNavigate }) {
               <p className="delivery-device-kicker">{deviceGuide.tab} · 第一次设置</p>
               <h3>{deviceGuide.title}</h3>
               <p>{deviceGuide.intro}</p>
+              {deviceGuide.id !== "desktop" && <a className="delivery-device-app" href={deviceGuide.appUrl} rel="noreferrer">{deviceGuide.appLabel} <ArrowIcon /></a>}
               <ol>
-                {deviceGuide.steps.map((step, index) => (
-                  <li key={step}><span>{index + 1}</span>{step}</li>
-                ))}
+                <li>
+                  <span>1</span>
+                  <div>
+                    <strong>在浏览器登录或免费注册 Notion</strong>
+                    <p>已经有账号时，直接登录同一个账号即可。</p>
+                    <a href="https://www.notion.so/signup" rel="noreferrer">打开 Notion 登录 / 注册 <ArrowIcon /></a>
+                  </div>
+                </li>
+                <li>
+                  <span>2</span>
+                  <div>
+                    <strong>回到本页，打开你的模板</strong>
+                    <p>保持浏览器打开，直接点击下面的按钮。</p>
+                    <a href={data.templateUrl} rel="noreferrer">{data.primary} <ArrowIcon /></a>
+                  </div>
+                </li>
+                <li>
+                  <span>3</span>
+                  <div>
+                    <strong>点击 Duplicate / 复制</strong>
+                    <p>在模板右上角找到复制按钮，把模板放进自己的工作区。右边是按钮位置示意。</p>
+                  </div>
+                </li>
               </ol>
-              <div className="delivery-device-actions">
-                <a href={deviceGuide.actionUrl} rel="noreferrer">{deviceGuide.actionLabel} <ArrowIcon /></a>
-                <a href={deviceGuide.optionalUrl} rel="noreferrer">{deviceGuide.optionalLabel} <ArrowIcon /></a>
-              </div>
+              {deviceGuide.id === "desktop" && <a className="delivery-device-app delivery-device-app--after" href={deviceGuide.appUrl} rel="noreferrer">{deviceGuide.appLabel} <ArrowIcon /></a>}
             </div>
 
             <div className={`delivery-notion-demo delivery-notion-demo--${deviceGuide.ui}`} aria-label="Notion 复制按钮示意">
@@ -377,8 +387,27 @@ export default function ProductDeliveryPage({ product, onNavigate }) {
         <section className="delivery-section delivery-section--steps" aria-labelledby={`${data.slug}-steps`}>
           <div className="delivery-section-heading">
             <p>QUICK START</p>
-            <h2 id={`${data.slug}-steps`}>第一次打开，照着这四步走</h2>
+            <h2 id={`${data.slug}-steps`}>{product === "weekly" ? "复制完成后，跟着视频设置你的第一周" : "复制完成后，这样开始阅读"}</h2>
           </div>
+          {product === "weekly" && (
+            <div className="delivery-video-guide">
+              <div className="delivery-video-copy">
+                <p>从 6:54 开始看</p>
+                <h3>先改好固定事件，<br />再创建本周计划</h3>
+                <p>请先在 <strong>Weekly Planning Template</strong> 里修改会议、运动和其他固定安排。以后每周从这个模板创建新计划时，这些内容才会自动保留下来。</p>
+                <a href="https://www.bilibili.com/video/BV18nDSBSEez/?t=414" target="_blank" rel="noreferrer">在 B 站从 6:54 打开完整视频 <ArrowIcon /></a>
+              </div>
+              <div className="delivery-video-player">
+                <iframe
+                  src="https://player.bilibili.com/player.html?isOutside=true&aid=116389956355311&bvid=BV18nDSBSEez&cid=37439145123&p=1&t=414&autoplay=0&danmaku=0"
+                  title="Minimalist Weekly System 设置教程，从 6 分 54 秒开始"
+                  loading="lazy"
+                  allowFullScreen
+                  scrolling="no"
+                />
+              </div>
+            </div>
+          )}
           <div className="delivery-steps">
             {data.steps.map((step) => (
               <article className="delivery-step" key={step.label}>
