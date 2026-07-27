@@ -240,21 +240,22 @@ export default function ProductDeliveryPage({ product, onNavigate }) {
             <p className="delivery-eyebrow"><span />{data.eyebrow}</p>
             <h1 id={`${data.slug}-title`}>{data.title}</h1>
             <p className="delivery-intro">{data.intro}</p>
-            {product === "weekly" && (
-              <div className="delivery-actions">
-                <a className="delivery-button delivery-button--primary" href={data.templateUrl} rel="noreferrer">
-                  {data.primary} <ArrowIcon />
-                </a>
-              </div>
-            )}
+            <div className="delivery-actions">
+              <a className="delivery-button delivery-button--primary" href={data.templateUrl} rel="noreferrer">
+                {data.primary} <ArrowIcon />
+              </a>
+              <a className="delivery-button delivery-button--secondary" href="#notion-install">
+                推荐：按下面步骤打开 <span aria-hidden="true">↓</span>
+              </a>
+            </div>
             <aside className="delivery-first-use" aria-label="第一次使用提醒">
               <p><span>{product === "reading" ? "请按照以下步骤" : "第一次只需要按照下面四个步骤设置"}</span></p>
               <h2>{product === "reading" ? "选择设备，打开你的阅读地图" : "先在电脑浏览器里复制模板"}</h2>
               <div>
                 {product === "reading" ? (
-                  <>电脑、iPhone / iPad、安卓 / 华为都有对应入口。<br />先注册或登录 Notion，再打开模板并复制。</>
+                  <><strong>上面的按钮就是模板入口。</strong><br />第一次使用，建议先选择设备，按下面三步完成注册、打开和复制。</>
                 ) : (
-                  <><strong>不用先安装软件。</strong><br />登录 Notion 网页版，把模板复制到自己的工作区。<br />复制成功后，再决定要不要下载桌面 App。</>
+                  <><strong>上面的按钮就是模板入口。</strong><br />第一次使用，建议先在电脑浏览器登录 Notion，再按下面三步复制模板。<br />复制成功后，再决定要不要下载桌面 App。</>
                 )}
               </div>
               <a href="#notion-install">选择你正在使用的设备 <span aria-hidden="true">↓</span></a>
