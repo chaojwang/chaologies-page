@@ -2,6 +2,7 @@
   "rewrites": [
     { "source": "/creator-money", "destination": "/index.html" },
     { "source": "/creator-money/:path*", "destination": "/index.html" },
+    { "source": "/weekly-focus", "destination": "/index.html" },
     { "source": "/start/read", "destination": "/index.html" },
     { "source": "/start/week", "destination": "/index.html" },
     { "source": "/reading-map/start", "destination": "/index.html" },
