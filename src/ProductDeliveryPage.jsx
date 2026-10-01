@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./product-delivery.css";
+import ReadingMapStartPage from "./ReadingMapStartPage";
 
 const DELIVERY = {
   reading: {
@@ -160,7 +161,13 @@ function ArrowIcon() {
   return <span aria-hidden="true">↗</span>;
 }
 
-export default function ProductDeliveryPage({ product, onNavigate }) {
+export default function ProductDeliveryPage(props) {
+  return props.product === "reading"
+    ? <ReadingMapStartPage onNavigate={props.onNavigate} />
+    : <LegacyProductDeliveryPage {...props} />;
+}
+
+function LegacyProductDeliveryPage({ product, onNavigate }) {
   const data = DELIVERY[product];
   const [device, setDevice] = useState("desktop");
   const deviceGuide = DEVICE_GUIDES.find((item) => item.id === device);
