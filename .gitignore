@@ -4,6 +4,17 @@ dist
 .env
 .DS_Store
 
+# Local AI assistant configuration and installed skills
+.claude/settings.local.json
+.claude/skills/
+.agents/
+skills-lock.json
+
+# Local work products; keep them on disk but out of the website repository
+deliverables/
+output/
+tmp/
+
 # local backup, not for deploy
 public/logo_whitebg_backup.png
 
