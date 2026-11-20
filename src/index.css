@@ -490,6 +490,14 @@ button { font-family: inherit; }
   .lang { width: 100%; justify-content: flex-end; }
 }
 @media (max-width: 480px) {
+  /* 手机：第一行 logo + 语言，第二行三个入口（去掉箭头省地方） */
+  .nav { flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 12px 8px; }
+  .nav-right { display: contents; }
+  .lang { order: 1; flex: 1 1 auto; width: auto; justify-content: flex-end; }
+  .nav-link { order: 2; padding: 7px 12px; }
+  .nav-link::after { display: none; }
+}
+@media (max-width: 480px) {
   .grid { grid-template-columns: 1fr; }
   .hero-head { font-size: 24px; }
   .social-dock { width: fit-content; justify-content: flex-start; gap: 6px; padding-inline: 0; }

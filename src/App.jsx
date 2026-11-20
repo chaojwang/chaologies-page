@@ -25,6 +25,7 @@ import SubscribeModal from "./SubscribeModal.jsx";
 import PartnerPage from "./PartnerPage.jsx";
 import CreatorAcademyPage from "./CreatorAcademyPage.jsx";
 import CreatorMoneyEmbed from "./CreatorMoneyEmbed.jsx";
+import FreePage from "./FreePage.jsx";
 import { tr, useTw, LangToggle } from "./i18n.jsx";
 
 gsap.registerPlugin(useGSAP);
@@ -50,6 +51,7 @@ function useSiteData() {
 
 // ── Static copy — zh 一律简体；繁体由 i18n 运行时转换 ──
 const COPY = {
+  free: { en: "Free resources", zh: "免费资源" },
   journal: { en: "Blog", zh: "博客" },
   partner: { en: "For Brands", zh: "品牌合作" },
   bubble: { en: "Hi, I'm Chao", zh: "你好，我是 Chao" },
@@ -285,6 +287,9 @@ function Nav({ lang, setLang, onNavigate }) {
         <img src="/logo.png?v=3" alt="Chaologies" className="logo-img" />
       </a>
       <div className="nav-right">
+        <button className="nav-link free-link" onClick={() => onNavigate("/free")}>
+          {tr(COPY.free, lang)}
+        </button>
         <button className="nav-link blog-link" onClick={() => onNavigate("/blog")}>
           {tr(COPY.journal, lang)}
         </button>
@@ -617,7 +622,7 @@ const pathToPage = (path) => {
     "/budget", "/blog", "/newsletter", "/fcpx", "/notion-weekly",
     "/weekly-focus", "/life-in-weeks", "/action-bank", "/reading-map", "/reading-map/access",
     "/reading-map/thank-you", "/reading-map/start", "/notion-weekly/start",
-    "/start/read", "/start/week", "/creator-academy",
+    "/start/read", "/start/week", "/creator-academy", "/free",
   ]);
   return pages.has(path) ? path : "home";
 };
@@ -659,6 +664,17 @@ export default function App() {
         onBack={() => handleNavigate("home")}
         onNavigate={handleNavigate}
         brandSlug={currentPage.startsWith("/partner/") ? currentPage.slice("/partner/".length) : null}
+      />
+    );
+  }
+
+  if (currentPage === "/free") {
+    return (
+      <FreePage
+        lang={lang}
+        setLang={setLang}
+        onBack={() => handleNavigate("home")}
+        onNavigate={handleNavigate}
       />
     );
   }

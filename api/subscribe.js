@@ -1,3 +1,9 @@
+// 订阅来源 → Beehiiv 的 utm_campaign，方便之后按来源筛人
+const CAMPAIGNS = {
+  "life-in-weeks": "life-in-weeks",
+  "free-checklist": "free-year-end-checklist",
+};
+
 export default async function handler(req, res) {
   const PUB_ID = "pub_045bdfc9-d6b0-454a-b284-ea9b5aa2de74";
   const API_KEY = process.env.BEEHIIV_API_KEY;
@@ -43,7 +49,7 @@ export default async function handler(req, res) {
           send_welcome_email: true,
           utm_source: "chaologies.com",
           utm_medium: "organic",
-          utm_campaign: source === "life-in-weeks" ? "life-in-weeks" : "website-subscribe",
+          utm_campaign: CAMPAIGNS[source] || "website-subscribe",
           referring_site: req.headers.referer || "https://chaologies.com",
         }),
       }
